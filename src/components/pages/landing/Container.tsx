@@ -1,4 +1,5 @@
-import Image from "next/image";
+import BlobImage from "./BlobImage";
+import Link from "next/link";
 
 export default function MembershipSection() {
   return (
@@ -14,47 +15,46 @@ export default function MembershipSection() {
             </div>
 
             <p className="text-lg text-gray-700">
-              No matter where you are in the world, there is a Membership
-              designed to cater to Reds of all ages.
+              Experience football like never before with exclusive member
+              benefits.
             </p>
 
             <div className="space-y-4">
-              <button className="bg-[#fae115] text-black px-6 py-2 font-bold rounded-lg hover:bg-[#e5cd13] transition-colors shadow-md transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center">
-                JOIN NOW
-                <svg
-                  className="ml-2 w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <Link href={"/SignUp"}>
+                <button className="bg-[#fae115] text-black px-6 py-2 font-bold rounded-full hover:bg-[#e5cd13] transition-colors shadow-md transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center">
+                  JOIN NOW
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5-5 5M6 12h12"
+                    />
+                  </svg>
+                </button>
+              </Link>
+
+              <div>
+                Already a member?{" "}
+                <Link
+                  href="/SignIn"
+                  className="text-[#fae115] hover:underline cursor-pointer font-semibold"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5-5 5M6 12h12"
-                  />
-                </svg>
-              </button>
-              <p className="text-sm">
-                Already a Member?{" "}
-                <span className="text-[#fae115] hover:underline cursor-pointer font-semibold">
                   LOG IN HERE
-                </span>
-              </p>
+                </Link>
+              </div>
             </div>
           </div>
 
-          <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
-              src="/placeholder.svg"
-              alt="Liverpool FC players celebrating"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
+          <BlobImage />
         </div>
+        {/* <div className="bg-gradient-to-bl from-[#fae115] to-black h-20" /> */}
       </div>
     </main>
   );
