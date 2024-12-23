@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { UsersRound } from "lucide-react";
 
 export default function LandingHeader() {
   const navItems = [
@@ -40,21 +41,24 @@ export default function LandingHeader() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="border-l-2 border-black h-8 mt-2 mx-4" />
+            <div className="border-l-2 border-[#eee] h-6  mx-4" />
             <Link
-              href="#"
-              className=" flex flex-row justify-between text-sm font-semibold hover:text-gray-600 bg-[#e1e1e1] px-3 py-1 rounded"
+              href="/SignUp"
+              className="flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors"
+              aria-label="Join Now"
             >
-              <span>👥</span>
-              JOIN
+              <span className="flex items-center">
+                <UsersRound className="mr-2" size={15} />{" "}
+                JOIN
+              </span>
             </Link>
             <Link
-              href="#"
-              className="text-sm font-semibold hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded"
+              href="/SignIn"
+              className="text-sm text-[#fff] font-semibold  bg-[#000] px-3 py-1 rounded"
             >
               LOGIN
             </Link>
-            <div className="border-l-2 border-black h-8 mx-4 mt-2" />
+            <div className="border-l-2 border-[#eee] h-6 mx-4" />
             <div>sportpesa</div>
             <button className="lg:hidden" aria-label="Open menu">
               <svg
