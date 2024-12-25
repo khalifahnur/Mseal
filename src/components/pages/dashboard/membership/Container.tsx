@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { Star, Shield, Gift, Award, Clock, Check } from "lucide-react";
+import React from "react";
+import { Star, Shield, Clock, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { memberInfo, membershipTiers } from "./placeholder";
 import { BenefitsList } from "./benefits";
 
 export default function MembershipPage() {
-  const [activeMembership, setActiveMembership] = useState("bronze");
+  let activeMembership = "bronze";
 
   return (
     <div className="p-4 space-y-6">

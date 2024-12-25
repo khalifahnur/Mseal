@@ -42,7 +42,7 @@ export function MembershipCard({
             )}
             <div className="justify-center">
               <h3 className="text-base font-bold md:text-lg">
-                Murang'a Seals
+                Murang&apos;a Seals
               </h3>
               <h3 className="text-sm font-bold md:text-sm text-[#e8e8e8]">
                 Membership Card

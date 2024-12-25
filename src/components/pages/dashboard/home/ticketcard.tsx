@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 
@@ -9,8 +8,8 @@ interface TicketProps {
   date: Date;
   seat: string;
   ticketNo: string;
-  venue:string;
-};
+  venue: string;
+}
 
 export default function TicketCard({
   home,
@@ -19,7 +18,7 @@ export default function TicketCard({
   date,
   seat,
   ticketNo,
-  venue
+  venue,
 }: TicketProps) {
   return (
     <div className="max-w-xl bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md overflow-hidden">
@@ -43,7 +42,7 @@ export default function TicketCard({
           <div>
             <div className="text-sm text-gray-400">Date</div>
             <div className="text-sm md:text-md font-semibold text-[#fae115]">
-            {new Date(date).toDateString()}
+              {new Date(date).toDateString()}
             </div>
           </div>
           <div>
@@ -75,7 +74,7 @@ export default function TicketCard({
       {/* Bottom Section */}
       <div className="bg-yellow-50 p-4 flex justify-between items-center">
         <div className="text-[#fae115] text-sm">
-          <div>Murang'a Seal FC</div>
+          <div>Murang&apos;a Seal FC</div>
         </div>
         {/* Venue */}
         <div className="flex flex-row gap-5 items-center ">

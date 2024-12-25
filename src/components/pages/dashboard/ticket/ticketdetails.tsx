@@ -1,28 +1,32 @@
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { QRCodeSVG } from "qrcode.react"
-import { Mail, Printer, RefreshCw } from 'lucide-react'
-import TicketCard from "../home/ticketcard"
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Mail, Printer, RefreshCw } from "lucide-react";
+import TicketCard from "../home/ticketcard";
 
 interface TicketDetailViewProps {
   ticket: {
-    id: string
-    matchName: string
-    date: string
-    venue: string
-    status: string
-    section: string
-    row: string
-    seat: string
-    matchPreview: string
-    keyPlayers: string
-    weatherForecast: string
-    ticketType: string
-    transactionId: string
-    kickoff:string
-  }
-};
+    id: string;
+    matchName: string;
+    date: string;
+    venue: string;
+    status: string;
+    section: string;
+    row: string;
+    seat: string;
+    matchPreview: string;
+    keyPlayers: string;
+    weatherForecast: string;
+    ticketType: string;
+    transactionId: string;
+    kickoff: string;
+  };
+}
 
 export function TicketDetailView({ ticket }: TicketDetailViewProps) {
   return (
@@ -64,13 +68,13 @@ export function TicketDetailView({ ticket }: TicketDetailViewProps) {
             </CardContent>
           </Card>
         </div> */}
-        <TicketCard 
-            kickoffTime={ticket.kickoff}
-            date={ticket.date}
-            seat={ticket.seat}
-            ticketNo={ticket.transactionId}
-            venue={ticket.venue}
-             />
+        <TicketCard
+          kickoffTime={ticket.kickoff}
+          date={ticket.date}
+          seat={ticket.seat}
+          ticketNo={ticket.transactionId}
+          venue={ticket.venue}
+        />
         <div className="flex justify-between">
           <Button variant="outline" className="w-full max-w-[120px]">
             <Printer className="mr-2 h-4 w-4" />
@@ -87,6 +91,5 @@ export function TicketDetailView({ ticket }: TicketDetailViewProps) {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-

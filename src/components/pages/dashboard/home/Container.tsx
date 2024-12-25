@@ -11,7 +11,7 @@ import TicketCard from "@/components/pages/dashboard/home/ticketcard";
 import { MembershipCard } from "@/components/pages/dashboard/home/membershipcard";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Calendar, TrendingUp, Trophy } from "lucide-react";
+import { TrendingUp, Trophy } from "lucide-react";
 
 export default function Home() {
   const recentResults = [
@@ -55,7 +55,7 @@ export default function Home() {
             home="MSEAL"
             away="GOR"
             kickoffTime="16:25"
-            date= {date}
+            date={date}
             seat="54B"
             ticketNo="FF346Y"
             venue="St. Sebastian Park"

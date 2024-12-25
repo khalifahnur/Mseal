@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { UsersRound, Menu, X, ChevronUp } from 'lucide-react'
-import { useState } from "react"
-import { MegaMenu } from "@/components/pages/landing/menu"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Link from "next/link";
+import Image from "next/image";
+import { UsersRound, Menu } from "lucide-react";
+import { MegaMenu } from "@/components/pages/landing/menu";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function LandingHeader() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const navItems = [
     { label: "HOME", href: "https://www.murangaseal.com/" },
     { label: "NEWS", href: "https://www.murangaseal.com/news" },
     { label: "MEMBERSHIPS", href: "#", megaMenu: true },
-    { label: "FIXTURES & RESULTS", href: "https://www.murangaseal.com/opponent" },
+    {
+      label: "FIXTURES & RESULTS",
+      href: "https://www.murangaseal.com/opponent",
+    },
     { label: "TICKETS & HOSPITALITY", href: "#" },
     { label: "SHOP", href: "#" },
     { label: "SUPPORT", href: "#" },
-  ]
+  ];
 
   return (
     <>
@@ -38,10 +38,9 @@ export default function LandingHeader() {
           </Link>
 
           <div className="hidden lg:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {navItems.map((item) =>
               item.megaMenu ? (
                 <MegaMenu key={item.label} />
-                
               ) : (
                 <Link
                   key={item.label}
@@ -51,7 +50,7 @@ export default function LandingHeader() {
                   {item.label}
                 </Link>
               )
-            ))}
+            )}
           </div>
 
           <div className="flex items-center space-x-4">
@@ -74,16 +73,21 @@ export default function LandingHeader() {
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
             <div className="hidden lg:block">
               <Image
-              src="https://www.ke.sportpesa.com/img/actionbar_logo.png?v3.15.0.1"
-              alt="Muranga Seals"
-              width={100}
-              height={100}
-              className="h-5 w-20"
-            />
+                src="https://www.ke.sportpesa.com/img/actionbar_logo.png?v3.15.0.1"
+                alt="Muranga Seals"
+                width={100}
+                height={100}
+                className="h-5 w-20"
+              />
             </div>
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="lg:hidden"
+                  aria-label="Open menu"
+                >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -120,6 +124,5 @@ export default function LandingHeader() {
         </nav>
       </header>
     </>
-  )
+  );
 }
-

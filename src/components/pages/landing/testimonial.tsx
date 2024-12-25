@@ -121,11 +121,10 @@ export function Testimonials() {
           </svg>
         </div>
         <p className="text-xl text-gray-600 max-w-md">
-          Don't just take our word for it. See what our satisfied customers have
-          to say about our services.
+          Don&apos;t just take our word for it. See what our satisfied customers
+          have to say about our services.
         </p>
       </div>
     </div>
   );
 }
-
