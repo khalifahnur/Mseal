@@ -29,11 +29,13 @@ export default function Home() {
     points: 25,
   };
 
+  const date = new Date();
+
   return (
     <div className="space-y-1">
       <section className="flex flex-row justify-between">
         <h1 className="text-xs font-semibold md:text-xl text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#fae115] to-black">
-          Welcome, John Doe
+          Welcome, User!
         </h1>
         <div className="flex flex-row justify-between gap-5">
           <p className="text-xs text-muted-foreground md:text-base">
@@ -46,22 +48,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2">
+      <section className="grid gap-4 sm:grid-cols-2 pb-2">
         <div className="col-span-full sm:col-span-1">
           <p className="font-xs font-bold py-1 px-5">Active Ticket</p>
           <TicketCard
             home="MSEAL"
             away="GOR"
             kickoffTime="16:25"
-            date="23/12/2024"
+            date= {date}
             seat="54B"
             ticketNo="FF346Y"
+            venue="St. Sebastian Park"
           />
         </div>
 
         <div className="col-span-full sm:col-span-1 mt-8">
           <MembershipCard
-            memberName="John Doe"
+            memberName="User"
             memberNumber="001"
             teamName="Murang'a Seals"
             balance={500}
@@ -109,7 +112,7 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:p-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 pt-2 md:grid-cols-2 lg:grid-cols-5">
         <Card className="md:col-span-2 lg:col-span-2 w-full">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
@@ -140,7 +143,7 @@ export default function Home() {
                           ][index % 3]
                         }
                       </TableCell>
-                      <TableCell>${(index + 1) * 50}</TableCell>
+                      <TableCell>Ksh.{(index + 1) * 50}</TableCell>
                       <TableCell>
                         {["Completed", "Pending", "Completed"][index % 3]}
                       </TableCell>
@@ -215,7 +218,7 @@ export default function Home() {
                   Team Announces New Signing
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600">
-                  Striker John Doe joins from Coastal Rangers...
+                  Striker joins from Coastal Rangers...
                 </p>
               </div>
             </div>
