@@ -32,8 +32,9 @@ export default function BlobImage() {
 
     return () => clearInterval(shuffleInterval);
   }, []);
+
   return (
-    <div className="relative h-[400px] overflow-hidden">
+    <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] overflow-hidden">
       {/* Blob Background */}
       <svg
         viewBox="0 0 200 200"
@@ -57,7 +58,7 @@ export default function BlobImage() {
           {cards.map((card) => (
             <motion.div
               key={card.id}
-              className="absolute w-[300px] h-[180px]"
+              className="absolute w-[200px] h-[120px] sm:w-[250px] sm:h-[150px] md:w-[300px] md:h-[180px]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{
                 opacity: 1,
@@ -82,7 +83,7 @@ export default function BlobImage() {
       </div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#f7f7f7] via-transparent to-transparent z-30" />
     </div>
   );
 }
