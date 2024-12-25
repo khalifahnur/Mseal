@@ -7,7 +7,7 @@ import { memberInfo, membershipTiers } from "./placeholder";
 import { BenefitsList } from "./benefits";
 
 export default function MembershipPage() {
-  let activeMembership = "bronze";
+  const activeMembership = "bronze";
 
   return (
     <div className="p-4 space-y-6">

@@ -1,11 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, Gift } from "lucide-react";
 
-interface Benefit {
-  title: string;
-  description: string;
-}
-
 export function BenefitsList() {
   return (
     <Card>
