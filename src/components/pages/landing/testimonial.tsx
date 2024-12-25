@@ -95,7 +95,7 @@ export function Testimonials() {
             />
           </svg>
           <h2 className="text-4xl font-bold px-4 text-[#000]">
-            What Our Clients Say
+            Reviews
           </h2>
           <svg
             className="absolute -bottom-3 -right-3 w-6 h-6 text-[#000]"
