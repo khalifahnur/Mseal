@@ -22,19 +22,6 @@ export default function SettingsPage() {
       <div className=" flex items-start">
         <Button variant="destructive">Delete Account</Button>
       </div>
-
-      <div className="text-sm text-gray-500">
-        <p>App Version: 1.0.0</p>
-        <p>
-          <a href="#" className="underline">
-            Terms of Service
-          </a>{" "}
-          |
-          <a href="#" className="underline">
-            Privacy Policy
-          </a>
-        </p>
-      </div>
     </div>
   );
 }

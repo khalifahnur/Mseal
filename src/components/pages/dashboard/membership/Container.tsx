@@ -14,23 +14,23 @@ export default function MembershipPage() {
       {/* Membership Status Card */}
       <Card className="bg-gradient-to-br from-[#fae115] to-black p-4">
         <CardHeader>
-          <CardTitle>Your Membership Status</CardTitle>
+          <CardTitle className="text-white">Your Membership Status</CardTitle>
         </CardHeader>
         <CardContent className="grid md:grid-cols-2 gap-6 grid-cols-2">
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-600">Member ID</p>
+              <p className="text-sm text-white">Member ID</p>
               <p className="font-bold">{memberInfo.id}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Current Tier</p>
+              <p className="text-sm text-white">Current Tier</p>
               <p className="font-bold flex items-center gap-2">
                 <Shield size={20} className="text-green-600" />
                 {memberInfo.tier}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Member Since</p>
+              <p className="text-sm text-white">Member Since</p>
               <p className="font-bold">
                 {new Date(memberInfo.memberSince).toLocaleDateString()}
               </p>
@@ -38,17 +38,17 @@ export default function MembershipPage() {
           </div>
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-600">Points Earned</p>
+              <p className="text-sm text-white">Points Earned</p>
               <p className="font-bold text-green-600">
                 {memberInfo.pointsEarned} points
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Points to Next Tier</p>
+              <p className="text-sm text-white">Points to Next Tier</p>
               <p className="font-bold">{memberInfo.pointsToNextTier} points</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Membership Expires</p>
+              <p className="text-sm text-white">Membership Expires</p>
               <p className="font-bold">
                 {new Date(memberInfo.expiryDate).toLocaleDateString()}
               </p>

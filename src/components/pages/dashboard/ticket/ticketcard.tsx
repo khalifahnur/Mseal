@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button"
 import { CalendarPlus, Share2, ImageIcon } from 'lucide-react'
 import Image from "next/image"
+import { TicketDetailView } from "./ticketdetails"
 
 interface TicketCardProps {
   ticket?: {
@@ -14,11 +15,16 @@ interface TicketCardProps {
     row: string
     seat: string
     thumbnail: string
+    matchPreview: string
+    keyPlayers: string
+    weatherForecast: string
+    ticketType: string
+    transactionId: string
+    kickoff:string
   }
-  onView: (id: string) => void
 }
 
-export function TicketCard({ ticket, onView }: TicketCardProps) {
+export function TicketCard({ ticket }: TicketCardProps) {
   if (!ticket) {
     return null;
   }
@@ -64,11 +70,7 @@ export function TicketCard({ ticket, onView }: TicketCardProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm"
-         //onClick={() => onView(ticket.id)}
-         >
-          View Details
-        </Button>
+        <TicketDetailView ticket={ticket} />
         <div className="flex space-x-2">
           <Button variant="ghost" size="icon">
             <CalendarPlus className="h-4 w-4" />

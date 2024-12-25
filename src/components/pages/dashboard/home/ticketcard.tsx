@@ -3,13 +3,14 @@ import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 
 interface TicketProps {
-  home: string;
-  away: string;
+  home?: string;
+  away?: string;
   kickoffTime: string;
-  date: string;
+  date: Date;
   seat: string;
   ticketNo: string;
-}
+  venue:string;
+};
 
 export default function TicketCard({
   home,
@@ -18,6 +19,7 @@ export default function TicketCard({
   date,
   seat,
   ticketNo,
+  venue
 }: TicketProps) {
   return (
     <div className="max-w-xl bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md overflow-hidden">
@@ -40,25 +42,25 @@ export default function TicketCard({
         <div className="grid grid-cols-4 gap-8 ">
           <div>
             <div className="text-sm text-gray-400">Date</div>
-            <div className="text-sm md:text-lg font-semibold text-[#fae115]">
-              {date}
+            <div className="text-sm md:text-md font-semibold text-[#fae115]">
+            {new Date(date).toDateString()}
             </div>
           </div>
           <div>
             <div className="text-sm text-gray-400">Kickoff</div>
-            <div className="text-sm md:text-lg font-semibold text-[#fae115]">
+            <div className="text-sm md:text-md font-semibold text-[#fae115]">
               {kickoffTime}
             </div>
           </div>
           <div>
             <div className="text-sm text-gray-400">Seat</div>
-            <div className="text-sm md:text-lg font-semibold text-[#fae115]">
+            <div className="text-sm md:text-md font-semibold text-[#fae115]">
               {seat}
             </div>
           </div>
           <div>
             <div className="text-sm text-gray-400">Ticket No.</div>
-            <div className="text-sm md:text-lg font-semibold text-[#fae115]">
+            <div className="text-sm md:text-md font-semibold text-[#fae115]">
               {ticketNo}
             </div>
           </div>
@@ -79,7 +81,7 @@ export default function TicketCard({
         <div className="flex flex-row gap-5 items-center ">
           <p className="text-sm text-gray-400">Venue:</p>
           <p className="text-sm md:text-base font-semibold text-[#fae115]">
-            St. Sebastian Park
+            {venue}
           </p>
         </div>
         {/* {/ QR Code /}         */}

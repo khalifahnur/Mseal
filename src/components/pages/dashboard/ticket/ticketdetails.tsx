@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { QRCodeSVG } from "qrcode.react"
 import { Mail, Printer, RefreshCw } from 'lucide-react'
+import TicketCard from "../home/ticketcard"
 
 interface TicketDetailViewProps {
   ticket: {
@@ -19,8 +20,9 @@ interface TicketDetailViewProps {
     weatherForecast: string
     ticketType: string
     transactionId: string
+    kickoff:string
   }
-}
+};
 
 export function TicketDetailView({ ticket }: TicketDetailViewProps) {
   return (
@@ -32,7 +34,7 @@ export function TicketDetailView({ ticket }: TicketDetailViewProps) {
         <DialogHeader>
           <DialogTitle>{ticket.matchName}</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4 md:grid-cols-2">
+        {/* <div className="grid gap-4 py-4 md:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle>Match Details</CardTitle>
@@ -61,7 +63,14 @@ export function TicketDetailView({ ticket }: TicketDetailViewProps) {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
+        <TicketCard 
+            kickoffTime={ticket.kickoff}
+            date={ticket.date}
+            seat={ticket.seat}
+            ticketNo={ticket.transactionId}
+            venue={ticket.venue}
+             />
         <div className="flex justify-between">
           <Button variant="outline" className="w-full max-w-[120px]">
             <Printer className="mr-2 h-4 w-4" />

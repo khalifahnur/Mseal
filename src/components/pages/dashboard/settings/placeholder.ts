@@ -1,9 +1,9 @@
 export const mockUserSettings = {
     profile: {
-      name: "John Doe",
-      email: "john.doe@example.com",
+      name: "user",
+      email: "user@example.com",
       phone: "+1234567890",
-      address: "123 Fan Street, Football City, FC12 3XX",
+      address: "123, Nairobi, Kenya",
       profilePicture: "https://img.icons8.com/bubbles/100/user.png",
     },
     membership: {
