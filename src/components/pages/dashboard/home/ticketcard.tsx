@@ -5,7 +5,7 @@ interface TicketProps {
   home?: string;
   away?: string;
   kickoffTime: string;
-  date: Date;
+  date: Date | string;
   seat: string;
   ticketNo: string;
   venue: string;

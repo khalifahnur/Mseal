@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React from "react";
 import { motion } from "framer-motion";
 
 const benefits = [
@@ -35,7 +35,7 @@ const benefits = [
 
 export function BenefitsPath() {
   const [containerWidth, setContainerWidth] = React.useState(0);
-  const containerRef = React.useRef(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     const updateWidth = () => {
@@ -45,8 +45,8 @@ export function BenefitsPath() {
     };
 
     updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
   // Responsive calculations
@@ -58,19 +58,19 @@ export function BenefitsPath() {
   // Calculate card positions first
   const cardPositions = benefits.map((_, index) => {
     const progress = index / (benefits.length - 1);
-    
+
     if (isMobile) {
       // Mobile positions with slight curve
       return {
         x: viewBoxWidth / 2 + Math.sin(progress * Math.PI) * 80,
-        y: 100 + progress * 400
+        y: 100 + progress * 400,
       };
     } else {
       // Desktop positions
       const angle = progress * Math.PI;
       return {
         x: viewBoxWidth * 0.1 + progress * viewBoxWidth * 0.8,
-        y: 250 - Math.sin(angle) * 150
+        y: 250 - Math.sin(angle) * 150,
       };
     }
   });
@@ -79,7 +79,7 @@ export function BenefitsPath() {
   const generateCurvePath = () => {
     if (isMobile) {
       // Create a smooth curve through all points for mobile
-      const points = cardPositions.map(pos => `${pos.x},${pos.y}`);
+      const points = cardPositions.map((pos) => `${pos.x},${pos.y}`);
       return `M${points[0]} C${points[0]} ${points[1]} ${points[1]} S${points[2]} ${points[2]} S${points[3]} ${points[3]}`;
     } else {
       // Create a smooth curve through points for desktop
@@ -87,14 +87,17 @@ export function BenefitsPath() {
       const endPoint = cardPositions[cardPositions.length - 1];
       const controlPoint = {
         x: viewBoxWidth / 2,
-        y: Math.min(...cardPositions.map(p => p.y)) - 20
+        y: Math.min(...cardPositions.map((p) => p.y)) - 20,
       };
       return `M${startPoint.x},${startPoint.y} Q${controlPoint.x},${controlPoint.y} ${endPoint.x},${endPoint.y}`;
     }
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-4xl mx-auto min-h-[400px] md:min-h-[350px] px-4">
+    <div
+      ref={containerRef}
+      className="relative w-full max-w-4xl mx-auto min-h-[400px] md:min-h-[350px] px-4"
+    >
       <h2 className="text-2xl text-[#fff] md:text-3xl font-bold text-center mb-4 md:mb-2">
         Membership Benefits
       </h2>
@@ -116,7 +119,7 @@ export function BenefitsPath() {
 
         {benefits.map((benefit, index) => {
           const position = cardPositions[index];
-          
+
           return (
             <motion.div
               key={benefit.title}
@@ -135,10 +138,14 @@ export function BenefitsPath() {
                 ease: "easeOut",
               }}
             >
-              <h3 className={`font-semibold mb-1 md:mb-2 text-sm md:text-base ${benefit.textColor}`}>
+              <h3
+                className={`font-semibold mb-1 md:mb-2 text-sm md:text-base ${benefit.textColor}`}
+              >
                 {benefit.title}
               </h3>
-              <p className={`text-xs md:text-sm ${benefit.textColor} opacity-90`}>
+              <p
+                className={`text-xs md:text-sm ${benefit.textColor} opacity-90`}
+              >
                 {benefit.description}
               </p>
             </motion.div>
