@@ -43,7 +43,7 @@ export function AppSidebar() {
   return (
     <Sidebar variant="floating">
       <SidebarHeader className="items-center justify-center">
-        <Link href="/home" className="flex-shrink-0">
+        <Link href="/home" className="z-50">
           <Image
             src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
             alt="Muranga Seals"
