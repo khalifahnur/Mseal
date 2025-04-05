@@ -1,159 +1,264 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
+"use client"
+
+import React, { useState, useEffect, useRef } from "react"
+import { motion } from "framer-motion"
+import { Shield, Clock, Crown, Gift, Ticket, Users, Star, Trophy } from "lucide-react"
 
 const benefits = [
   {
-    title: "Early Access",
-    description: "Priority ticket booking for all matches",
-    color: "bg-gray-100",
-    textColor: "text-gray-800",
-    borderColor: "border-gray-200",
+    title: "Priority Access",
+    description: "Book tickets before general sale for all home matches",
+    icon: Clock,
+    color: "bg-gradient-to-br from-blue-50/90 to-blue-100/90",
+    textColor: "text-blue-800",
+    borderColor: "border-blue-200/50",
+    iconColor: "text-blue-600",
+    iconBg: "bg-blue-100/80",
+    shadowColor: "shadow-blue-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-blue-100/90 hover:to-blue-200/90",
   },
   {
-    title: "VIP Seating",
-    description: "Premium match day experience",
-    color: "bg-gray-200",
-    textColor: "text-blue-700",
-    borderColor: "border-blue-100",
+    title: "VIP Experience",
+    description: "Premium seating and exclusive match day perks",
+    icon: Crown,
+    color: "bg-gradient-to-br from-amber-50/90 to-amber-100/90",
+    textColor: "text-amber-800",
+    borderColor: "border-amber-200/50",
+    iconColor: "text-amber-600",
+    iconBg: "bg-amber-100/80",
+    shadowColor: "shadow-amber-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-amber-100/90 hover:to-amber-200/90",
   },
   {
-    title: "Exclusive Content",
-    description: "Behind-the-scenes access",
-    color: "bg-pink-50",
-    textColor: "text-pink-700",
-    borderColor: "border-pink-100",
+    title: "Insider Access",
+    description: "Behind-the-scenes content and team updates",
+    icon: Shield,
+    color: "bg-gradient-to-br from-emerald-50/90 to-emerald-100/90",
+    textColor: "text-emerald-800",
+    borderColor: "border-emerald-200/50",
+    iconColor: "text-emerald-600",
+    iconBg: "bg-emerald-100/80",
+    shadowColor: "shadow-emerald-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-emerald-100/90 hover:to-emerald-200/90",
   },
   {
     title: "Member Rewards",
-    description: "Special discounts and offers",
-    color: "bg-yellow-50",
-    textColor: "text-green-700",
-    borderColor: "border-green-100",
+    description: "Exclusive discounts on merchandise and events",
+    icon: Gift,
+    color: "bg-gradient-to-br from-purple-50/90 to-purple-100/90",
+    textColor: "text-purple-800",
+    borderColor: "border-purple-200/50",
+    iconColor: "text-purple-600",
+    iconBg: "bg-purple-100/80",
+    shadowColor: "shadow-purple-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-purple-100/90 hover:to-purple-200/90",
+  },
+  {
+    title: "Digital Card",
+    description: "Access your membership directly from your phone",
+    icon: Ticket,
+    color: "bg-gradient-to-br from-pink-50/90 to-pink-100/90",
+    textColor: "text-pink-800",
+    borderColor: "border-pink-200/50",
+    iconColor: "text-pink-600",
+    iconBg: "bg-pink-100/80",
+    shadowColor: "shadow-pink-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-pink-100/90 hover:to-pink-200/90",
+  },
+  {
+    title: "Member Events",
+    description: "Exclusive invitations to member-only gatherings",
+    icon: Users,
+    color: "bg-gradient-to-br from-indigo-50/90 to-indigo-100/90",
+    textColor: "text-indigo-800",
+    borderColor: "border-indigo-200/50",
+    iconColor: "text-indigo-600",
+    iconBg: "bg-indigo-100/80",
+    shadowColor: "shadow-indigo-500/10",
+    hoverBg: "hover:bg-gradient-to-br hover:from-indigo-100/90 hover:to-indigo-200/90",
   },
 ];
 
+// Create animated background particles
+const BackgroundParticles = ({ count = 20 }) => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(count)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full bg-white opacity-10"
+          initial={{
+            x: `${Math.random() * 100}%`,
+            y: `${Math.random() * 100}%`,
+            scale: Math.random() * 0.5 + 0.5,
+          }}
+          animate={{
+            x: [
+              `${Math.random() * 100}%`,
+              `${Math.random() * 100}%`,
+              `${Math.random() * 100}%`,
+            ],
+            y: [
+              `${Math.random() * 100}%`,
+              `${Math.random() * 100}%`,
+              `${Math.random() * 100}%`,
+            ],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: Math.random() * 10 + 20,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          style={{
+            width: `${Math.random() * 10 + 5}px`,
+            height: `${Math.random() * 10 + 5}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export function BenefitsPath() {
-  const [containerWidth, setContainerWidth] = React.useState(0);
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = React.useState(0)
+  const containerRef = React.useRef<HTMLDivElement | null>(null)
 
   React.useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
+        setContainerWidth(containerRef.current.offsetWidth)
       }
-    };
+    }
 
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
+    updateWidth()
+    window.addEventListener("resize", updateWidth)
+    return () => window.removeEventListener("resize", updateWidth)
+  }, [])
 
   // Responsive calculations
-  const isMobile = containerWidth < 768;
-  const viewBoxWidth = isMobile ? 400 : 800;
-  const viewBoxHeight = isMobile ? 600 : 400;
-  const cardWidth = isMobile ? 140 : 180;
-
-  // Calculate card positions first
-  const cardPositions = benefits.map((_, index) => {
-    const progress = index / (benefits.length - 1);
-
-    if (isMobile) {
-      // Mobile positions with slight curve
-      return {
-        x: viewBoxWidth / 2 + Math.sin(progress * Math.PI) * 80,
-        y: 100 + progress * 400,
-      };
-    } else {
-      // Desktop positions
-      const angle = progress * Math.PI;
-      return {
-        x: viewBoxWidth * 0.1 + progress * viewBoxWidth * 0.8,
-        y: 250 - Math.sin(angle) * 150,
-      };
-    }
-  });
-
-  // Generate path through card positions
-  const generateCurvePath = () => {
-    if (isMobile) {
-      // Create a smooth curve through all points for mobile
-      const points = cardPositions.map((pos) => `${pos.x},${pos.y}`);
-      return `M${points[0]} C${points[0]} ${points[1]} ${points[1]} S${points[2]} ${points[2]} S${points[3]} ${points[3]}`;
-    } else {
-      // Create a smooth curve through points for desktop
-      const startPoint = cardPositions[0];
-      const endPoint = cardPositions[cardPositions.length - 1];
-      const controlPoint = {
-        x: viewBoxWidth / 2,
-        y: Math.min(...cardPositions.map((p) => p.y)) - 20,
-      };
-      return `M${startPoint.x},${startPoint.y} Q${controlPoint.x},${controlPoint.y} ${endPoint.x},${endPoint.y}`;
-    }
-  };
+  const isMobile = containerWidth < 768
+  const visibleBenefits = benefits.slice(0, 6)
+  const cardWidth = isMobile ? 160 : 200
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full max-w-4xl mx-auto min-h-[400px] md:min-h-[350px] px-4"
-    >
-      <h2 className="text-2xl text-[#fff] md:text-3xl font-bold text-center mb-4 md:mb-2">
-        Membership Benefits
-      </h2>
+    <div className="relative w-full py-12 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex justify-center">
+      {/* Animated gradient background */}
+      <motion.div 
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: "radial-gradient(circle at 30% 40%, rgba(124, 58, 237, 0.4), transparent 30%), radial-gradient(circle at 70% 60%, rgba(37, 99, 235, 0.4), transparent 30%), radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.3), transparent 50%)",
+        }}
+        animate={{
+          backgroundPosition: ["0% 0%", "10% 10%", "0% 0%"],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+      />
+      
+      {/* Animated particles */}
+      <BackgroundParticles count={15} />
+      
+      {/* Main content container */}
+      <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4 z-10">
+        <div className="text-center mb-12">
+          <motion.div 
+            className="inline-block px-3 py-1 bg-slate-800/80 rounded-full text-yellow-400 text-sm font-medium mb-4 backdrop-blur-sm border border-slate-700/50"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            MEMBER PRIVILEGES
+          </motion.div>
+          <motion.h2 
+            className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-100 via-gray-400 to-primary/20 bg-clip-text text-transparent"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Premium Membership Benefits
+          </motion.h2>
+          <motion.p 
+            className="text-slate-300 max-w-2xl mx-auto text-lg"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Join the Muranga Seal family and enjoy exclusive privileges designed to enhance your fan experience.
+          </motion.p>
+        </div>
 
-      <div className="relative w-full h-[500px] md:h-[250px] flex items-center justify-center">
-        <svg
-          className="absolute w-full h-full"
-          viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-          fill="none"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <path
-            d={generateCurvePath()}
-            stroke="#e5e7eb"
-            strokeWidth="2"
-            strokeDasharray="5,5"
-          />
-        </svg>
+        {/* Centered grid container */}
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+            {visibleBenefits.map((benefit, index) => {
+              const Icon = benefit.icon
 
-        {benefits.map((benefit, index) => {
-          const position = cardPositions[index];
-
-          return (
-            <motion.div
-              key={benefit.title}
-              className={`absolute ${benefit.color} rounded-lg p-3 md:p-4 shadow-lg border ${benefit.borderColor}`}
-              style={{
-                width: `${cardWidth}px`,
-                left: `${(position.x / viewBoxWidth) * 100}%`,
-                top: `${(position.y / viewBoxHeight) * 100}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.2,
-                ease: "easeOut",
-              }}
-            >
-              <h3
-                className={`font-semibold mb-1 md:mb-2 text-sm md:text-base ${benefit.textColor}`}
-              >
-                {benefit.title}
-              </h3>
-              <p
-                className={`text-xs md:text-sm ${benefit.textColor} opacity-90`}
-              >
-                {benefit.description}
-              </p>
-            </motion.div>
-          );
-        })}
+              return (
+                <motion.div
+                  key={benefit.title}
+                  className={`${benefit.color} ${benefit.hoverBg} backdrop-blur-md rounded-xl p-5 shadow-lg ${benefit.shadowColor} border ${benefit.borderColor} hover:shadow-xl transition-all duration-300 group relative overflow-hidden`}
+                  style={{
+                    width: "100%",
+                    maxWidth: `${cardWidth}px`,
+                    margin: "0 auto",
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1 + 0.3,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{
+                    y: -8,
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  {/* Subtle animated gradient in card background */}
+                  <motion.div 
+                    className="absolute inset-0 opacity-20 z-0 pointer-events-none"
+                    animate={{
+                      background: [
+                        "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)",
+                        "radial-gradient(circle at 100% 100%, rgba(255,255,255,0.2), transparent 50%)",
+                        "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)"
+                      ]
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      repeatType: "mirror"
+                    }}
+                  />
+                  
+                  <div
+                    className={`${benefit.iconBg} ${benefit.iconColor} h-14 w-14 rounded-full flex items-center justify-center mb-4 mx-auto transform group-hover:scale-110 transition-transform duration-300 shadow-md relative z-10`}
+                  >
+                    <Icon size={26} />
+                  </div>
+                  <h3
+                    className={`font-bold mb-2 text-base md:text-lg ${benefit.textColor} text-center group-hover:translate-x-1 transition-transform duration-300 relative z-10`}
+                  >
+                    {benefit.title}
+                  </h3>
+                  <p className={`text-sm ${benefit.textColor} opacity-80 text-center relative z-10`}>
+                    {benefit.description}
+                  </p>
+                  <div className="w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mt-3 opacity-0 group-hover:opacity-100 transition-all duration-500 mx-auto relative z-10"></div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+        
       </div>
     </div>
-  );
+  )
 }
 
-export default BenefitsPath;
+export default BenefitsPath

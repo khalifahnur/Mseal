@@ -62,7 +62,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <p>&copy; 2024 Murang&apos;a Seals. All rights reserved.</p>
+          <p>&copy; 2025 Murang&apos;a Seals. All rights reserved.</p>
         </div>
       </div>
     </footer>
