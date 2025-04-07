@@ -12,7 +12,7 @@ export default function MembershipPage() {
   return (
     <div className="p-4 space-y-6">
       {/* Membership Status Card */}
-      <Card className="bg-gradient-to-br from-[#fae115] to-black p-4">
+      <Card className="bg-linear-to-br from-[#fae115] to-black p-4">
         <CardHeader>
           <CardTitle className="text-white">Your Membership Status</CardTitle>
         </CardHeader>
