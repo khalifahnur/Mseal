@@ -21,9 +21,9 @@ export function MembershipCard({
   logoUrl = "https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png",
 }: MembershipCardProps) {
   return (
-    <Card className="relative overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 p-4 text-white md:p-2">
+    <Card className="relative overflow-hidden bg-linear-to-br from-orange-400 to-red-500 p-4 text-white md:p-2">
       <div
-        className="absolute inset-0 bg-right bg-contain bg-no-repeat filter blur-sm "
+        className="absolute inset-0 bg-right bg-contain bg-no-repeat filter blur-xs "
         style={{
           backgroundImage: `url("${logoUrl}")`,
         }}
