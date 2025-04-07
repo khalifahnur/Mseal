@@ -12,6 +12,7 @@ import { MembershipCard } from "@/components/pages/dashboard/home/membershipcard
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TrendingUp, Trophy } from "lucide-react";
+import ActiveTickets from "./ActiveTickets";
 
 export default function Home() {
   const recentResults = [
@@ -34,7 +35,7 @@ export default function Home() {
   return (
     <div className="space-y-1">
       <section className="flex flex-row justify-between">
-        <h1 className="text-xs font-semibold md:text-xl text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#fae115] to-black">
+        <h1 className="text-xs font-semibold md:text-xl text-gradient bg-clip-text text-transparent bg-linear-to-r from-[#fae115] to-black">
           Welcome, User!
         </h1>
         <div className="flex flex-row justify-between gap-5">
@@ -51,7 +52,7 @@ export default function Home() {
       <section className="grid gap-4 sm:grid-cols-2 pb-2">
         <div className="col-span-full sm:col-span-1">
           <p className="font-xs font-bold py-1 px-5">Active Ticket</p>
-          <TicketCard
+          {/* <TicketCard
             home="MSEAL"
             away="GOR"
             kickoffTime="16:25"
@@ -59,7 +60,8 @@ export default function Home() {
             seat="54B"
             ticketNo="FF346Y"
             venue="St. Sebastian Park"
-          />
+          /> */}
+          <ActiveTickets />
         </div>
 
         <div className="col-span-full sm:col-span-1 mt-8">
@@ -112,7 +114,7 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 pt-2 md:grid-cols-2 lg:grid-cols-5">
+      <div className=" gap-4 pt-2 ">
         <Card className="md:col-span-2 lg:col-span-2 w-full">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
@@ -154,76 +156,7 @@ export default function Home() {
             </ScrollArea>
           </CardContent>
         </Card>
-
-        {/* League Position */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="flex items-center text-center gap-2 text-base sm:text-sm">
-              <Trophy size={20} />
-              League Position
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className=" text-center text-2xl sm:text-3xl font-bold text-green-600">
-              {leaguePosition.position}th
-            </p>
-            <div className="mt-2 space-y-1 text-xs sm:text-sm">
-              <p className="text-center">Played: {leaguePosition.played}</p>
-              <p className="text-center">Won: {leaguePosition.won}</p>
-              <p className="text-center">Points: {leaguePosition.points}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Recent Results */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-              <TrendingUp size={20} />
-              Recent Results
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-xs sm:text-sm">
-              {recentResults.map((result, index) => (
-                <div key={index} className="flex justify-between items-center">
-                  <span className="truncate mr-2">{result.opponent}</span>
-                  <span className="font-mono">{result.score}</span>
-                  <span
-                    className={`font-bold ${
-                      result.result === "W"
-                        ? "text-green-600"
-                        : result.result === "L"
-                        ? "text-red-600"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    {result.result}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* News and Updates Section */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle className="text-base sm:text-lg">Latest News</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="border-l-4 border-green-600 pl-4">
-                <h3 className="font-semibold text-sm sm:text-base">
-                  Team Announces New Signing
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600">
-                  Striker joins from Coastal Rangers...
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        
       </div>
     </div>
   );
