@@ -4,13 +4,13 @@ import React from 'react'
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-10 md:py-20 relative px-20 bg-gradient-to-r from-gray-50 to-white">
+    <section id="pricing" className="py-10 md:py-20 relative px-20 bg-linear-to-r from-gray-50 to-white">
           <div className="container px-4 md:px-6 relative">
             <div
               className="flex flex-col items-center justify-center space-y-4 text-center mb-16"
               data-animate
             >
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-gray-900 to-primary/20 bg-clip-text text-transparent">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-gray-900 via-gray-900 to-primary/20 bg-clip-text text-transparent">
                 Simple, Transparent Pricing
               </h2>
               <p className="max-w-[800px] text-gray-700 text-lg md:text-xl">
@@ -75,8 +75,8 @@ export default function Pricing() {
                   key={index}
                   className={`relative flex flex-col rounded-2xl ${
                     plan.popular
-                      ? "bg-gradient-to-br from-primary/50 to-primary shadow-xl shadow-blue-900/30"
-                      : "bg-gradient-to-br from-white/10 to-white/5 border border-gray-200/70"
+                      ? "bg-linear-to-br from-primary/50 to-primary shadow-xl shadow-blue-900/30"
+                      : "bg-linear-to-br from-white/10 to-white/5 border border-gray-200/70"
                   } overflow-hidden`}
                   data-animate
                   style={{ animationDelay: `${index * 100}ms` }}
@@ -88,7 +88,7 @@ export default function Pricing() {
                   <div className="p-6 relative">
                     {plan.popular && (
                       <div className="absolute top-6 right-6">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium text-white">
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-xs font-medium text-white">
                           Most Popular
                         </div>
                       </div>

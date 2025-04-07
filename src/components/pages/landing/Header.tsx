@@ -26,8 +26,8 @@ export default function LandingHeader() {
       <div className="bg-[#fae115] h-2 w-full"></div>
       <header className="text-black border-b border-gray-200 relative z-50">
         <div className="relative bg-black h-10 w-full" />
-        <nav className="absolute w-[calc(100%-2rem)] bg-[#f7f7f7] left-5 h-12 top-15 -translate-y-1/2 px-2 flex items-center justify-between">
-          <Link href="/" className="flex-shrink-0">
+        <nav className="absolute w-[calc(100%-2rem)] bg-[#ffff] left-5 h-12 top-10 -translate-y-1/2 px-2 flex items-center justify-between">
+          <Link href="/" className="shrink-0">
             <Image
               src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
               alt="Muranga Seals"

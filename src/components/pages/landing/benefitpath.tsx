@@ -9,73 +9,73 @@ const benefits = [
     title: "Priority Access",
     description: "Book tickets before general sale for all home matches",
     icon: Clock,
-    color: "bg-gradient-to-br from-blue-50/90 to-blue-100/90",
+    color: "bg-linear-to-br from-blue-50/90 to-blue-100/90",
     textColor: "text-blue-800",
     borderColor: "border-blue-200/50",
     iconColor: "text-blue-600",
     iconBg: "bg-blue-100/80",
     shadowColor: "shadow-blue-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-blue-100/90 hover:to-blue-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-blue-100/90 hover:to-blue-200/90",
   },
   {
     title: "VIP Experience",
     description: "Premium seating and exclusive match day perks",
     icon: Crown,
-    color: "bg-gradient-to-br from-amber-50/90 to-amber-100/90",
+    color: "bg-linear-to-br from-amber-50/90 to-amber-100/90",
     textColor: "text-amber-800",
     borderColor: "border-amber-200/50",
     iconColor: "text-amber-600",
     iconBg: "bg-amber-100/80",
     shadowColor: "shadow-amber-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-amber-100/90 hover:to-amber-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-amber-100/90 hover:to-amber-200/90",
   },
   {
     title: "Insider Access",
     description: "Behind-the-scenes content and team updates",
     icon: Shield,
-    color: "bg-gradient-to-br from-emerald-50/90 to-emerald-100/90",
+    color: "bg-linear-to-br from-emerald-50/90 to-emerald-100/90",
     textColor: "text-emerald-800",
     borderColor: "border-emerald-200/50",
     iconColor: "text-emerald-600",
     iconBg: "bg-emerald-100/80",
     shadowColor: "shadow-emerald-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-emerald-100/90 hover:to-emerald-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-emerald-100/90 hover:to-emerald-200/90",
   },
   {
     title: "Member Rewards",
     description: "Exclusive discounts on merchandise and events",
     icon: Gift,
-    color: "bg-gradient-to-br from-purple-50/90 to-purple-100/90",
+    color: "bg-linear-to-br from-purple-50/90 to-purple-100/90",
     textColor: "text-purple-800",
     borderColor: "border-purple-200/50",
     iconColor: "text-purple-600",
     iconBg: "bg-purple-100/80",
     shadowColor: "shadow-purple-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-purple-100/90 hover:to-purple-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-purple-100/90 hover:to-purple-200/90",
   },
   {
     title: "Digital Card",
     description: "Access your membership directly from your phone",
     icon: Ticket,
-    color: "bg-gradient-to-br from-pink-50/90 to-pink-100/90",
+    color: "bg-linear-to-br from-pink-50/90 to-pink-100/90",
     textColor: "text-pink-800",
     borderColor: "border-pink-200/50",
     iconColor: "text-pink-600",
     iconBg: "bg-pink-100/80",
     shadowColor: "shadow-pink-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-pink-100/90 hover:to-pink-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-pink-100/90 hover:to-pink-200/90",
   },
   {
     title: "Member Events",
     description: "Exclusive invitations to member-only gatherings",
     icon: Users,
-    color: "bg-gradient-to-br from-indigo-50/90 to-indigo-100/90",
+    color: "bg-linear-to-br from-indigo-50/90 to-indigo-100/90",
     textColor: "text-indigo-800",
     borderColor: "border-indigo-200/50",
     iconColor: "text-indigo-600",
     iconBg: "bg-indigo-100/80",
     shadowColor: "shadow-indigo-500/10",
-    hoverBg: "hover:bg-gradient-to-br hover:from-indigo-100/90 hover:to-indigo-200/90",
+    hoverBg: "hover:bg-linear-to-br hover:from-indigo-100/90 hover:to-indigo-200/90",
   },
 ];
 
@@ -142,7 +142,7 @@ export function BenefitsPath() {
   const cardWidth = isMobile ? 160 : 200
 
   return (
-    <div className="relative w-full py-12 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex justify-center">
+    <div className="relative w-full py-12 overflow-hidden flex justify-center">
       {/* Animated gradient background */}
       <motion.div 
         className="absolute inset-0 opacity-20"
@@ -158,6 +158,10 @@ export function BenefitsPath() {
           repeatType: "reverse",
         }}
       />
+
+      <div className="absolute inset-0 rounded-3xl bg-opacity-30 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-40" />
+      </div>
       
       {/* Animated particles */}
       <BackgroundParticles count={15} />
@@ -166,7 +170,7 @@ export function BenefitsPath() {
       <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4 z-10">
         <div className="text-center mb-12">
           <motion.div 
-            className="inline-block px-3 py-1 bg-slate-800/80 rounded-full text-yellow-400 text-sm font-medium mb-4 backdrop-blur-sm border border-slate-700/50"
+            className="inline-block px-3 py-1 bg-slate-800/80 rounded-full text-yellow-400 text-sm font-medium mb-4 backdrop-blur-xs border border-slate-700/50"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -174,7 +178,7 @@ export function BenefitsPath() {
             MEMBER PRIVILEGES
           </motion.div>
           <motion.h2 
-            className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-100 via-gray-400 to-primary/20 bg-clip-text text-transparent"
+            className="text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-gray-100 via-gray-400 to-primary/20 bg-clip-text text-black "
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -249,7 +253,7 @@ export function BenefitsPath() {
                   <p className={`text-sm ${benefit.textColor} opacity-80 text-center relative z-10`}>
                     {benefit.description}
                   </p>
-                  <div className="w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mt-3 opacity-0 group-hover:opacity-100 transition-all duration-500 mx-auto relative z-10"></div>
+                  <div className="w-0 group-hover:w-full h-0.5 bg-linear-to-r from-transparent via-yellow-400 to-transparent mt-3 opacity-0 group-hover:opacity-100 transition-all duration-500 mx-auto relative z-10"></div>
                 </motion.div>
               )
             })}

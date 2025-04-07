@@ -40,7 +40,7 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="py-20 md:py-20 relative">
       {/* Background elements */}
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-b from-gray-50 via-blue-900/10 to-gray-50 opacity-50"></div>
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-linear-to-b from-gray-50 via-blue-900/10 to-gray-50 opacity-50"></div>
       <div className="absolute top-0 right-0 w-1/2 h-3/4 bg-primary/40 transform rotate-12 translate-x-1/4 translate-y-[20%] rounded-3xl shadow-2xl opacity-30"></div>
       
       <div className="container mx-auto px-4 md:px-6 relative">
@@ -57,7 +57,7 @@ export default function Testimonials() {
               <path d="M8 24C8 15.1634 15.1634 8 24 8" stroke="currentColor" strokeWidth="2" />
               <path d="M16 24C16 19.5817 19.5817 16 24 16" stroke="currentColor" strokeWidth="2" />
             </svg> */}
-            <h2 className="className=text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-gray-900 to-primary/20 bg-clip-text text-transparent">
+            <h2 className="className=text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-gray-900 via-gray-900 to-primary/20 bg-clip-text text-transparent">
               Loved by anyone Everywhere
             </h2>
             {/* <svg
