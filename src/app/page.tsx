@@ -6,7 +6,8 @@ import LandingHeader from "@/components/pages/landing/Header";
 import { MembershipBenefits } from "@/components/pages/landing/membershipbenefits";
 import Pricing from "@/components/pages/landing/pricesection";
 import Testimonials from "@/components/pages/landing/testimonial";
-import TrustedVenues from "@/components/pages/landing/trustedvenues";
+import TrustedSponsors from "@/components/pages/landing/TrustedSPonsor";
+
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       <LandingHeader />
       <main className="overflow-x-hidden">
       <MembershipSection />
-      <TrustedVenues />
+      <TrustedSponsors />
       <MembershipBenefits />
       <Pricing />
       <CTASection />
