@@ -21,7 +21,7 @@ export default function TicketCard({
   venue,
 }: TicketProps) {
   return (
-    <div className="max-w-xl bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md overflow-hidden">
+    <div className="max-w-xl bg-linear-to-r from-yellow-50 to-white rounded-lg shadow-md overflow-hidden">
       {/* Main Ticket Content */}
       <div className="relative p-6">
         <div className="flex flex-row justify-between">
