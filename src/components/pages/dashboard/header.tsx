@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export function Header({ currentTab }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-10 flex h-12 items-center justify-between border-b bg-black px-4 md:px-6">
+    <header className="sticky top-0 z-10 flex h-12 items-center justify-between border-b bg-gradient-to-r from-black to-primary px-4 md:px-6">
       <div className="flex items-center">
         <SidebarTrigger className="mr-2 md:hidden bg-white" />
         <h1 className="text-lg font-semibold md:text-xl text-white">
