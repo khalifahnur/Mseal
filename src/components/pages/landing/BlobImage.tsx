@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 
 export default function BlobImage() {
   // Use the actual membership card image path
-  const cardImage = "/assets/card.jpg" // Make sure this path is correct
+  const cardImage = "/assets/card.png" // Make sure this path is correct
 
   const [cards, setCards] = useState([
     { id: 1, x: 0, y: 0, rotation: 0, scale: 1, zIndex: 3 },
