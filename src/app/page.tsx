@@ -1,3 +1,5 @@
+"use client";
+
 import MembershipSection from "@/components/pages/landing/Container";
 import { CTASection } from "@/components/pages/landing/cta";
 import { FAQSection } from "@/components/pages/landing/faqsection";
