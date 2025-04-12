@@ -50,9 +50,9 @@ export function TicketFilters() {
 
   return (
     <Card>
-      <CardContent className="pt-6">
+      <CardContent className="pt-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col sm:flex-row gap-4 items-end">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex md:flex-row sm:flex-row gap-4 items-end">
             <FormField
               control={form.control}
               name="date"
@@ -98,9 +98,9 @@ export function TicketFilters() {
               )}
             />
 
-            <div className="flex gap-2">
-              <Button type="submit">Apply</Button>
-              <Button type="button" variant="outline" onClick={handleReset}>
+            <div className=" md:flex gap-2 ">
+              <Button type="submit" >Apply</Button>
+              <Button type="button" variant="outline" onClick={handleReset} className="mt-2 md:mt-0">
                 Reset
               </Button>
             </div>

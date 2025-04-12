@@ -4,14 +4,15 @@ import { Card } from "@/components/ui/card";
 import { QRCodeSVG } from "qrcode.react";
 import Image from "next/image";
 import { Ellipsis } from "lucide-react";
+import { maskExceptLastFour } from "@/lib/utils";
 
 interface MembershipCardProps {
   memberName: string;
-  memberNumber: string;
+  memberNumber: string | null;
   teamName: string;
-  balance: number;
+  balance: number | 0;
   logoUrl?: string;
-}
+};
 
 export function MembershipCard({
   memberName,
@@ -21,7 +22,7 @@ export function MembershipCard({
   logoUrl = "https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png",
 }: MembershipCardProps) {
   return (
-    <Card className="relative overflow-hidden bg-linear-to-br from-orange-400 to-red-500 p-4 text-white md:p-2">
+    <Card className="relative overflow-hidden bg-linear-to-br from-orange-400 to-red-500 p-2 text-white md:p-2">
       <div
         className="absolute inset-0 bg-right bg-contain bg-no-repeat filter blur-xs "
         style={{
@@ -41,7 +42,7 @@ export function MembershipCard({
               />
             )}
             <div className="justify-center">
-              <h3 className="text-base font-bold md:text-lg">
+              <h3 className="text-base font-bold md:text-sm">
                 Murang&apos;a Seals
               </h3>
               <h3 className="text-sm font-bold md:text-sm text-[#e8e8e8]">
@@ -51,15 +52,15 @@ export function MembershipCard({
           </div>
           <div>
             <div className="text-xs opacity-80 md:text-sm">Member Name</div>
-            <div className="text-base font-bold md:text-lg">{memberName}</div>
+            <div className="text-base font-bold md:text-sm">{memberName}</div>
           </div>
           <div>
             <div className="text-xs opacity-80 md:text-sm">Member Number</div>
-            <div className="font-mono text-base md:text-lg">{memberNumber}</div>
+            <div className="font-mono text-base md:text-sm">{maskExceptLastFour(memberNumber)}</div>
           </div>
           <div>
             <div className="text-xs opacity-80 md:text-sm">Balance</div>
-            <div className="text-base font-bold md:text-lg">
+            <div className="text-base font-bold md:text-sm">
               Ksh.{balance.toFixed(2)}
             </div>
           </div>
@@ -73,11 +74,14 @@ export function MembershipCard({
               </span>
             </button>
           </div>
-          <QRCodeSVG
+          {
+            memberNumber && <QRCodeSVG
             value={`MEMBER:Ksh{memberNumber}`}
             size={40}
-            className="rounded-lg bg-white p-1 md:p-2"
+            className="rounded-lg bg-white p-1 md:p-1"
           />
+          }
+          
         </div>
       </div>
     </Card>

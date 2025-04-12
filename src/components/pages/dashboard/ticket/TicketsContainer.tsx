@@ -6,9 +6,9 @@ import { TicketFilters } from "./ticketfilter"
 export default function TicketsContainer() {
   return (
     <div className="container px-2 py-2 md:px-4 md:py-4">
-      <div className="flex flex-col space-y-6">
-        <div className="flex flex-col space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter">Upcoming Matches</h1>
+      <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-xl font-bold tracking-tighter">Upcoming Matches</h1>
           <p className="text-muted-foreground">Browse and purchase tickets for upcoming Muranga Seal matches.</p>
         </div>
         <TicketFilters />

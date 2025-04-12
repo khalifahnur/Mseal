@@ -1,179 +1,132 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Calendar, Clock, MapPin, Ticket } from "lucide-react"
-import { useSearchParams } from "next/navigation"
-import { formatDate } from "@/lib/utils"
+import { useEffect, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Calendar, Clock, MapPin, Ticket } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { formatDate } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTickets } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
+import { ApiResponse } from "@/types/ticket";
 
-interface Event {
-  id: string
-  name: string
-  date: string
-  time: string
-  venue: string
-  price: number
-  totalTickets: number
-  availableTickets: number
-  imageUrl: string
-  opponent: {
-    name: string
-    logo: string
-  }
-}
+
+// Mock opponent data (you might want to fetch this from your API)
+const opponentData: Record<string, { name: string; logo: string }> = {
+  "Gor Mahia": { name: "Gor Mahia", logo: "/assets/images/gor-mahia.png" },
+  "AFC Leopards": { name: "AFC Leopards", logo: "/assets/images/afc-leopards.png" },
+  "Tusker FC": { name: "Tusker FC", logo: "/assets/images/tusker-fc.png" },
+  "KCB FC": { name: "KCB FC", logo: "/assets/images/kcb-fc.png" },
+};
 
 export function TicketList() {
-  const [events, setEvents] = useState<Event[]>([])
-  const [loading, setLoading] = useState(true)
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
+  const dateFilter = searchParams.get("date");
+  const sortBy = searchParams.get("sort");
 
-  const dateFilter = searchParams.get("date")
-  const sortBy = searchParams.get("sort")
+  // Fetch tickets using react-query
+  const { data, isLoading, error } = useQuery<ApiResponse>({
+    queryKey: ["tickets", dateFilter, sortBy],
+    queryFn: fetchTickets,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    retry: 2, // Retry failed requests twice
+  });
 
-  useEffect(() => {
-    async function fetchEvents() {
-      try {
-        // In a real app, this would be an API call to your backend
-        // const response = await fetch('/api/events/upcoming')
-        // const data = await response.json()
+  const filteredEvents = useMemo(() => {
+    if (!data?.events) return [];
 
-        // For demo purposes, we'll use mock data
-        const mockEvents: Event[] = [
-          {
-            id: "1",
-            name: "Muranga Seal vs. Gor Mahia",
-            date: "2025-04-10",
-            time: "15:00",
-            venue: "Muranga Stadium",
-            price: 500,
-            totalTickets: 1000,
-            availableTickets: 750,
-            imageUrl: "/assets/images/stadi1.jpeg",
-            opponent: {
-              name: "Gor Mahia",
-              logo: "/placeholder.svg?height=50&width=50",
-            },
-          },
-          {
-            id: "2",
-            name: "Muranga Seal vs. AFC Leopards",
-            date: "2025-04-17",
-            time: "16:30",
-            venue: "Muranga Stadium",
-            price: 600,
-            totalTickets: 1000,
-            availableTickets: 250,
-            imageUrl: "/assets/images/stadi2.jpeg",
-            opponent: {
-              name: "AFC Leopards",
-              logo: "/placeholder.svg?height=50&width=50",
-            },
-          },
-          {
-            id: "3",
-            name: "Tusker FC vs. Muranga Seal",
-            date: "2025-04-24",
-            time: "19:00",
-            venue: "Ruaraka Stadium",
-            price: 450,
-            totalTickets: 800,
-            availableTickets: 650,
-            imageUrl: "/assets/images/stadi1.jpeg",
-            opponent: {
-              name: "Tusker FC",
-              logo: "/placeholder.svg?height=50&width=50",
-            },
-          },
-          {
-            id: "4",
-            name: "Muranga Seal vs. KCB FC",
-            date: "2025-05-01",
-            time: "15:00",
-            venue: "Muranga Stadium",
-            price: 500,
-            totalTickets: 1000,
-            availableTickets: 900,
-            imageUrl: "/assets/images/stadi2.jpeg",
-            opponent: {
-              name: "KCB FC",
-              logo: "/placeholder.svg?height=50&width=50",
-            },
-          },
-        ]
+    let events = [...data.events];
 
-        let filteredEvents = [...mockEvents]
+    // Apply date filter
+    if (dateFilter) {
+      const today = new Date();
+      const thisWeekEnd = new Date(today);
+      thisWeekEnd.setDate(today.getDate() + (7 - today.getDay()));
+      const thisMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-        // Apply date filter
-        if (dateFilter) {
-          const today = new Date()
-          const thisWeekEnd = new Date(today)
-          thisWeekEnd.setDate(today.getDate() + (7 - today.getDay()))
-
-          const thisMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-
-          filteredEvents = filteredEvents.filter((event) => {
-            const eventDate = new Date(event.date)
-            if (dateFilter === "this-week") {
-              return eventDate <= thisWeekEnd && eventDate >= today
-            } else if (dateFilter === "this-month") {
-              return eventDate <= thisMonthEnd && eventDate >= today
-            }
-            return true
-          })
+      events = events.filter((event) => {
+        const eventDate = new Date(event.date);
+        if (dateFilter === "this-week") {
+          return eventDate <= thisWeekEnd && eventDate >= today;
+        } else if (dateFilter === "this-month") {
+          return eventDate <= thisMonthEnd && eventDate >= today;
         }
-
-        // Apply sorting
-        if (sortBy) {
-          filteredEvents.sort((a, b) => {
-            if (sortBy === "price-asc") {
-              return a.price - b.price
-            } else if (sortBy === "price-desc") {
-              return b.price - a.price
-            } else if (sortBy === "availability") {
-              return b.availableTickets - a.availableTickets
-            } else if (sortBy === "date") {
-              return new Date(a.date).getTime() - new Date(b.date).getTime()
-            }
-            return 0
-          })
-        }
-
-        setEvents(filteredEvents)
-        setLoading(false)
-      } catch (error) {
-        console.error("Error fetching events:", error)
-        setLoading(false)
-      }
+        return true;
+      });
     }
 
-    fetchEvents()
-  }, [dateFilter, sortBy])
+    // Apply sorting
+    if (sortBy) {
+      events.sort((a, b) => {
+        if (sortBy === "price-asc") {
+          return a.ticketPrice - b.ticketPrice;
+        } else if (sortBy === "price-desc") {
+          return b.ticketPrice - a.ticketPrice;
+        } else if (sortBy === "date") {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        }
+        return 0;
+      });
+    }
 
-  if (loading) {
-    return <p>Loading events...</p>
+    return events;
+  }, [data?.events, dateFilter, sortBy]);
+
+  if (isLoading) {
+    return <FullScreenLoader />;
   }
 
-  if (events.length === 0) {
-    return <p>No upcoming events found.</p>
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">Error loading events: {(error as Error).message}</p>
+      </div>
+    );
+  }
+
+  if (!filteredEvents.length) {
+    return (
+      <div className="text-center py-8">
+        <p>No upcoming events found.</p>
+      </div>
+    );
   }
 
   return (
     <div className="grid gap-6">
-      {events.map((event) => {
-        const soldPercentage = ((event.totalTickets - event.availableTickets) / event.totalTickets) * 100
-        const isSellingFast = event.availableTickets < event.totalTickets * 0.3
+      {filteredEvents.map((event) => {
+        // Calculate opponent from event name
+        const opponentName = event.name
+          .replace("Muranga Seal vs.", "")
+          .replace("vs. Muranga Seal", "")
+          .trim();
+        const opponent = opponentData[opponentName] || {
+          name: opponentName,
+          logo: "/placeholder.svg",
+        };
+
+        const availableTickets = event.totalTickets;
+        const soldPercentage = 0;
+        const isSellingFast = false;
 
         return (
-          <Card key={event.id} className="overflow-hidden">
+          <Card key={event._id} className="overflow-hidden">
             <CardContent className="p-0">
               <div className="flex flex-col md:flex-row">
-                <div className="relative md:w-1/3 h-[200px]">
-                  <Image src={event.imageUrl || "/placeholder.svg"} alt={event.name} fill className="object-cover" />
+                <div className="relative md:w-1/3 ">
+                  <Image
+                    src={`/assets/images/stadi1.jpeg`}
+                    alt={event.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    priority={filteredEvents.indexOf(event) < 2}
+                  />
                 </div>
                 <div className="flex-1 p-6">
                   <div className="flex flex-col h-full justify-between">
@@ -182,7 +135,7 @@ export function TicketList() {
                         <h3 className="text-xl font-bold">{event.name}</h3>
                         <div className="flex items-center space-x-2">
                           <Image
-                            src="/placeholder.svg?height=40&width=40"
+                            src="/assets/images/muranga-seal.png"
                             alt="Muranga Seal"
                             width={40}
                             height={40}
@@ -190,8 +143,8 @@ export function TicketList() {
                           />
                           <span className="text-sm">vs</span>
                           <Image
-                            src={event.opponent.logo || "/placeholder.svg"}
-                            alt={event.opponent.name}
+                            src={opponent.logo}
+                            alt={opponent.name}
                             width={40}
                             height={40}
                             className="rounded-full"
@@ -214,14 +167,14 @@ export function TicketList() {
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Ticket className="mr-2 h-4 w-4" />
-                          <span>KES {event.price.toLocaleString()}</span>
+                          <span>KES {event.ticketPrice.toLocaleString()}</span>
                         </div>
                       </div>
 
                       <div className="mb-4">
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">Ticket availability</span>
-                          <span className="text-sm font-medium">{event.availableTickets} left</span>
+                          <span className="text-sm font-medium">{availableTickets} left</span>
                         </div>
                         <Progress value={soldPercentage} className="h-2" />
                       </div>
@@ -232,9 +185,9 @@ export function TicketList() {
                         <Badge variant="destructive">Selling Fast</Badge>
                       ) : (
                         <Badge variant="outline">On Sale</Badge>
-                      )}
+                    )}
 
-                      <Link href={`/tickets/buy/${event.id}`}>
+                      <Link href={`/tickets/buy/${event._id}`}>
                         <Button>Buy Now</Button>
                       </Link>
                     </div>
@@ -243,9 +196,8 @@ export function TicketList() {
               </div>
             </CardContent>
           </Card>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
-

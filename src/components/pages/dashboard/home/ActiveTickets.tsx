@@ -14,7 +14,7 @@ import React from "react";
 export default function ActiveTickets() {
   return (
     <Card>
-      <CardHeader className="pb-2">
+      <CardHeader className="md:pb-2">
         <CardTitle>Tickets</CardTitle>
         <CardDescription>View your active tickets and history</CardDescription>
       </CardHeader>
