@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import { motion } from "framer-motion"
 import { Shield, Clock, Crown, Gift, Ticket, Users, Star, Trophy } from "lucide-react"
 
@@ -80,29 +80,71 @@ const benefits = [
 ];
 
 // Create animated background particles
+// const BackgroundParticles = ({ count = 20 }) => {
+//   return (
+//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+//       {[...Array(count)].map((_, i) => (
+//         <motion.div
+//           key={i}
+//           className="absolute rounded-full bg-white opacity-10"
+//           initial={{
+//             x: `${Math.random() * 100}%`,
+//             y: `${Math.random() * 100}%`,
+//             scale: Math.random() * 0.5 + 0.5,
+//           }}
+//           animate={{
+//             x: [
+//               `${Math.random() * 100}%`,
+//               `${Math.random() * 100}%`,
+//               `${Math.random() * 100}%`,
+//             ],
+//             y: [
+//               `${Math.random() * 100}%`,
+//               `${Math.random() * 100}%`,
+//               `${Math.random() * 100}%`,
+//             ],
+//             opacity: [0.1, 0.2, 0.1],
+//           }}
+//           transition={{
+//             duration: Math.random() * 10 + 20,
+//             repeat: Infinity,
+//             repeatType: "reverse",
+//           }}
+//           style={{
+//             width: `${Math.random() * 10 + 5}px`,
+//             height: `${Math.random() * 10 + 5}px`,
+//           }}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
 const BackgroundParticles = ({ count = 20 }) => {
+  const particles = useMemo(() => {
+    return [...Array(count)].map(() => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      scale: Math.random() * 0.5 + 0.5,
+      width: Math.random() * 10 + 5,
+      height: Math.random() * 10 + 5,
+    }))
+  }, [count])
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(count)].map((_, i) => (
+      {particles.map((p, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full bg-white opacity-10"
           initial={{
-            x: `${Math.random() * 100}%`,
-            y: `${Math.random() * 100}%`,
-            scale: Math.random() * 0.5 + 0.5,
+            x: `${p.x}%`,
+            y: `${p.y}%`,
+            scale: p.scale,
           }}
           animate={{
-            x: [
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-            ],
-            y: [
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-            ],
+            x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+            y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
             opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
@@ -111,14 +153,15 @@ const BackgroundParticles = ({ count = 20 }) => {
             repeatType: "reverse",
           }}
           style={{
-            width: `${Math.random() * 10 + 5}px`,
-            height: `${Math.random() * 10 + 5}px`,
+            width: `${p.width}px`,
+            height: `${p.height}px`,
           }}
         />
       ))}
     </div>
-  );
-};
+  )
+}
+
 
 export function BenefitsPath() {
   const [containerWidth, setContainerWidth] = React.useState(0)
@@ -197,7 +240,7 @@ export function BenefitsPath() {
 
         {/* Centered grid container */}
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
             {visibleBenefits.map((benefit, index) => {
               const Icon = benefit.icon
 
