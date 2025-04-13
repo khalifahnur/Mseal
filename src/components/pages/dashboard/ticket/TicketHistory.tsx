@@ -32,6 +32,7 @@ interface TicketData {
 }
 
 export function TicketHistory() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pastTickets, setPastTickets] = useState<TicketData[]>([
     {
       id: "ticket-3",
@@ -82,7 +83,7 @@ export function TicketHistory() {
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <Receipt className="h-12 w-12 text-muted-foreground mb-4" />
         <h3 className="text-xl font-medium mb-2">No ticket history</h3>
-        <p className="text-muted-foreground mb-6">You haven't purchased any tickets yet.</p>
+        <p className="text-muted-foreground mb-6">You haven&apos;t purchased any tickets yet.</p>
         <Button asChild>
           <a href="/tickets">Browse Tickets</a>
         </Button>

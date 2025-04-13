@@ -6,7 +6,6 @@ import { MembershipCard } from "@/components/pages/dashboard/home/membershipcard
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import ActiveTickets from "./ActiveTickets"
-import { OnboardingTour } from "@/components/pages/dashboard/onboarding/HomeOnboard"
 import { FullScreenLoader } from "../../loading/FullScreenLoader"
 import { useQuery } from "@tanstack/react-query"
 import { fetchUserInfo } from "@/api/api"
@@ -38,7 +37,7 @@ export default function Home() {
     return <FullScreenLoader />;
   }
 
-  const {firstName,lastName,phoneNumber,email,membershipTier,membershipId, balance} = data;
+  const {firstName,lastName,membershipId, balance} = data;
 
   return (
     <div className="space-y-1">

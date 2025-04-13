@@ -17,6 +17,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ id, name, price, image, badge }: ProductCardProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isHovered, setIsHovered] = useState(false)
 
   const handleAddToCart = () => {

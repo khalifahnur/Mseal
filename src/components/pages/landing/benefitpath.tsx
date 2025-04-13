@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState, useEffect, useRef, useMemo } from "react"
+import React, { useMemo } from "react"
 import { motion } from "framer-motion"
-import { Shield, Clock, Crown, Gift, Ticket, Users, Star, Trophy } from "lucide-react"
+import { Shield, Clock, Crown, Gift, Ticket, Users } from "lucide-react"
 
 const benefits = [
   {

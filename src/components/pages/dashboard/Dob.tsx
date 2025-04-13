@@ -52,7 +52,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
         setDay(date.getDate().toString());
       }
     }
-  }, [field.value]);
+  }, [field.value,month,day,year]);
 
   // Update Formik field value and validate age
   const updateDob = React.useCallback(() => {

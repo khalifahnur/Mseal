@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSignUp } from "@/hooks/Authhook/authHook";
 import { useRouter } from "next/navigation";
@@ -14,14 +13,16 @@ import { features } from "@/lib/placeholderData";
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const signUpMutation = useSignUp();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleSubmit = async (values: {
     firstName: string;
-    lastName:string;
+    lastName: string;
     email: string;
     password: string;
     phoneNumber: string;
@@ -29,6 +30,7 @@ const SignUpPage = () => {
   }) => {
     try {
       setLoading(true);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...submitData } = values;
       await signUpMutation.mutateAsync(submitData);
 
@@ -55,8 +57,7 @@ const SignUpPage = () => {
     },
     validationSchema: signupSchema,
     onSubmit: (values) => {
-      console.log(values);
-      handleSubmit(values)
+      handleSubmit(values);
     },
   });
 
@@ -116,7 +117,7 @@ const SignUpPage = () => {
       {/* Right Side - Single Form */}
       <div className="p-4 bg-white items-center">
         <h1 className="text-xl font-bold text-gray-800 mb-6">Create Account</h1>
-        
+
         <form onSubmit={formik.handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* First Name */}
@@ -125,7 +126,10 @@ const SignUpPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium text-gray-700"
+              >
                 First Name
               </label>
               <input
@@ -142,7 +146,9 @@ const SignUpPage = () => {
                 } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
               />
               {formik.touched.firstName && formik.errors.firstName && (
-                <p className="mt-1 text-sm text-red-500">{formik.errors.firstName}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {formik.errors.firstName}
+                </p>
               )}
             </motion.div>
 
@@ -152,7 +158,10 @@ const SignUpPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Last Name
               </label>
               <input
@@ -169,7 +178,9 @@ const SignUpPage = () => {
                 } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
               />
               {formik.touched.lastName && formik.errors.lastName && (
-                <p className="mt-1 text-sm text-red-500">{formik.errors.lastName}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {formik.errors.lastName}
+                </p>
               )}
             </motion.div>
           </div>
@@ -180,7 +191,10 @@ const SignUpPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -191,7 +205,9 @@ const SignUpPage = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`mt-1 block w-full rounded-md border ${
-                formik.touched.email && formik.errors.email ? "border-red-500" : "border-gray-300"
+                formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : "border-gray-300"
               } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
             />
             {formik.touched.email && formik.errors.email && (
@@ -205,7 +221,10 @@ const SignUpPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="phoneNumber"
+              className="block text-sm font-medium text-gray-700"
+            >
               Phone Number
             </label>
             <div className="flex mt-1">
@@ -233,7 +252,9 @@ const SignUpPage = () => {
               />
             </div>
             {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <p className="mt-1 text-sm text-red-500">{formik.errors.phoneNumber}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {formik.errors.phoneNumber}
+              </p>
             )}
           </motion.div>
 
@@ -244,7 +265,10 @@ const SignUpPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="relative mt-1">
@@ -274,7 +298,9 @@ const SignUpPage = () => {
                 </button>
               </div>
               {formik.touched.password && formik.errors.password && (
-                <p className="mt-1 text-sm text-red-500">{formik.errors.password}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {formik.errors.password}
+                </p>
               )}
             </motion.div>
 
@@ -284,7 +310,10 @@ const SignUpPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm Password
               </label>
               <div className="relative mt-1">
@@ -296,7 +325,8 @@ const SignUpPage = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   className={`block w-full rounded-md border ${
-                    formik.touched.confirmPassword && formik.errors.confirmPassword
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
                       ? "border-red-500"
                       : "border-gray-300"
                   } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 pr-10`}
@@ -313,9 +343,12 @@ const SignUpPage = () => {
                   )}
                 </button>
               </div>
-              {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-500">{formik.errors.confirmPassword}</p>
-              )}
+              {formik.touched.confirmPassword &&
+                formik.errors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {formik.errors.confirmPassword}
+                  </p>
+                )}
             </motion.div>
           </div>
 
@@ -339,10 +372,19 @@ const SignUpPage = () => {
             </div>
             <div className="ml-3 text-sm">
               <label htmlFor="agreeTerms" className="font-medium text-gray-700">
-                I agree to the <a href="#" className="text-yellow-600 hover:text-yellow-500">Terms of Service</a> and <a href="#" className="text-yellow-600 hover:text-yellow-500">Privacy Policy</a>
+                I agree to the{" "}
+                <a href="#" className="text-yellow-600 hover:text-yellow-500">
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-yellow-600 hover:text-yellow-500">
+                  Privacy Policy
+                </a>
               </label>
               {formik.touched.agreeTerms && formik.errors.agreeTerms && (
-                <p className="mt-1 text-sm text-red-500">{formik.errors.agreeTerms}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {formik.errors.agreeTerms}
+                </p>
               )}
             </div>
           </motion.div>
@@ -361,13 +403,13 @@ const SignUpPage = () => {
               style={{ backgroundColor: loading ? undefined : "#fae115" }}
             >
               {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
-                    <span>Creating account...</span>
-                  </div>
-                ) : (
-                  <span>Create Account</span>
-                )}
+                <div className="flex items-center justify-center gap-2">
+                  <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+                  <span>Creating account...</span>
+                </div>
+              ) : (
+                <span>Create Account</span>
+              )}
             </button>
           </motion.div>
         </form>

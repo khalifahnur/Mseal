@@ -27,7 +27,7 @@ export interface Authwaiter {
 export interface AuthWaiterResponse {
   message: string;
 }
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ErrorResponse {
   message: string;
   statusCode?: number;

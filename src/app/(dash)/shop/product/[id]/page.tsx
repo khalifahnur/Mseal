@@ -1,13 +1,18 @@
-"use client"
+"use client";
 
-import { use, useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Heart, ShoppingCart, Star } from "lucide-react"
-import { Shirt } from "lucide-react"
-import { toast } from "react-toastify"
+import { use, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Heart, ShoppingCart, Star } from "lucide-react";
+import { toast } from "react-toastify";
 
 // Mock product data - in a real app, this would come from an API or database
 const products = [
@@ -51,31 +56,38 @@ const products = [
     inStock: true,
     badge: "Almost Gone!",
   },
-]
+];
 
 interface PageProps {
   params: Promise<{
-    id:string
+    id: string;
   }>;
 }
 
-export default function ProductPage({ params }:PageProps) {
+export default function ProductPage({ params }: PageProps) {
   const resolvedParams = use(params);
-  const product = products.find((p) => p.id === resolvedParams.id) || products[0]
-  const [selectedSize, setSelectedSize] = useState<string>("")
-  const [quantity, setQuantity] = useState("1")
+  const product =
+    products.find((p) => p.id === resolvedParams.id) || products[0];
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [quantity, setQuantity] = useState("1");
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      toast.error("Please select a size , You need to select a size before adding to cart")
-      return
+      toast.error(
+        "Please select a size , You need to select a size before adding to cart"
+      );
+      return;
     }
-    toast.success(`Added to cart ${product.name} (Size: ${selectedSize}, Qty: ${quantity}) has been added to your cart.`)
-  }
+    toast.success(
+      `Added to cart ${product.name} (Size: ${selectedSize}, Qty: ${quantity}) has been added to your cart.`
+    );
+  };
 
   const handleAddToWishlist = () => {
-    toast.success(`Added to wishlist, ${product.name} has been added to your wishlist.`)
-  }
+    toast.success(
+      `Added to wishlist, ${product.name} has been added to your wishlist.`
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -120,7 +132,12 @@ export default function ProductPage({ params }:PageProps) {
           <div className="lg:w-1/2">
             <div className="sticky top-24">
               <div className="aspect-square relative overflow-hidden rounded-lg border bg-white">
-                <Image src={product.images} alt={product.name} fill className="object-cover" />
+                <Image
+                  src={product.images}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
                 {product.badge && (
                   <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     {product.badge}
@@ -132,19 +149,29 @@ export default function ProductPage({ params }:PageProps) {
 
           <div className="lg:w-1/2">
             <div className="mb-6">
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">{product.name}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">
+                {product.name}
+              </h1>
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                      className={`h-4 w-4 ${
+                        i < Math.floor(product.rating)
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-300"
+                      }`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">{product.reviews} reviews</span>
+                <span className="text-sm text-gray-600">
+                  {product.reviews} reviews
+                </span>
               </div>
-              <div className="text-3xl font-bold mb-6">Ksh.{product.price.toFixed(2)}</div>
+              <div className="text-3xl font-bold mb-6">
+                Ksh.{product.price.toFixed(2)}
+              </div>
               <p className="text-gray-700 mb-6">{product.description}</p>
             </div>
 
@@ -187,7 +214,12 @@ export default function ProductPage({ params }:PageProps) {
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Add to Cart
                 </Button>
-                <Button size="lg" variant="outline" className="flex-1" onClick={handleAddToWishlist}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={handleAddToWishlist}
+                >
                   <Heart className="mr-2 h-5 w-5" />
                   Add to Wishlist
                 </Button>
@@ -319,7 +351,14 @@ export default function ProductPage({ params }:PageProps) {
                     strokeLinejoin="round"
                     className="h-5 w-5"
                   >
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <rect
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                      rx="5"
+                      ry="5"
+                    ></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
@@ -344,10 +383,12 @@ export default function ProductPage({ params }:PageProps) {
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500">© 2025 Football Club Store. All rights reserved.</p>
+            <p className="text-sm text-gray-500">
+              © 2025 Football Club Store. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

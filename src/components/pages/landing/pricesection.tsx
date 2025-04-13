@@ -14,7 +14,7 @@ export default function Pricing() {
                 Simple, Transparent Pricing
               </h2>
               <p className="max-w-[800px] text-gray-700 text-lg md:text-xl">
-                Choose the plan that's right for your restaurant. No hidden
+                Choose the plan that&apos;s right for your restaurant. No hidden
                 fees.
               </p>
             </div>

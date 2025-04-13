@@ -3,7 +3,7 @@ export interface paymentData {
   phoneNumber: string;
   membershipTier: string;
   dob: string;
-  amount: Number;
+  amount: number;
   physicalAddress: string;
   city: string;
 }

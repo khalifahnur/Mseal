@@ -6,7 +6,6 @@ import { Eye, EyeOff, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { useLogin } from "@/hooks/Authhook/authHook";
 import { toast } from "react-toastify";
@@ -15,11 +14,12 @@ import { loginSchema } from "@/lib/validationSchema";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
   const signInMutation = useLogin();
-
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleSubmit = async (
     values: AuthData,
     { setSubmitting }: FormikHelpers<AuthData>
@@ -38,6 +38,7 @@ export default function LoginForm() {
     }
   };
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   useEffect(() => {
     if (signInMutation.isSuccess) {
       toast.success(" Welcome Back! You've successfully logged");
@@ -55,7 +56,6 @@ export default function LoginForm() {
     signInMutation.isSuccess,
     signInMutation.isError,
     signInMutation.error,
-    toast,
     router,
   ]);
 
@@ -206,7 +206,7 @@ export default function LoginForm() {
 
               <hr className="border border-[#e8e8e8] my-6" />
               <div className="text-sm text-center">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link
                   href="/SignUp"
                   className="text-[#fae115] hover:underline font-semibold"

@@ -48,7 +48,7 @@ export default function NoActiveTickets() {
 
           <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
             <h3 className="text-lg font-medium">No Active Tickets</h3>
-            <p className="text-sm text-gray-500 mt-1">You don't have any active tickets at the moment.</p>
+            <p className="text-sm text-gray-500 mt-1">You don&apos;t have any active tickets at the moment.</p>
           </motion.div>
         </div>
       </CardContent>

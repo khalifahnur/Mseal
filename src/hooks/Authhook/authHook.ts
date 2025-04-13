@@ -1,8 +1,7 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { AuthData, AuthResponse, Authwaiter, AuthWaiterResponse, ErrorResponse } from "@/types/auth";
+import { AuthData, AuthResponse, ErrorResponse } from "@/types/auth";
 import { loginUser, signUpUser } from "@/api/api";
 import apiClient from "@/lib/apiClient";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export function useLogin(): UseMutationResult<
@@ -10,8 +9,6 @@ export function useLogin(): UseMutationResult<
   ErrorResponse,
   AuthData
 > {
-  const router = useRouter();
-  
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: loginUser,
     onSuccess: (data: AuthResponse) => {
@@ -32,7 +29,9 @@ export function useLogin(): UseMutationResult<
       console.error(
         `Login error (${error.statusCode || "Unknown"}): ${error.message}`
       );
-      toast.error(error.message || "An unexpected error occurred. Please try again.");
+      toast.error(
+        error.message || "An unexpected error occurred. Please try again."
+      );
       if (error.details) {
         console.error("Additional error details:", error.details);
       }

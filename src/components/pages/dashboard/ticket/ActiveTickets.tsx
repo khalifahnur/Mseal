@@ -31,6 +31,7 @@ interface TicketData {
 }
 
 export function ActiveTickets() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTickets, setActiveTickets] = useState<TicketData[]>([
     {
       id: "ticket-1",
@@ -67,7 +68,7 @@ export function ActiveTickets() {
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <Ticket className="h-12 w-12 text-muted-foreground mb-4" />
         <h3 className="text-xl font-medium mb-2">No active tickets</h3>
-        <p className="text-muted-foreground mb-6">You don't have any upcoming matches to attend.</p>
+        <p className="text-muted-foreground mb-6">You don&apos;t have any upcoming matches to attend.</p>
         <Button asChild>
           <a href="/tickets">Browse Tickets</a>
         </Button>

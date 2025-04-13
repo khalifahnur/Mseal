@@ -74,7 +74,7 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-xl font-medium mb-4">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Looks like you haven't added anything to your cart yet.</p>
+            <p className="text-gray-600 mb-6">Looks like you haven&apos;t added anything to your cart yet.</p>
             <Link href="/">
               <Button>
                 <ArrowLeft className="mr-2 h-4 w-4" />

@@ -1,7 +1,6 @@
 import { Shirt, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import PromoHeader from "./PromoHeader"
-import FilterSidebar from "./Filter"
 import ProductCard from "./ProductCard"
 
 export default function Container() {

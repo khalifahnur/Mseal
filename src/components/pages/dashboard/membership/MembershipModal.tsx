@@ -45,6 +45,7 @@ export function MembershipModal({
   const [step, setStep] = useState(1);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const paymentMutation = useMembershipPayment();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -99,7 +100,7 @@ export function MembershipModal({
   const handleBack = useCallback(() => {
     if (step > 1) setStep((prev) => prev - 1);
   }, [step]);
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
   const handleSubmit = useCallback(
     async (
       values: paymentData,
@@ -221,9 +222,7 @@ export function MembershipModal({
               values,
               setFieldValue,
               errors,
-              touched,
               isSubmitting,
-              dirty,
               setTouched,
               validateForm,
             }) => (
@@ -403,7 +402,7 @@ export function MembershipModal({
                         className="text-sm text-red-600 mt-1"
                       />
                     </div>
-
+                     {/* eslint-disable @typescript-eslint/no-explicit-any */}
                     <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <Field name="useDefaultNumber">
                         {({ field }: any) => (

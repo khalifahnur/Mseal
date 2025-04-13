@@ -68,7 +68,7 @@ export default function NoMembership() {
           >
             <h3 className="text-lg font-medium">No Active Membership</h3>
             <p className="text-sm text-gray-500 mt-1">
-              You don't currently have an active membership plan.
+              You don&apos;t currently have an active membership plan.
             </p>
           </motion.div>
         </div>

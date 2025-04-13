@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     id: 1,
-    text: "Joining Murang'a Seals' membership was the best decision ever! The benefits are amazing.",
+    text: "Joining Murang&apos;a Seals' membership was the best decision ever! The benefits are amazing.",
     name: "John , Fan",
   },
   {
     id: 2,
-    text: "I love the exclusive access to matches and behind-the-scenes content. It's a fan's dream come true!",
+    text: "I love the exclusive access to matches and behind-the-scenes content. It&apos;s a fan&apos;s dream come true!",
     name: "Jane , Fan",
   },
   {
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     id: 4,
-    text: "Joining Murang'a Seals' membership was the best decision ever! The benefits are amazing.",
+    text: "Joining Murang&apos;a Seals' membership was the best decision ever! The benefits are amazing.",
     name: "Alice , Fan",
   },
   {
@@ -31,7 +31,7 @@ const testimonials = [
   },
   {
     id: 6,
-    text: "I love the exclusive access to matches and behind-the-scenes content. It's a fan's dream come true!",
+    text: "I love the exclusive access to matches and behind-the-scenes content. It&apos;s a fan&apos;s dream come true!",
     name: "Eva , Fan",
   },
 ];
@@ -42,10 +42,13 @@ export default function Testimonials() {
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-1/2 h-full bg-linear-to-b from-gray-50 via-blue-900/10 to-gray-50 opacity-50"></div>
       <div className="absolute top-0 right-0 w-1/2 h-3/4 bg-primary/40 transform rotate-12 translate-x-1/4 translate-y-[20%] rounded-3xl shadow-2xl opacity-30"></div>
-      
+
       <div className="container mx-auto px-4 md:px-6 relative">
         {/* Heading section */}
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16" data-animate>
+        <div
+          className="flex flex-col items-center justify-center space-y-4 text-center mb-16"
+          data-animate
+        >
           <div className="relative inline-block mb-2">
             {/* <svg
               className="absolute -top-3 -left-3 w-6 h-6 text-primary/40"
@@ -72,7 +75,8 @@ export default function Testimonials() {
             </svg> */}
           </div>
           <p className="max-w-[800px] text-gray-700 text-lg md:text-xl">
-            Don't just take our word for it. Here's what our satisfied fans have to say.
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied
+            fans have to say.
           </p>
         </div>
 
@@ -95,7 +99,7 @@ export default function Testimonials() {
                 className="min-w-64 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 flex flex-col justify-between shadow-lg"
               >
                 <p className="text-gray-900 text-lg font-medium italic">
-                  "{testimonial.text}"
+                  &quot;{testimonial.text}&quot;
                 </p>
                 <p className="text-gray-800 text-sm font-bold mt-4">
                   - {testimonial.name}
@@ -125,7 +129,7 @@ export default function Testimonials() {
                 className="min-w-64 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 flex flex-col justify-between shadow-lg"
               >
                 <p className="text-gray-900 text-lg font-medium italic">
-                  "{testimonial.text}"
+                  &quot;{testimonial.text}&quot;
                 </p>
                 <p className="text-gray-800 text-sm font-bold mt-4">
                   - {testimonial.name}

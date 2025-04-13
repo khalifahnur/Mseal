@@ -1,13 +1,14 @@
-import { AuthData, AuthResponse } from "@/types/auth"
-import apiClient from "@/lib/apiClient"
+import { AuthData, AuthResponse } from "@/types/auth";
+import apiClient from "@/lib/apiClient";
 import { paymentData, paymentResponse } from "@/types/payment";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const loginUser = async (data: AuthData): Promise<AuthResponse> => {
   try {
     const response = await apiClient.post<AuthResponse>(
       "/auth-user/signIn",
       data,
-      {withCredentials: true}
+      { withCredentials: true }
     );
     return response.data;
   } catch (error: any) {
@@ -15,6 +16,7 @@ export const loginUser = async (data: AuthData): Promise<AuthResponse> => {
   }
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
   try {
     const response = await apiClient.post<AuthResponse>(
@@ -59,9 +61,10 @@ export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
 //   }
 // };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchUserInfo() {
   try {
-    const response = await apiClient.get("/auth-user/fetch-user-info")
+    const response = await apiClient.get("/auth-user/fetch-user-info");
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -75,11 +78,13 @@ export async function fetchUserInfo() {
       console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
-}
+  }
 }
 
-
-export const initiateMembershipPayment = async (data: paymentData): Promise<paymentResponse> => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateMembershipPayment = async (
+  data: paymentData
+): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/initiate-payment",
@@ -101,9 +106,10 @@ export const initiateMembershipPayment = async (data: paymentData): Promise<paym
   }
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchTickets() {
   try {
-    const response = await apiClient.get("/event/fetch-all-events")
+    const response = await apiClient.get("/event/fetch-all-events");
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -117,12 +123,13 @@ export async function fetchTickets() {
       console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
-}
+  }
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchActiveTickets() {
   try {
-    const response = await apiClient.get("/ticket/fetch-active-ticket")
+    const response = await apiClient.get("/ticket/fetch-active-ticket");
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -136,12 +143,13 @@ export async function fetchActiveTickets() {
       console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
-}
+  }
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchUsedTickets() {
   try {
-    const response = await apiClient.get("/ticket/fetch-used-ticket")
+    const response = await apiClient.get("/ticket/fetch-used-ticket");
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -155,5 +163,5 @@ export async function fetchUsedTickets() {
       console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
-}
+  }
 }

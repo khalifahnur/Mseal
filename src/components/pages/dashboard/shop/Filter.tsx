@@ -28,7 +28,7 @@ export default function FilterSidebar() {
         <Collapsible open={openSections.sizes} onOpenChange={() => toggleSection("sizes")}>
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer pb-2 border-b">
-              <h3 className="font-medium">Men's Sizes</h3>
+              <h3 className="font-medium">Men&apos;s Sizes</h3>
               {openSections.sizes ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </div>
           </CollapsibleTrigger>
