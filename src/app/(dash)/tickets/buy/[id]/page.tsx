@@ -1,3 +1,7 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { fetchTickets } from "@/api/api";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,31 +19,31 @@ import { ArrowLeft, Calendar, Clock, MapPin, Ticket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { ApiResponse } from "@/types/ticket";
+import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
+import { useParams } from "next/navigation";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
 
-export default function BuyTicketPage({ params }: PageProps) {
-  // In a real app, you would fetch the event details from your API
-  // For demo purposes, we'll use mock data
-  const event = {
-    id: params.id,
-    name: "Muranga Seal vs. Gor Mahia",
-    date: "2025-04-10",
-    time: "15:00",
-    venue: "Muranga Stadium",
-    price: 500,
-    totalTickets: 1000,
-    availableTickets: 750,
-    imageUrl: "/placeholder.svg?height=200&width=300",
-    opponent: {
-      name: "Gor Mahia",
-      logo: "/placeholder.svg?height=50&width=50",
-    },
-  };
+export default function BuyTicketPage() {
+  const params = useParams();
+  const eventId = params?.id as string;
+
+  const { data, isLoading, error } = useQuery<ApiResponse>({
+    queryKey: ["tickets"],
+    queryFn: fetchTickets,
+  });
+
+  const event = data?.events?.find((e) => e._id === eventId);
+
+  if (isLoading) return <FullScreenLoader />;
+
+  if (error || !event) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">Event not found or failed to load.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container px-4 py-4 md:px-6 md:py-2">
@@ -52,6 +56,7 @@ export default function BuyTicketPage({ params }: PageProps) {
       </Link>
 
       <div className="grid gap-6 lg:grid-cols-3">
+        {/* LEFT SIDE */}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
@@ -61,52 +66,14 @@ export default function BuyTicketPage({ params }: PageProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* <div className="space-y-4">
-                <h3 className="text-lg font-medium">Contact Information</h3>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="first-name">First name</Label>
-                    <Input
-                      id="first-name"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="last-name">Last name</Label>
-                    <Input id="last-name" placeholder="Enter your last name" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone number</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-              </div> */}
-
+              {/* Add form here later if needed */}
               <Separator />
 
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Ticket Options</h3>
                 <div className="space-y-2">
                   <Label htmlFor="quantity">Number of tickets</Label>
-                  <Input
-                    id="quantity"
-                    type="number"
-                    min="1"
-                    max="10"
-                    defaultValue="1"
-                  />
+                  <Input id="quantity" type="number" min="1" max="10" defaultValue="1" />
                 </div>
                 <div className="space-y-2">
                   <Label>Ticket type</Label>
@@ -114,12 +81,14 @@ export default function BuyTicketPage({ params }: PageProps) {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="regular" id="regular" />
                       <Label htmlFor="regular">
-                        Regular - KES {event.price}
+                        Regular - KES {event.ticketPrice}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="vip" id="vip" />
-                      <Label htmlFor="vip">VIP - KES {event.price * 2}</Label>
+                      <Label htmlFor="vip">
+                        VIP - KES {event.ticketPrice * 2}
+                      </Label>
                     </div>
                   </RadioGroup>
                 </div>
@@ -147,6 +116,7 @@ export default function BuyTicketPage({ params }: PageProps) {
           </Card>
         </div>
 
+        {/* RIGHT SIDE */}
         <div>
           <Card>
             <CardHeader>
@@ -155,7 +125,7 @@ export default function BuyTicketPage({ params }: PageProps) {
             <CardContent className="space-y-4">
               <div className="relative h-[150px] w-full overflow-hidden rounded-md">
                 <Image
-                  src={event.imageUrl || "/placeholder.svg"}
+                  src={`/assets/images/stadi1.jpeg`}
                   alt={event.name}
                   fill
                   className="object-cover"
@@ -190,7 +160,7 @@ export default function BuyTicketPage({ params }: PageProps) {
               <div className="space-y-1.5">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Ticket price</span>
-                  <span>KES {event.price.toLocaleString()}</span>
+                  <span>KES {event.ticketPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Quantity</span>
@@ -203,7 +173,7 @@ export default function BuyTicketPage({ params }: PageProps) {
                 <Separator className="my-2" />
                 <div className="flex justify-between font-medium">
                   <span>Total</span>
-                  <span>KES {(event.price + 50).toLocaleString()}</span>
+                  <span>KES {(event.ticketPrice + 50).toLocaleString()}</span>
                 </div>
               </div>
             </CardContent>

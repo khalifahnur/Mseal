@@ -6,6 +6,7 @@ export interface paymentData {
   amount: number;
   physicalAddress: string;
   city: string;
+  useDefaultNumber: boolean;
 }
 
 export interface paymentResponse {
