@@ -14,16 +14,16 @@ export default function AuthButtons() {
     refreshUser()
       .then(() => {
         if (isNewLogin) {
-          toast.success("Welcome Back! You've successfully logged in", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          // toast.success("Welcome Back! You've successfully logged in", {
+          //   position: "bottom-right",
+          //   autoClose: 5000,
+          //   hideProgressBar: false,
+          //   closeOnClick: false,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "light",
+          // });
           setIsNewLogin(false);
         }
       })
@@ -44,7 +44,7 @@ export default function AuthButtons() {
 
   const handleGoogleSignIn = () => {
     setIsNewLogin(true);
-    window.location.href = "http://localhost:3002/mseal/auth-user/google";
+    window.location.href = "https://msealserver-production.up.railway.app/mseal/auth-user/google";
   };
   const handleXSignIn = () => {
     console.log("X sign-in not implemented");
