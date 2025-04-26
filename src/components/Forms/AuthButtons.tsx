@@ -13,19 +13,7 @@ export default function AuthButtons() {
     if (user) return;
     refreshUser()
       .then(() => {
-        if (isNewLogin) {
-          // toast.success("Welcome Back! You've successfully logged in", {
-          //   position: "bottom-right",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: false,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "light",
-          // });
           setIsNewLogin(false);
-        }
       })
       .catch((err) => {
         console.log("No active session:", err);
