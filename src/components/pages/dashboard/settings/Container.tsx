@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ProfileSection } from "@/components/pages/dashboard/settings/profile";
 import { PasswordSection } from "@/components/pages/dashboard/settings/password";
@@ -6,11 +8,23 @@ import { NotificationSection } from "@/components/pages/dashboard/settings/notif
 import { PrivacySection } from "@/components/pages/dashboard/settings/privacy";
 import { AppSettingsSection } from "@/components/pages/dashboard/settings/appsettings";
 import { mockUserSettings } from "@/components/pages/dashboard/settings/placeholder";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUserInfo } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 export default function SettingsPage() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo,
+  });
+
+  if (isLoading) {
+    return <FullScreenLoader />;
+  }
+
   return (
     <div className="space-y-6">
-      <ProfileSection profile={mockUserSettings.profile} />
+      <ProfileSection profile={data} />
       <PasswordSection
         twoFactorEnabled={mockUserSettings.security.twoFactorEnabled}
       />
