@@ -5,57 +5,80 @@ import { Star, Shield, Clock, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { memberInfo, membershipTiers } from "./placeholder";
 import { BenefitsList } from "./benefits";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUserInfo } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
+import { maskExceptLastFour } from "@/lib/utils";
 
 export default function MembershipPage() {
-  const activeMembership = "bronze";
+  
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo,
+    staleTime: 1000 * 60 * 5,
+    //cacheTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
+
+  if (isLoading) {
+    return <FullScreenLoader />;
+  }
+
+  const {membershipId,membershipTier, balance,expDate,createdAt} = data;
+
+  const activeMembership = membershipTier;
 
   return (
     <div className="p-4 space-y-6">
       {/* Membership Status Card */}
-      <Card className="bg-linear-to-br from-[#fae115] to-black p-4">
-        <CardHeader>
-          <CardTitle className="text-white">Your Membership Status</CardTitle>
-        </CardHeader>
-        <CardContent className="grid md:grid-cols-2 gap-6 grid-cols-2">
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-white">Member ID</p>
-              <p className="font-bold">{memberInfo.id}</p>
-            </div>
-            <div>
-              <p className="text-sm text-white">Current Tier</p>
-              <p className="font-bold flex items-center gap-2">
-                <Shield size={20} className="text-green-600" />
-                {memberInfo.tier}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-white">Member Since</p>
-              <p className="font-bold">
-                {new Date(memberInfo.memberSince).toLocaleDateString()}
-              </p>
-            </div>
+      
+    {
+      membershipId &&       <Card className="bg-linear-to-br from-[#fae115] to-black p-4">
+      <CardHeader>
+        <CardTitle className="text-white">Your Membership Status</CardTitle>
+      </CardHeader>
+      <CardContent className="grid md:grid-cols-2 gap-6 grid-cols-2">
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm text-white">Member ID</p>
+            <p className="font-bold">{maskExceptLastFour(membershipId)}</p>
           </div>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-white">Points Earned</p>
-              <p className="font-bold text-green-600">
-                {memberInfo.pointsEarned} points
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-white">Points to Next Tier</p>
-              <p className="font-bold">{memberInfo.pointsToNextTier} points</p>
-            </div>
-            <div>
-              <p className="text-sm text-white">Membership Expires</p>
-              <p className="font-bold">
-                {new Date(memberInfo.expiryDate).toLocaleDateString()}
-              </p>
-            </div>
+          <div>
+            <p className="text-sm text-white">Current Tier</p>
+            <p className="font-bold flex items-center gap-2">
+              <Shield size={20} className="text-green-600" />
+              {membershipTier}
+            </p>
           </div>
-        </CardContent>
-      </Card>
+          <div>
+            <p className="text-sm text-white">Member Since</p>
+            <p className="font-bold">
+              {new Date(createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm text-white">Points Earned</p>
+            <p className="font-bold text-green-600">
+              {memberInfo.pointsEarned} points
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-white">Points to Next Tier</p>
+            <p className="font-bold">{memberInfo.pointsToNextTier} points</p>
+          </div>
+          <div>
+            <p className="text-sm text-white">Membership Expires</p>
+            <p className="font-bold">
+              {new Date(expDate).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+    }
 
       {/* Membership Benefits */}
       <Card>

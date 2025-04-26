@@ -40,7 +40,7 @@ export function MembershipModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   email: string;
-  phoneNumber: string;
+  phoneNumber: string | null;
 }) {
   const [step, setStep] = useState(1);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
@@ -176,7 +176,7 @@ export function MembershipModal({
   );
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Membership Registration</DialogTitle>
@@ -215,7 +215,7 @@ export function MembershipModal({
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
-            validateOnChange={true} // Enable validation on change for immediate feedback
+            validateOnChange={true}
             validateOnBlur={true}
           >
             {({
