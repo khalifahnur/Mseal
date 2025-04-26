@@ -1,48 +1,53 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useAuth } from '@/components/Forms/AuthContext';
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export default function AuthButtons() {
   const { user, refreshUser } = useAuth();
+
+  const [isNewLogin, setIsNewLogin] = useState(false);
 
   useEffect(() => {
     if (user) return;
     refreshUser()
       .then(() => {
-        toast.success("Welcome Back! You've successfully logged in", {
-          position: 'bottom-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        if (isNewLogin) {
+          toast.success("Welcome Back! You've successfully logged in", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setIsNewLogin(false); // Reset flag
+        }
       })
       .catch((err) => {
-        console.log('No active session:', err);
-        toast.error('❌ Login failed. Please try again.', {
-          position: 'bottom-right',
+        console.log("No active session:", err);
+        toast.error("❌ Login failed. Please try again.", {
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'light',
+          theme: "light",
         });
       });
-  }, [user]);
+  }, [user, isNewLogin]);
 
   const handleGoogleSignIn = () => {
-    window.location.href = 'http://localhost:3002/mseal/auth-user/google';
+    setIsNewLogin(true); // Set flag before redirect
+    window.location.href = "http://localhost:3002/mseal/auth-user/google";
   };
-
   const handleXSignIn = () => {
-    console.log('X sign-in not implemented');
+    console.log("X sign-in not implemented");
   };
 
   return (
