@@ -1,10 +1,13 @@
-import Container from '@/components/pages/dashboard/ticket/Container'
-import React from 'react'
+import Container from "@/components/pages/dashboard/ticket/Container";
+import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
+import React, { Suspense } from "react";
 
 export default function page() {
   return (
     <div>
-      <Container />
+      <Suspense fallback={<FullScreenLoader />}>
+        <Container />
+      </Suspense>
     </div>
-  )
+  );
 }
