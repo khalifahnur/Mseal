@@ -18,3 +18,13 @@ export interface paymentResponse {
 export interface paymentError {
   message: string;
 }
+
+export interface ticketPayment{
+  eventId:string;
+  match:string;
+  date:string;
+  venue:string;
+  quantity:number;
+  amount:number;
+  // phoneNUmber:string;
+}

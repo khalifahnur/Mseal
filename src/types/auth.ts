@@ -16,20 +16,18 @@ export interface AuthResponse {
     phoneNumber?: string;
   };
 }
-
-export interface Authwaiter {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phoneNumber: string;
-}
-
-export interface AuthWaiterResponse {
-  message: string;
-}
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ErrorResponse {
   message: string;
   statusCode?: number;
-  details?: any;
+  details?: { reason?: string; [key: string]: any };
 }
+
+export interface PhoneNumber{
+  phoneNumber:string;
+}
+
+export interface PhoneNumberResponse{
+  message:string
+}
+
