@@ -3,7 +3,6 @@
 import { Shirt, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import PromoHeader from "./PromoHeader"
-import ProductCard from "./ProductCard"
 import { useCart } from "@/hooks/Store/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllMerchandise } from "@/api/api";

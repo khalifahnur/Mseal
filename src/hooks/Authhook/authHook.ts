@@ -1,6 +1,12 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { AuthData, AuthResponse, ErrorResponse, PhoneNumber, PhoneNumberResponse } from "@/types/auth";
-import { fetchUserInfo, loginUser, signUpUser, updateUserPhoneNumber } from "@/api/api";
+import {
+  AuthData,
+  AuthResponse,
+  ErrorResponse,
+  PhoneNumber,
+  PhoneNumberResponse,
+} from "@/types/auth";
+import { loginUser, signUpUser, updateUserPhoneNumber } from "@/api/api";
 import apiClient from "@/lib/apiClient";
 import { toast } from "react-toastify";
 import { useAuth } from "@/components/Forms/AuthContext";
@@ -9,12 +15,12 @@ export function useLogin(): UseMutationResult<
   AuthResponse,
   ErrorResponse,
   AuthData
->  {
+> {
   const { refreshUser } = useAuth();
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: loginUser,
-    onSuccess: (data: AuthResponse) => {
-      refreshUser()
+    onSuccess: () => {
+      refreshUser();
     },
     onError: (error: ErrorResponse) => {
       console.error(
@@ -65,43 +71,44 @@ export function useUpdatePhone(): UseMutationResult<
     onSuccess: (data: PhoneNumberResponse) => {
       refreshUser();
       toast.success(data.message, {
-        position: 'bottom-right',
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'light',
+        theme: "light",
       });
     },
     onError: (error: ErrorResponse) => {
-      console.error('Update phone number error:', error.message, error.details);
+      console.error("Update phone number error:", error.message, error.details);
       let toastMessage = error.message;
       if (error.statusCode === 409) {
-        toastMessage = 'This phone number is already in use. Please try another.';
+        toastMessage =
+          "This phone number is already in use. Please try another.";
       } else if (error.statusCode === 400) {
         toastMessage = error.message;
       } else if (error.statusCode === 401) {
-        toastMessage = 'Please log in again to update your phone number.';
+        toastMessage = "Please log in again to update your phone number.";
       } else {
-        toastMessage = 'Failed to update phone number. Please try again.';
+        toastMessage = "Failed to update phone number. Please try again.";
       }
 
       toast.error(toastMessage, {
-        position: 'bottom-right',
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'light',
+        theme: "light",
       });
 
       if (error.details) {
-        console.error('Additional error details:', error.details);
+        console.error("Additional error details:", error.details);
       }
     },
-  })
+  });
 }

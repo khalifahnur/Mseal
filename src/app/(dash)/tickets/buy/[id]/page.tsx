@@ -83,9 +83,14 @@ const PaymentProcessingOverlay = ({
   );
 };
 
-// Status Banner Component for better UI feedback
-const StatusBanner = ({ status, message }) => {
+const StatusBanner = ({ status, message }:{status:"idle" | "initiating" | "pending" | "success" | "error", message:string}) => {
   const statusConfig = {
+    idle: {
+      icon: null,
+      title: "Idle",
+      bgColor: "bg-gray-50 border-gray-200",
+      textColor: "text-gray-800",
+    },
     initiating: {
       icon: <Loader2 className="h-5 w-5 mr-2 animate-spin" />,
       title: "Initiating Payment",
@@ -172,7 +177,7 @@ export default function BuyTicketPage() {
             Event Not Found
           </h2>
           <p className="text-gray-600 mb-6">
-            We couldn't find the event you're looking for or failed to load
+            We couldn&apos;t find the event you&apos;re looking for or failed to load
             event details.
           </p>
           <Link
@@ -236,7 +241,8 @@ export default function BuyTicketPage() {
           theme: "light",
         }
       );
-    } catch (error: any) {
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+    } catch (error: any) { 
       setPaymentStatus("error");
       setErrorMessage(
         error?.message || "An error occurred while processing your payment."

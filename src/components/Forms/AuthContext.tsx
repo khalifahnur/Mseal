@@ -1,7 +1,6 @@
 "use client";
 
 import { fetchUserInfo } from "@/api/api";
-import apiClient from "@/lib/apiClient";
 import {
   createContext,
   useContext,
@@ -9,7 +8,6 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import { toast } from "react-toastify";
 
 type User = {
   firstName: string;
@@ -67,7 +65,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, signOut, setUser,refreshUser }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, signOut, setUser, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

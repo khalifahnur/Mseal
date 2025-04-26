@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { CalendarDays, Ticket } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -19,33 +19,31 @@ export default function ActiveTickets() {
   const results = useQueries({
     queries: [
       {
-        queryKey: ['historyTicket'],
+        queryKey: ["historyTicket"],
         queryFn: fetchUsedTickets,
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
       },
       {
-        queryKey: ['activeTickets'],
+        queryKey: ["activeTickets"],
         queryFn: fetchActiveTickets,
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
       },
     ],
   });
-  
+
   const [usedTicketsQuery, activeTicketsQuery] = results;
-  
+
   if (usedTicketsQuery.isLoading || activeTicketsQuery.isLoading) {
     return <FullScreenLoader />;
   }
-  
+
   const usedTickets = usedTicketsQuery.data?.tickets ?? [];
   const activeTickets = activeTicketsQuery.data?.tickets ?? [];
 
   if (activeTickets.length === 0) {
-    return (
-      <NoActiveTickets />
-    );
+    return <NoActiveTickets />;
   }
   return (
     <Card>
@@ -60,7 +58,9 @@ export default function ActiveTickets() {
           </div>
           <div>
             <p className="font-medium">{activeTickets?.length} Active Ticket</p>
-            <p className="text-sm text-muted-foreground">{usedTickets?.length} Past Tickets</p>
+            <p className="text-sm text-muted-foreground">
+              {usedTickets?.length} Past Tickets
+            </p>
           </div>
         </div>
       </CardContent>

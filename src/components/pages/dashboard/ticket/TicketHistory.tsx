@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, Download, MapPin, Receipt, Ticket, User } from "lucide-react"
-import { formatDate } from "@/lib/utils"
+import { useState } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock, Download, MapPin, Receipt } from "lucide-react";
+import { formatDate } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -14,24 +14,24 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { useQuery } from "@tanstack/react-query"
-import { fetchUsedTickets } from "@/api/api"
-import { FullScreenLoader } from "../../loading/FullScreenLoader"
+} from "@/components/ui/dialog";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUsedTickets } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 interface TicketData {
-  id: string
-  eventId: string
-  eventName: string
-  date: string
-  time: string
-  venue: string
-  ticketType: string
-  seatInfo: string
-  price: number
-  purchaseDate: string
-  ticketCode: string
-  imageUrl: string
+  id: string;
+  eventId: string;
+  eventName: string;
+  date: string;
+  time: string;
+  venue: string;
+  ticketType: string;
+  seatInfo: string;
+  price: number;
+  purchaseDate: string;
+  ticketCode: string;
+  imageUrl: string;
 }
 
 export function TicketHistory() {
@@ -79,7 +79,7 @@ export function TicketHistory() {
       ticketCode: "MS-BFC-2024-11-05-V1-04",
       imageUrl: "/placeholder.svg?height=200&width=300",
     },
-  ])
+  ]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["historyTicket"],
@@ -98,19 +98,21 @@ export function TicketHistory() {
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <Receipt className="h-12 w-12 text-muted-foreground mb-4" />
         <h3 className="text-xl font-medium mb-2">No ticket history</h3>
-        <p className="text-muted-foreground mb-6">You haven&apos;t purchased any tickets yet.</p>
+        <p className="text-muted-foreground mb-6">
+          You haven&apos;t purchased any tickets yet.
+        </p>
         <Button asChild>
           <a href="/tickets">Browse Tickets</a>
         </Button>
       </div>
-    )
+    );
   }
 
   return (
     <div className="grid gap-6">
-      {usedTickets.map((ticket) => {
+      {/* eslint-disable @typescript-eslint/no-explicit-any  */}
+      {usedTickets.map(({ ticket }: any) => {
         const event = ticket.event?.[0];
-        (
         <Card key={ticket._id} className="overflow-hidden">
           <CardContent className="p-0">
             <div className="flex flex-col md:flex-row">
@@ -158,7 +160,9 @@ export function TicketHistory() {
                       <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                           <DialogTitle>Purchase Receipt</DialogTitle>
-                          <DialogDescription>Details of your ticket purchase</DialogDescription>
+                          <DialogDescription>
+                            Details of your ticket purchase
+                          </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-4 p-4">
                           <div className="space-y-1">
@@ -181,7 +185,9 @@ export function TicketHistory() {
                           </div>
                           <div className="space-y-1">
                             <h4 className="font-medium">Ticket ID</h4>
-                            <p className="font-mono text-xs">{ticket.ticketId}</p>
+                            <p className="font-mono text-xs">
+                              {ticket.ticketId}
+                            </p>
                           </div>
                           {/* <div className="space-y-1">
                             <h4 className="font-medium">Amount Paid</h4>
@@ -200,9 +206,8 @@ export function TicketHistory() {
               </div>
             </div>
           </CardContent>
-        </Card>
-      )})}
+        </Card>;
+      })}
     </div>
-  )
+  );
 }
-

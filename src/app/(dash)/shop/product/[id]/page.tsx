@@ -2,7 +2,6 @@
 
 import { use, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -39,6 +38,7 @@ export default function ProductPage({ params }: PageProps) {
   if (isLoading) return <FullScreenLoader />;
   if (!data) return <p className="p-4">Failed to load product data.</p>;
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const baseProduct = data.responseItems.find((p: any) => p.id === resolvedParams.id);
 
   const product = baseProduct && {

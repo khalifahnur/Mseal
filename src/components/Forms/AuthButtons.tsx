@@ -24,7 +24,7 @@ export default function AuthButtons() {
             progress: undefined,
             theme: "light",
           });
-          setIsNewLogin(false); // Reset flag
+          setIsNewLogin(false);
         }
       })
       .catch((err) => {
@@ -43,7 +43,7 @@ export default function AuthButtons() {
   }, [user, isNewLogin]);
 
   const handleGoogleSignIn = () => {
-    setIsNewLogin(true); // Set flag before redirect
+    setIsNewLogin(true);
     window.location.href = "http://localhost:3002/mseal/auth-user/google";
   };
   const handleXSignIn = () => {

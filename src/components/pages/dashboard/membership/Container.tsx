@@ -25,14 +25,12 @@ export default function MembershipPage() {
     return <FullScreenLoader />;
   }
 
-  const {membershipId,membershipTier, balance,expDate,createdAt} = data;
+  const {membershipId,membershipTier,expDate,createdAt} = data;
 
   const activeMembership = membershipTier;
 
   return (
-    <div className="p-4 space-y-6">
-      {/* Membership Status Card */}
-      
+    <div className="p-4 space-y-6">      
     {
       membershipId &&       <Card className="bg-linear-to-br from-[#fae115] to-black p-4">
       <CardHeader>

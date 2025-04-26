@@ -87,7 +87,8 @@ export function ActiveTickets() {
 
   return (
     <div className="grid gap-6">
-      {activeTickets.map((ticket) => {
+      {/* eslint-disable @typescript-eslint/no-explicit-any */}
+      {activeTickets.map((ticket: any) => {
         const event = ticket.event?.[0];
         return (
           <Card key={ticket._id} className="overflow-hidden">

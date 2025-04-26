@@ -10,7 +10,6 @@ import Pricing from "@/components/pages/landing/pricesection";
 import Testimonials from "@/components/pages/landing/testimonial";
 import TrustedSponsors from "@/components/pages/landing/TrustedSPonsor";
 import { useState } from "react";
-import { Button } from "./ui/button";
 import AuthPage from "./Forms/AuthPage";
 
 export default function LandingPage() {
@@ -32,9 +31,15 @@ export default function LandingPage() {
 
   return (
     <div className="h-full bg-[#f7f7f7] font-[family-name:var(--font-geist-sans)]">
-      <LandingHeader onLoginClick={() => setShowAuth(true)} onSignUpClick={() => setShowAuth(true)} />
+      <LandingHeader
+        onLoginClick={() => setShowAuth(true)}
+        onSignUpClick={() => setShowAuth(true)}
+      />
       <main className="overflow-x-hidden">
-        <MembershipSection onLoginClick={() => setShowAuth(true)} onSignUpClick={() => setShowAuth(true)}/>
+        <MembershipSection
+          onLoginClick={() => setShowAuth(true)}
+          onSignUpClick={() => setShowAuth(true)}
+        />
         <TrustedSponsors />
         <MembershipBenefits />
         <Pricing />
