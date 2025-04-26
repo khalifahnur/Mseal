@@ -1,6 +1,6 @@
-import { AuthData, AuthResponse } from "@/types/auth";
+import { AuthData, AuthResponse, ErrorResponse, PhoneNumber, PhoneNumberResponse } from "@/types/auth";
 import apiClient from "@/lib/apiClient";
-import { paymentData, paymentResponse } from "@/types/payment";
+import { paymentData, paymentResponse, ticketPayment } from "@/types/payment";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const loginUser = async (data: AuthData): Promise<AuthResponse> => {
@@ -38,28 +38,6 @@ export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
     }
   }
 };
-
-// export const signUpWaiter = async (data: Authwaiter): Promise<AuthWaiterResponse> => {
-//   try {
-//     const response = await apiClient.post<AuthWaiterResponse>(
-//       "/auth/waiter/waiter-app-signup",
-//       data
-//     );
-//     return response.data;
-//   } catch (error: any) {
-//     if (error?.response) {
-//       console.error("Sign-up error details:", error.response);
-//       // Show a more specific error message
-//       const errorMessage =
-//         error?.response?.data?.message || "An error occurred during sign up.";
-//       throw new Error(errorMessage);
-//     } else {
-//       // response (network issues, etc.)
-//       console.error("Network error or no response:", error);
-//       throw new Error("Network error or no response from server.");
-//     }
-//   }
-// };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchUserInfo() {
@@ -165,3 +143,65 @@ export async function fetchUsedTickets() {
     }
   }
 }
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateTicketPayment = async (data: ticketPayment): Promise<paymentResponse> => {
+  try {
+    const response = await apiClient.post<paymentResponse>(
+      "/payment/initiate-ticket-payment",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Payment error details:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred during payment.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function fetchAllMerchandise() {
+  try {
+    const response = await apiClient.get("/merchandise/fetch-users-merchandise");
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Error fetching merchandise:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "Error fetching merchandise.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const updateUserPhoneNumber = async (data: PhoneNumber): Promise<PhoneNumberResponse> => {
+  try {
+    const response = await apiClient.patch<PhoneNumberResponse>(
+      '/auth-user/update-user-phone-number',
+      data,
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error: any) {
+    const errorResponse: ErrorResponse = {
+      message: error.response?.data?.error || 'Failed to update phone number',
+      statusCode: error.response?.status,
+      details: error.response?.data?.details,
+    };
+    throw errorResponse;
+  }
+};
