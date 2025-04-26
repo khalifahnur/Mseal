@@ -20,7 +20,7 @@ export function maskExceptLastFour(value: string | null | undefined): string {
   if (value === null || value === undefined) return "*";
   if (value.length <= 4) return value;
   const lastFour = value.slice(-4);
-  const maskedPart = "*".repeat(value.length - 4);
+  const maskedPart = "****";
   return maskedPart + lastFour;
 }
 
