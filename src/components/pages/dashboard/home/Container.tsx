@@ -1,67 +1,72 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { MembershipCard } from "@/components/pages/dashboard/home/membershipcard"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import ActiveTickets from "./ActiveTickets"
-import { FullScreenLoader } from "../../loading/FullScreenLoader"
-import { useQuery } from "@tanstack/react-query"
-import { fetchUserInfo } from "@/api/api"
-import NoMembership from "./NoMembership"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { MembershipCard } from "@/components/pages/dashboard/home/membershipcard";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ActiveTickets from "./ActiveTickets";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
+import NoMembership from "./NoMembership";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export default function Home() {
-  //const [showOnboarding, setShowOnboarding] = useState(false)
+  const { user, isLoading } = useAuth();
 
-
-  // Check if this is the first visit
-  // useEffect(() => {
-  //   const hasSeenOnboarding = localStorage.getItem("hasSeenOnboarding")
-  //   if (!hasSeenOnboarding) {
-  //     setShowOnboarding(true)
-  //   }
-  // }, [])
-
-  // const completeOnboarding = () => {
-  //   setShowOnboarding(false)
-  //   localStorage.setItem("hasSeenOnboarding", "true")
-  // }
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: fetchUserInfo,
-  });
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["userInfo"],
+  //   queryFn: fetchUserInfo,
+  //   staleTime: 1000 * 60 * 5,
+  //   //cacheTime: 1000 * 60 * 30,
+  //   refetchOnWindowFocus: false,
+  // });
 
   if (isLoading) {
     return <FullScreenLoader />;
   }
 
-  const {firstName,lastName,membershipId, balance} = data;
+  console.log(user);
 
   return (
     <div className="space-y-1">
       <section className="flex flex-row justify-between" id="welcome-header">
         <h1 className="text-xs font-semibold md:text-xl text-gradient bg-clip-text text-transparent bg-linear-to-r from-[#fae115] to-black">
-          Welcome, User!
+          Welcome, {user?.firstName} !
         </h1>
         <div className="flex flex-row justify-between gap-5">
           <p className="text-xs text-muted-foreground md:text-base">
-            {new Date().toLocaleDateString()} - {new Date().toLocaleTimeString()}
+            {new Date().toLocaleDateString()} -{" "}
+            {new Date().toLocaleTimeString()}
           </p>
-          <p className="text-xs text-muted-foreground md:text-base">Sunny, 22°C</p>
+          <p className="text-xs text-muted-foreground md:text-base">
+            Sunny, 22°C
+          </p>
         </div>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2 pb-2">
+        <div className="col-span-full sm:col-span-1" id="membership-card">
+          {user?.membershipId == null ? (
+            <NoMembership />
+          ) : (
+            <MembershipCard
+              memberName={`${user?.firstName} ${user?.lastName}`}
+              memberNumber={user?.membershipId}
+              teamName="Murang'a Seals"
+              balance={user?.balance}
+              qrcode={user?.qrcode}
+            />
+          )}
+        </div>
         <div className="col-span-full sm:col-span-1" id="active-tickets">
           <ActiveTickets />
-        </div>
-
-        <div className="col-span-full sm:col-span-1" id="membership-card">
-          {
-            membershipId == null ? <NoMembership /> : <MembershipCard memberName={`${firstName} ${lastName}`} memberNumber={membershipId} teamName="Murang'a Seals" balance={balance} />
-          }  
         </div>
       </section>
 
@@ -78,7 +83,9 @@ export default function Home() {
                   <TableHead>Time</TableHead>
                   <TableHead>Venue</TableHead>
                   <TableHead>Opponent</TableHead>
-                  <TableHead className="hidden sm:table-cell">Ticket Status</TableHead>
+                  <TableHead className="hidden sm:table-cell">
+                    Ticket Status
+                  </TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -112,7 +119,10 @@ export default function Home() {
       </Card>
 
       <div className="gap-4 pt-2">
-        <Card className="md:col-span-2 lg:col-span-2 w-full" id="recent-transactions">
+        <Card
+          className="md:col-span-2 lg:col-span-2 w-full"
+          id="recent-transactions"
+        >
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
           </CardHeader>
@@ -130,10 +140,22 @@ export default function Home() {
                 <TableBody>
                   {Array.from({ length: 5 }).map((_, index) => (
                     <TableRow key={index}>
-                      <TableCell className="font-medium">{new Date().toLocaleDateString()}</TableCell>
-                      <TableCell>{["Ticket Purchase", "Membership Renewal", "Merchandise"][index % 3]}</TableCell>
+                      <TableCell className="font-medium">
+                        {new Date().toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        {
+                          [
+                            "Ticket Purchase",
+                            "Membership Renewal",
+                            "Merchandise",
+                          ][index % 3]
+                        }
+                      </TableCell>
                       <TableCell>Ksh.{(index + 1) * 50}</TableCell>
-                      <TableCell>{["Completed", "Pending", "Completed"][index % 3]}</TableCell>
+                      <TableCell>
+                        {["Completed", "Pending", "Completed"][index % 3]}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -156,6 +178,5 @@ export default function Home() {
         </Button>
       </div> */}
     </div>
-  )
+  );
 }
-

@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Ticket } from "lucide-react"
+import { motion } from "framer-motion";
+import { Ticket } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function NoActiveTickets() {
   return (
-    <Card className="w-full border-dashed">
-      <CardContent className="pt-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+    <Card className="w-full border">
+      <CardContent className="pt-0">
+        <div className="flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -19,7 +19,7 @@ export default function NoActiveTickets() {
               stiffness: 100,
               duration: 0.5,
             }}
-            className="relative"
+            className="relative pt-2"
           >
             <motion.div
               animate={{
@@ -32,7 +32,7 @@ export default function NoActiveTickets() {
               }}
               className="bg-gray-100 rounded-full p-4"
             >
-              <Ticket className="h-12 w-12 text-gray-400" />
+              <Ticket className="h-4 w-4 text-gray-400" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
@@ -46,9 +46,15 @@ export default function NoActiveTickets() {
             </motion.div>
           </motion.div>
 
-          <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
+          <motion.div
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             <h3 className="text-lg font-medium">No Active Tickets</h3>
-            <p className="text-sm text-gray-500 mt-1">You don&apos;t have any active tickets at the moment.</p>
+            <p className="text-sm text-gray-500 mt-1">
+              You don&apos;t have any active tickets at the moment.
+            </p>
           </motion.div>
         </div>
       </CardContent>
@@ -58,5 +64,5 @@ export default function NoActiveTickets() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

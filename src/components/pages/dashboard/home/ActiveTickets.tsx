@@ -1,3 +1,4 @@
+import { fetchActiveTickets, fetchUsedTickets } from "@/api/api";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,11 +8,45 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { CalendarDays, Ticket } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
+import NoActiveTickets from "./NoActiveTicket";
 
 export default function ActiveTickets() {
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ['historyTicket'],
+        queryFn: fetchUsedTickets,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
+      },
+      {
+        queryKey: ['activeTickets'],
+        queryFn: fetchActiveTickets,
+        staleTime: 1000 * 60 * 5,
+        refetchOnWindowFocus: false,
+      },
+    ],
+  });
+  
+  const [usedTicketsQuery, activeTicketsQuery] = results;
+  
+  if (usedTicketsQuery.isLoading || activeTicketsQuery.isLoading) {
+    return <FullScreenLoader />;
+  }
+  
+  const usedTickets = usedTicketsQuery.data?.tickets ?? [];
+  const activeTickets = activeTicketsQuery.data?.tickets ?? [];
+
+  if (activeTickets.length === 0) {
+    return (
+      <NoActiveTickets />
+    );
+  }
   return (
     <Card>
       <CardHeader className="md:pb-2">
@@ -24,8 +59,8 @@ export default function ActiveTickets() {
             <Ticket className="h-6 w-6" />
           </div>
           <div>
-            <p className="font-medium">2 Active Tickets</p>
-            <p className="text-sm text-muted-foreground">3 Past Tickets</p>
+            <p className="font-medium">{activeTickets?.length} Active Ticket</p>
+            <p className="text-sm text-muted-foreground">{usedTickets?.length} Past Tickets</p>
           </div>
         </div>
       </CardContent>
