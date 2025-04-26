@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function BlobImage() {
-  // Use the actual membership card image path
-  const cardImage = "/assets/card.png"; // Make sure this path is correct
+  const cardImage = "/assets/card.png"; 
 
   const [cards, setCards] = useState([
     { id: 1, x: 0, y: 0, rotation: 0, scale: 1, zIndex: 3 },
@@ -17,7 +16,7 @@ export default function BlobImage() {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    if (isHovering) return; // Don't shuffle when user is hovering
+    if (isHovering) return;
 
     const shuffleInterval = setInterval(() => {
       setCards((prevCards) => {
@@ -53,7 +52,6 @@ export default function BlobImage() {
         <div className="absolute inset-0 bg-grid-pattern opacity-40" />
       </div>
 
-      {/* Card Container - Centered */}
       <div className="absolute inset-0 flex items-center justify-center">
         <AnimatePresence>
           {cards.map((card) => (
@@ -80,7 +78,6 @@ export default function BlobImage() {
                 transition: { duration: 0.3 },
               }}
               onClick={() => {
-                // Bring clicked card to front
                 if (card.zIndex !== 3) {
                   setCards(
                     cards.map((c) =>
@@ -98,7 +95,6 @@ export default function BlobImage() {
                 }
               }}
             >
-              {/* Card with shadow effect */}
               <div className="relative w-full h-full">
                 <div className="absolute inset-0 rounded-2xl bg-gray-300 transform translate-y-1 translate-x-1" />
                 <div className="absolute inset-0 rounded-2xl bg-white shadow-lg overflow-hidden">
@@ -111,7 +107,6 @@ export default function BlobImage() {
                   />
                 </div>
 
-                {/* Click to preview label - only on the top card */}
                 {card.zIndex === 3 && (
                   <motion.div
                     className="absolute bottom-3 right-3"

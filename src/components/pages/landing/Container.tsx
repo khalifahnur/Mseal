@@ -4,7 +4,6 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import BlobImage from "./BlobImage"
 import { Button } from "@/components/ui/button"
-import { Ghost } from "lucide-react"
 
 interface LandingHeaderProps {
   onLoginClick: () => void;

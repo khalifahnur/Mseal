@@ -1,3 +1,114 @@
+// // "use client";
+
+// // import {
+// //   Home,
+// //   Ticket,
+// //   Calendar,
+// //   CreditCard,
+// //   Settings,
+// //   LogOut,
+// //   HelpCircle,
+// //   StoreIcon,
+// // } from "lucide-react";
+// // import {
+// //   Sidebar,
+// //   SidebarContent,
+// //   SidebarFooter,
+// //   SidebarHeader,
+// //   SidebarMenu,
+// //   SidebarMenuItem,
+// //   SidebarMenuButton,
+// //   SidebarRail,
+// //   SidebarSeparator,
+// // } from "@/components/ui/sidebar";
+// // import Link from "next/link";
+// // import { usePathname } from "next/navigation";
+// // import Image from "next/image";
+// // import { fetchUserInfo } from "@/api/api";
+// // import { useQuery } from "@tanstack/react-query";
+// // import { FullScreenLoader } from "../pages/loading/FullScreenLoader";
+
+// // const baseSidebarItems = [
+// //   { name: "Home", href: "/home", icon: Home },
+// //   { name: "Tickets", href: "/tickets", icon: Ticket },
+// //   { name: "Matches", href: "/matches", icon: Calendar },
+// //   { name: "Membership", href: "/membership", icon: CreditCard },
+// // ];
+
+// // const shopItem = { name: "Shop", href: "/shop", icon: StoreIcon };
+
+// // const footerItems = [
+// //   { name: "Settings", href: "/settings", icon: Settings },
+// //   { name: "Logout", href: "#", icon: LogOut },
+// //   { name: "Need Help", href: "#", icon: HelpCircle },
+// // ];
+
+// // export function AppSidebar() {
+// //   const pathname = usePathname();
+
+// //   const { data, isLoading } = useQuery({
+// //     queryKey: ["userInfo"],
+// //     queryFn: fetchUserInfo,
+// //   });
+
+// //   if (isLoading) {
+// //     return <FullScreenLoader />;
+// //   }
+
+// //   const { membershipId } = data || {};
+
+// //   const sidebarItems = membershipId
+// //     ? [...baseSidebarItems, shopItem]
+// //     : baseSidebarItems;
+
+// //   return (
+// //     <Sidebar variant="floating">
+// //       <SidebarHeader className="items-center justify-center">
+// //         <Link href="/home" className="z-50">
+// //           <Image
+// //             src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
+// //             alt="Muranga Seals"
+// //             width={50}
+// //             height={50}
+// //             className="h-24 w-auto "
+// //           />
+// //         </Link>
+// //       </SidebarHeader>
+// //       <SidebarSeparator className="mt-2"/>
+// //       <SidebarContent>
+// //         <SidebarMenu>
+// //           {sidebarItems.map((item) => (
+// //             <SidebarMenuItem key={item.name}>
+// //               <SidebarMenuButton asChild isActive={pathname === item.href}>
+// //                 <Link href={item.href}>
+// //                   <item.icon className="mr-2 h-4 w-4" />
+// //                   {item.name}
+// //                 </Link>
+// //               </SidebarMenuButton>
+// //             </SidebarMenuItem>
+// //           ))}
+// //         </SidebarMenu>
+// //       </SidebarContent>
+// //       <SidebarSeparator className="mt-2"/>
+// //       <SidebarFooter>
+// //         <SidebarMenu>
+// //           {footerItems.map((item) => (
+// //             <SidebarMenuItem key={item.name}>
+// //               <SidebarMenuButton asChild>
+// //                 <Link href={item.href}>
+// //                   <item.icon className="mr-2 h-4 w-4" />
+// //                   {item.name}
+// //                 </Link>
+// //               </SidebarMenuButton>
+// //             </SidebarMenuItem>
+// //           ))}
+// //         </SidebarMenu>
+// //       </SidebarFooter>
+// //       <SidebarRail />
+// //     </Sidebar>
+// //   );
+// // }
+
 // "use client";
 
 // import {
@@ -22,11 +133,14 @@
 //   SidebarSeparator,
 // } from "@/components/ui/sidebar";
 // import Link from "next/link";
-// import { usePathname } from "next/navigation";
+// import { usePathname, useRouter } from "next/navigation";
 // import Image from "next/image";
 // import { fetchUserInfo } from "@/api/api";
-// import { useQuery } from "@tanstack/react-query";
+// import { useMutation, useQuery } from "@tanstack/react-query";
 // import { FullScreenLoader } from "../pages/loading/FullScreenLoader";
+// import { fetchLogout } from "@/hooks/Authhook/authHook";
+// import { toast } from "react-toastify";
+// import { useAuth } from "../Forms/AuthContext";
 
 // const baseSidebarItems = [
 //   { name: "Home", href: "/home", icon: Home },
@@ -45,11 +159,54 @@
 
 // export function AppSidebar() {
 //   const pathname = usePathname();
+//   const router = useRouter();
+//   const {signOut} = useAuth()
 
 //   const { data, isLoading } = useQuery({
 //     queryKey: ["userInfo"],
 //     queryFn: fetchUserInfo,
 //   });
+
+//   const logoutMutation = useMutation<void, Error, void>({
+//     mutationFn: fetchLogout,
+//     onSuccess: () => {
+//       toast.success(" Logged out,You have logged out successfully.", {
+//         position: "bottom-right",
+//         autoClose: 5000,
+//         hideProgressBar: false,
+//         closeOnClick: false,
+//         pauseOnHover: true,
+//         draggable: true,
+//         progress: undefined,
+//         theme: "light",
+//         //transition: Bounce,
+//       });
+//       router.replace("/");
+//       localStorage.clear();
+//       signOut()
+//     },
+//     onError: () => {
+//       toast.error("Logout failed,You have logged out successfully.", {
+//         position: "bottom-right",
+//         autoClose: 5000,
+//         hideProgressBar: false,
+//         closeOnClick: false,
+//         pauseOnHover: true,
+//         draggable: true,
+//         progress: undefined,
+//         theme: "light",
+//         //transition: Bounce,
+//       });
+//     },
+//   });
+
+//   const handleLogout = async () => {
+//     try {
+//       await logoutMutation.mutateAsync();
+//     } catch (error) {
+//       console.error("Logout failed:", error);
+//     }
+//   };
 
 //   if (isLoading) {
 //     return <FullScreenLoader />;
@@ -70,11 +227,12 @@
 //             alt="Muranga Seals"
 //             width={50}
 //             height={50}
-//             className="h-24 w-auto "
+//             className="h-24 w-auto"
 //           />
 //         </Link>
 //       </SidebarHeader>
-//       <SidebarSeparator className="mt-2"/>
+
+//       <SidebarSeparator className="mt-2" />
 //       <SidebarContent>
 //         <SidebarMenu>
 //           {sidebarItems.map((item) => (
@@ -89,21 +247,30 @@
 //           ))}
 //         </SidebarMenu>
 //       </SidebarContent>
-//       <SidebarSeparator className="mt-2"/>
+
+//       <SidebarSeparator className="mt-2" />
 //       <SidebarFooter>
 //         <SidebarMenu>
 //           {footerItems.map((item) => (
 //             <SidebarMenuItem key={item.name}>
-//               <SidebarMenuButton asChild>
-//                 <Link href={item.href}>
+//               {item.name === "Logout" ? (
+//                 <SidebarMenuButton onClick={handleLogout}>
 //                   <item.icon className="mr-2 h-4 w-4" />
-//                   {item.name}
-//                 </Link>
-//               </SidebarMenuButton>
+//                   Logout
+//                 </SidebarMenuButton>
+//               ) : (
+//                 <SidebarMenuButton asChild>
+//                   <Link href={item.href}>
+//                     <item.icon className="mr-2 h-4 w-4" />
+//                     {item.name}
+//                   </Link>
+//                 </SidebarMenuButton>
+//               )}
 //             </SidebarMenuItem>
 //           ))}
 //         </SidebarMenu>
 //       </SidebarFooter>
+
 //       <SidebarRail />
 //     </Sidebar>
 //   );
@@ -111,6 +278,7 @@
 
 "use client";
 
+import { useMemo, useCallback } from "react";
 import {
   Home,
   Ticket,
@@ -137,10 +305,10 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { fetchUserInfo } from "@/api/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FullScreenLoader } from "../pages/loading/FullScreenLoader";
 import { fetchLogout } from "@/hooks/Authhook/authHook";
 import { toast } from "react-toastify";
-import { useAuth } from "../Forms/AuthContext";
+import { useAuth } from "@/components/Forms/AuthContext";
+import { Skeleton } from "../ui/skeleton";
 
 const baseSidebarItems = [
   { name: "Home", href: "/home", icon: Home },
@@ -160,85 +328,104 @@ const footerItems = [
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const {signOut} = useAuth()
+  const { signOut } = useAuth();
 
   const { data, isLoading } = useQuery({
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
-  const logoutMutation = useMutation<void, Error, void>({
+  const logoutMutation = useMutation({
     mutationFn: fetchLogout,
     onSuccess: () => {
-      toast.success(" Logged out,You have logged out successfully.", {
+      toast.success("Logged- You have logged out successfully.", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
         theme: "light",
-        //transition: Bounce,
       });
+      localStorage.removeItem("authToken");
+      signOut();
       router.replace("/");
-      localStorage.clear();
-      signOut()
     },
     onError: () => {
-      toast.error("Logout failed,You have logged out successfully.", {
+      toast.error("Logout failed.", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
         theme: "light",
-        //transition: Bounce,
       });
     },
   });
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await logoutMutation.mutateAsync();
     } catch (error) {
       console.error("Logout failed:", error);
     }
-  };
+  }, [logoutMutation]);
+
+  const sidebarItems = useMemo(
+    () => (data?.membershipId ? [...baseSidebarItems, shopItem] : baseSidebarItems),
+    [data?.membershipId]
+  );
 
   if (isLoading) {
-    return <FullScreenLoader />;
+    return (
+      <Sidebar variant="floating">
+        <SidebarHeader className="items-center justify-center">
+          <Image
+            src="./assets/images/logo.png"
+            alt="Muranga Seals"
+            width={50}
+            height={50}
+            className="h-24 w-auto"
+            priority
+          />
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            {baseSidebarItems.map((item) => (
+              <SidebarMenuItem key={item.name}>
+                <Skeleton className="h-10 w-full" />
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+    );
   }
-
-  const { membershipId } = data || {};
-
-  const sidebarItems = membershipId
-    ? [...baseSidebarItems, shopItem]
-    : baseSidebarItems;
 
   return (
     <Sidebar variant="floating">
       <SidebarHeader className="items-center justify-center">
         <Link href="/home" className="z-50">
           <Image
-            src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
+            src="/assets/images/logo.png"
             alt="Muranga Seals"
             width={50}
             height={50}
             className="h-24 w-auto"
+            priority
           />
         </Link>
       </SidebarHeader>
-
       <SidebarSeparator className="mt-2" />
       <SidebarContent>
         <SidebarMenu>
           {sidebarItems.map((item) => (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild isActive={pathname === item.href}>
-                <Link href={item.href}>
+                <Link href={item.href} prefetch>
                   <item.icon className="mr-2 h-4 w-4" />
                   {item.name}
                 </Link>
@@ -247,7 +434,6 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-
       <SidebarSeparator className="mt-2" />
       <SidebarFooter>
         <SidebarMenu>
@@ -260,7 +446,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               ) : (
                 <SidebarMenuButton asChild>
-                  <Link href={item.href}>
+                  <Link href={item.href} prefetch>
                     <item.icon className="mr-2 h-4 w-4" />
                     {item.name}
                   </Link>
@@ -270,7 +456,6 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarFooter>
-
       <SidebarRail />
     </Sidebar>
   );

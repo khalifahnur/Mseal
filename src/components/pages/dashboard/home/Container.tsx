@@ -32,8 +32,6 @@ export default function Home() {
     return <FullScreenLoader />;
   }
 
-  console.log(user);
-
   return (
     <div className="space-y-1">
       <section className="flex flex-row justify-between" id="welcome-header">

@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer} from 'react-toastify';
+import { fetchUserInfo } from "@/api/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  queryClient.prefetchQuery({
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo,
+  });
+
   return (
     <html>
       <QueryClientProvider client={queryClient}>
@@ -36,3 +43,4 @@ export default function RootLayout({
     </html>
   );
 }
+

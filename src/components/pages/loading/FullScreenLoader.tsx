@@ -6,9 +6,6 @@ import { cn } from "@/lib/utils"
 export type LoadingColor = "primary" | "secondary" | "accent" | "success" | "info" | "warning" | "error" | "neutral"
 export type LoadingSize = "xs" | "sm" | "md" | "lg" | "xl"
 
-/**
- * LoadingOverlay component with a pulse effect and animated bar design
- */
 export const LoadingOverlay = ({
   message,
   color = "primary",
@@ -51,7 +48,7 @@ export const LoadingOverlay = ({
   }, [])
 
   const colorMap: Record<LoadingColor, string> = {
-    primary: "border-blue-600 bg-blue-100",
+    primary: "border-blue-600 bg-[#fae115]",
     secondary: "border-slate-700 bg-slate-100",
     accent: "border-indigo-600 bg-indigo-100",
     success: "border-emerald-600 bg-emerald-100",
@@ -219,7 +216,7 @@ export const InlineLoader = ({
   }, [])
 
   const colorMap: Record<LoadingColor, string> = {
-    primary: "bg-blue-600",
+    primary: "bg-[#fae115]",
     secondary: "bg-slate-700",
     accent: "bg-indigo-600",
     success: "bg-emerald-600",
