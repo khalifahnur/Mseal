@@ -15,6 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useQuery } from "@tanstack/react-query"
+import { fetchUsedTickets } from "@/api/api"
+import { FullScreenLoader } from "../../loading/FullScreenLoader"
 
 interface TicketData {
   id: string
@@ -78,7 +81,19 @@ export function TicketHistory() {
     },
   ])
 
-  if (pastTickets.length === 0) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["historyTicket"],
+    queryFn: fetchUsedTickets,
+    staleTime: 1000 * 60 * 5,
+    //cacheTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
+
+  if (isLoading) return <FullScreenLoader />;
+
+  const usedTickets = data?.tickets ?? [];
+
+  if (usedTickets.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <Receipt className="h-12 w-12 text-muted-foreground mb-4" />
@@ -93,16 +108,19 @@ export function TicketHistory() {
 
   return (
     <div className="grid gap-6">
-      {pastTickets.map((ticket) => (
-        <Card key={ticket.id} className="overflow-hidden">
+      {usedTickets.map((ticket) => {
+        const event = ticket.event?.[0];
+        (
+        <Card key={ticket._id} className="overflow-hidden">
           <CardContent className="p-0">
             <div className="flex flex-col md:flex-row">
-              <div className="relative md:w-1/3 h-[200px]">
+              <div className="relative md:w-1/3">
                 <Image
-                  src={ticket.imageUrl || "/placeholder.svg"}
-                  alt={ticket.eventName}
+                  src={`/assets/images/stadi1.jpeg`}
+                  alt={event.name}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute top-2 left-2">
                   <Badge variant="secondary">Past Event</Badge>
@@ -111,28 +129,20 @@ export function TicketHistory() {
               <div className="flex-1 p-6">
                 <div className="flex flex-col h-full justify-between">
                   <div>
-                    <h3 className="text-xl font-bold mb-2">{ticket.eventName}</h3>
+                    <h3 className="text-xl font-bold mb-2">{event.name}</h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                       <div className="flex items-center text-muted-foreground">
                         <Calendar className="mr-2 h-4 w-4" />
-                        <span>{formatDate(ticket.date)}</span>
+                        <span>{formatDate(event.date)}</span>
                       </div>
                       <div className="flex items-center text-muted-foreground">
                         <Clock className="mr-2 h-4 w-4" />
-                        <span>{ticket.time} EAT</span>
+                        <span>{event.time} EAT</span>
                       </div>
                       <div className="flex items-center text-muted-foreground">
                         <MapPin className="mr-2 h-4 w-4" />
-                        <span>{ticket.venue}</span>
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <Ticket className="mr-2 h-4 w-4" />
-                        <span>{ticket.ticketType} Ticket</span>
-                      </div>
-                      <div className="flex items-center text-muted-foreground">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>{ticket.seatInfo}</span>
+                        <span>{event.venue}</span>
                       </div>
                     </div>
                   </div>
@@ -153,36 +163,30 @@ export function TicketHistory() {
                         <div className="space-y-4 p-4">
                           <div className="space-y-1">
                             <h4 className="font-medium">Event</h4>
-                            <p>{ticket.eventName}</p>
+                            <p>{event.name}</p>
                           </div>
                           <div className="space-y-1">
                             <h4 className="font-medium">Date & Time</h4>
                             <p>
-                              {formatDate(ticket.date)} at {ticket.time}
+                              {formatDate(event.date)} at {event.time}
                             </p>
                           </div>
                           <div className="space-y-1">
                             <h4 className="font-medium">Venue</h4>
-                            <p>{ticket.venue}</p>
-                          </div>
-                          <div className="space-y-1">
-                            <h4 className="font-medium">Ticket Details</h4>
-                            <p>
-                              {ticket.ticketType} - {ticket.seatInfo}
-                            </p>
+                            <p>{event.venue}</p>
                           </div>
                           <div className="space-y-1">
                             <h4 className="font-medium">Purchase Date</h4>
-                            <p>{formatDate(ticket.purchaseDate)}</p>
+                            <p>{formatDate(ticket.createdAt)}</p>
                           </div>
                           <div className="space-y-1">
                             <h4 className="font-medium">Ticket ID</h4>
-                            <p className="font-mono text-xs">{ticket.ticketCode}</p>
+                            <p className="font-mono text-xs">{ticket.ticketId}</p>
                           </div>
-                          <div className="space-y-1">
+                          {/* <div className="space-y-1">
                             <h4 className="font-medium">Amount Paid</h4>
                             <p>KES {ticket.price.toLocaleString()}</p>
-                          </div>
+                          </div> */}
                         </div>
                       </DialogContent>
                     </Dialog>
@@ -197,7 +201,7 @@ export function TicketHistory() {
             </div>
           </CardContent>
         </Card>
-      ))}
+      )})}
     </div>
   )
 }

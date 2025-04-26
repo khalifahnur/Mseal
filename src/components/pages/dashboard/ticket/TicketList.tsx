@@ -33,8 +33,8 @@ export function TicketList() {
   const { data, isLoading, error } = useQuery<ApiResponse>({
     queryKey: ["tickets", dateFilter, sortBy],
     queryFn: fetchTickets,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    retry: 2, // Retry failed requests twice
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
   });
 
   const filteredEvents = useMemo(() => {
