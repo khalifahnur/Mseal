@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const apiClient = axios.create({
   baseURL:"https://msealserver-production.up.railway.app/mseal", //"http://localhost:3002/mseal",
   headers: {
@@ -10,18 +9,17 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-// Attach token to API requests
-apiClient.interceptors.request.use((config) => {
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-    ?.split("=")[1];
+// apiClient.interceptors.request.use((config) => {
+//   const token = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("token="))
+//     ?.split("=")[1];
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
 
-  return config;
-});
+//   return config;
+// });
 
 export default apiClient;
