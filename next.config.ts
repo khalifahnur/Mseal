@@ -3,12 +3,32 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: ['res.cloudinary.com','www.murangaseal.com', 'img.icons8.com', 'www.ke.sportpesa.com','http://www.w3.org'],
-        pathname: '**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.murangaseal.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.icons8.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.ke.sportpesa.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "http://www.w3.org",
+        pathname: "**",
       },
     ],
   },
-}
+};
 
 module.exports = nextConfig;
