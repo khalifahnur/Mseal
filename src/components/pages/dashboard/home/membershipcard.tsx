@@ -57,20 +57,21 @@ export function MembershipCard({
                 <div className="text-base font-bold">{memberName}</div>
               </div>
             )}
-            <div>
-              <div className="text-sm opacity-80">Member Number</div>
-              <div className="font-mono text-base font-bold">
-                {memberNumber ? maskExceptLastFour(memberNumber) : "N/A"}
-              </div>
-            </div>
+
             <div>
               <div className="text-sm opacity-80">Balance</div>
               <div className="font-mono text-base font-bold">
-                Ksh.{balance ? balance : "N/A"}
+                Ksh.{balance ? balance.toFixed(2) : "N/A"}
               </div>
             </div>
           </div>
 
+          <div>
+            <div className="text-sm opacity-80">Member Number</div>
+            <div className="font-mono text-base font-bold">
+              {memberNumber ? maskExceptLastFour(memberNumber) : "N/A"}
+            </div>
+          </div>
           {/* QR Code */}
           <div
             className={cn(
