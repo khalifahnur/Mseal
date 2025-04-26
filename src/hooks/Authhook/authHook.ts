@@ -1,29 +1,20 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { AuthData, AuthResponse, ErrorResponse } from "@/types/auth";
-import { loginUser, signUpUser } from "@/api/api";
+import { AuthData, AuthResponse, ErrorResponse, PhoneNumber, PhoneNumberResponse } from "@/types/auth";
+import { fetchUserInfo, loginUser, signUpUser, updateUserPhoneNumber } from "@/api/api";
 import apiClient from "@/lib/apiClient";
 import { toast } from "react-toastify";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export function useLogin(): UseMutationResult<
   AuthResponse,
   ErrorResponse,
   AuthData
-> {
+>  {
+  const { refreshUser } = useAuth();
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: loginUser,
     onSuccess: (data: AuthResponse) => {
-      console.log("Login successful:", data);
-      // if (data.token) {
-      //   localStorage.setItem("authToken", data.token);
-      // }
-      // if (data.token) {
-      //   //document.cookie = `token=${data.token}; path=/; max-age=${24 * 60 * 60}; secure=${process.env.NODE_ENV === 'production'}; sameSite=${process.env.NODE_ENV === 'production' ? 'none' : 'lax'}`;
-      //   localStorage.setItem("authToken", data.token); // Optional
-      // }
-      // if (data.user) {
-      //   localStorage.setItem("user", JSON.stringify(data.user));
-      // }
-      // router.replace('/dash');
+      refreshUser()
     },
     onError: (error: ErrorResponse) => {
       console.error(
@@ -56,25 +47,61 @@ export function useSignUp(): UseMutationResult<
 }
 
 export const fetchLogout = async (): Promise<void> => {
-  const response = await apiClient.post("/auth/admin/logout");
+  const response = await apiClient.post("/auth-user/logout");
 
   if (!response || response.status !== 200) {
     throw new Error("Logout failed");
   }
 };
 
-// export function useWaiterSignUp(): UseMutationResult<
-//   AuthWaiterResponse,
-//   ErrorResponse,
-//   Authwaiter
-// > {
-//   return useMutation<AuthWaiterResponse, ErrorResponse, Authwaiter>({
-//     mutationFn: signUpWaiter,
-//     onSuccess: () => {
-//       console.log("Sign-up waiter successful:");
-//     },
-//     onError: (error: ErrorResponse) => {
-//       console.error("Sign-up waiter error:", error.message);
-//     },
-//   });
-// }
+export function useUpdatePhone(): UseMutationResult<
+  PhoneNumberResponse,
+  ErrorResponse,
+  PhoneNumber
+> {
+  const { refreshUser } = useAuth();
+  return useMutation<PhoneNumberResponse, ErrorResponse, PhoneNumber>({
+    mutationFn: updateUserPhoneNumber,
+    onSuccess: (data: PhoneNumberResponse) => {
+      refreshUser();
+      toast.success(data.message, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    },
+    onError: (error: ErrorResponse) => {
+      console.error('Update phone number error:', error.message, error.details);
+      let toastMessage = error.message;
+      if (error.statusCode === 409) {
+        toastMessage = 'This phone number is already in use. Please try another.';
+      } else if (error.statusCode === 400) {
+        toastMessage = error.message;
+      } else if (error.statusCode === 401) {
+        toastMessage = 'Please log in again to update your phone number.';
+      } else {
+        toastMessage = 'Failed to update phone number. Please try again.';
+      }
+
+      toast.error(toastMessage, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+
+      if (error.details) {
+        console.error('Additional error details:', error.details);
+      }
+    },
+  })
+}
