@@ -1,21 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSignUp } from "@/hooks/Authhook/authHook";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { signupSchema } from "@/lib/validationSchema";
 import { features } from "@/lib/placeholderData";
+import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 
-const SignUpPage = () => {
+interface signUpProps {
+  onSignInClick:()=>void;
+}
+
+const SignUpPage = ({onSignInClick}:signUpProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
   const signUpMutation = useSignUp();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,12 +35,22 @@ const SignUpPage = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...submitData } = values;
       await signUpMutation.mutateAsync(submitData);
-
-      toast.success("🎉 Registration Successful! You can now sign in.");
-
       setTimeout(() => {
-        router.push("/SignIn");
-      }, 1500);
+        <FullScreenLoader />;
+      }, 3000);
+      onSignInClick();
+      
+      toast.success(" 🎉 Registration Successful! You can now sign in.", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        //transition: Bounce,
+      });
     } catch (err: any) {
       toast.error(err.message || "❌ Registration failed. Please try again.");
       setLoading(false);
@@ -62,10 +74,10 @@ const SignUpPage = () => {
   });
 
   return (
-    <div className="grid md:grid-cols-2 min-h-[600px]">
+    <div className="grid md:grid-cols-2 min-h-[550px]">
       {/* Left Side - Features */}
       <div className="bg-[#fae115] p-8 relative overflow-hidden">
-        <div className="relative z-10 items-center">
+        <div className="relative z-10 items-center pt-10">
           <h2 className="text-xl font-bold text-black mb-6">
             Membership Benefits
           </h2>
@@ -439,12 +451,7 @@ const SignUpPage = () => {
         {/* Login Link */}
         <div className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link
-            href="/SignIn"
-            className="text-yellow-600 hover:text-yellow-500 font-medium hover:underline"
-          >
-            Log in
-          </Link>
+            <button className="text-yellow-600 hover:text-yellow-500 font-medium hover:underline cursor-pointer" onClick={onSignInClick}>Log in</button>
         </div>
       </div>
     </div>

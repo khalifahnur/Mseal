@@ -11,8 +11,13 @@ import { useLogin } from "@/hooks/Authhook/authHook";
 import { toast } from "react-toastify";
 import { AuthData } from "@/types/auth";
 import { loginSchema } from "@/lib/validationSchema";
+import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
+import AuthButtons from "../AuthButtons";
 
-export default function LoginForm() {
+interface signInProps {
+  onSignUpClick: () => void;
+}
+export default function LoginForm({ onSignUpClick }: signInProps) {
   const [showPassword, setShowPassword] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
@@ -41,15 +46,38 @@ export default function LoginForm() {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   useEffect(() => {
     if (signInMutation.isSuccess) {
-      toast.success(" Welcome Back! You've successfully logged");
+      setTimeout(() => {
+        <FullScreenLoader />;
+      }, 3000);
 
+      toast.success(" Welcome Back! You've successfully logged", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        //transition: Bounce,
+      });
       router.replace("/home");
     }
 
     if (signInMutation.isError) {
       toast.error(
         signInMutation.isError ||
-          "❌ Login failed. Check credentials and try again.."
+          "❌ Login failed. Check credentials and try again..",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
       );
     }
   }, [
@@ -60,10 +88,10 @@ export default function LoginForm() {
   ]);
 
   return (
-    <div className="min-h-[600px] bg-gray-50">
+    <div className="min-h-[500px] mx-w-auto bg-gray-50">
       <div className="container mx-auto h-screen p-4 flex items-center justify-center">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full">
-          <div className="grid md:grid-cols-2 min-h-[600px]">
+          <div className="grid md:grid-cols-2 min-h-[450px]">
             {/* Left Section */}
             <div className="bg-[#fae115] p-8 relative overflow-hidden">
               <div className="relative z-10 h-full flex flex-col justify-center items-center">
@@ -204,15 +232,17 @@ export default function LoginForm() {
                 </Formik>
               </motion.div>
 
+              <span className=" my-4" />
+              <AuthButtons />
               <hr className="border border-[#e8e8e8] my-6" />
               <div className="text-sm text-center">
                 Don&apos;t have an account?{" "}
-                <Link
-                  href="/SignUp"
-                  className="text-[#fae115] hover:underline font-semibold"
+                <button
+                  className="text-[#fae115] hover:underline font-semibold cursor-pointer"
+                  onClick={onSignUpClick}
                 >
                   Sign Up
-                </Link>
+                </button>
               </div>
             </div>
           </div>
