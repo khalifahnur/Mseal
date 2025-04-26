@@ -79,46 +79,6 @@ const benefits = [
   },
 ];
 
-// Create animated background particles
-// const BackgroundParticles = ({ count = 20 }) => {
-//   return (
-//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//       {[...Array(count)].map((_, i) => (
-//         <motion.div
-//           key={i}
-//           className="absolute rounded-full bg-white opacity-10"
-//           initial={{
-//             x: `${Math.random() * 100}%`,
-//             y: `${Math.random() * 100}%`,
-//             scale: Math.random() * 0.5 + 0.5,
-//           }}
-//           animate={{
-//             x: [
-//               `${Math.random() * 100}%`,
-//               `${Math.random() * 100}%`,
-//               `${Math.random() * 100}%`,
-//             ],
-//             y: [
-//               `${Math.random() * 100}%`,
-//               `${Math.random() * 100}%`,
-//               `${Math.random() * 100}%`,
-//             ],
-//             opacity: [0.1, 0.2, 0.1],
-//           }}
-//           transition={{
-//             duration: Math.random() * 10 + 20,
-//             repeat: Infinity,
-//             repeatType: "reverse",
-//           }}
-//           style={{
-//             width: `${Math.random() * 10 + 5}px`,
-//             height: `${Math.random() * 10 + 5}px`,
-//           }}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
 
 const BackgroundParticles = ({ count = 20 }) => {
   const particles = useMemo(() => {

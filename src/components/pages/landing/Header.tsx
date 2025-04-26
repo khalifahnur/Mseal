@@ -7,7 +7,12 @@ import { MegaMenu } from "@/components/pages/landing/menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export default function LandingHeader() {
+interface LandingHeaderProps {
+  onLoginClick: () => void;
+  onSignUpClick: () => void;
+}
+
+export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHeaderProps) {
   const navItems = [
     { label: "HOME", href: "https://www.murangaseal.com/" },
     { label: "NEWS", href: "https://www.murangaseal.com/news" },
@@ -55,23 +60,19 @@ export default function LandingHeader() {
 
           <div className="flex items-center space-x-4">
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
-            <Link
-              href="/SignUp"
-              className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors"
-              aria-label="Join Now"
-            >
+
+            <Button className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer" onClick={onSignUpClick} variant={'ghost'}>
               <span className="flex items-center">
                 <UsersRound className="mr-2" size={15} /> JOIN
               </span>
-            </Link>
-            <Link
-              href="/SignIn"
-              className="hidden lg:block text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded"
-            >
+            </Button>
+
+            <Button className="hidden lg:block text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer" onClick={onLoginClick} variant={'ghost'}>
               LOGIN
-            </Link>
+            </Button>
+
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
-            <div className="hidden lg:block">
+            <div className="hidden lg:block bg-[#000] p-2">
               <Image
                 src="https://www.ke.sportpesa.com/img/actionbar_logo.png?v3.15.0.1"
                 alt="Muranga Seals"
@@ -102,21 +103,12 @@ export default function LandingHeader() {
                       {item.label}
                     </Link>
                   ))}
-                  <Link
-                    href="/SignUp"
-                    className="flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors"
-                    aria-label="Join Now"
-                  >
-                    <span className="flex items-center">
+                  <Button className="flex items-center justify-center text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer" onClick={onSignUpClick}>
                       <UsersRound className="mr-2" size={15} /> JOIN
-                    </span>
-                  </Link>
-                  <Link
-                    href="/SignIn"
-                    className="text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded"
-                  >
+                  </Button>
+                  <Button className="text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer" onClick={onLoginClick}>
                     LOGIN
-                  </Link>
+                  </Button>
                 </nav>
               </SheetContent>
             </Sheet>

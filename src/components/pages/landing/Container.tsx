@@ -3,8 +3,14 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import BlobImage from "./BlobImage"
+import { Button } from "@/components/ui/button"
+import { Ghost } from "lucide-react"
 
-export default function MembershipSection() {
+interface LandingHeaderProps {
+  onLoginClick: () => void;
+  onSignUpClick: () => void;
+}
+export default function MembershipSection({ onLoginClick,onSignUpClick}: LandingHeaderProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
       {/* Background animated elements */}
@@ -200,11 +206,12 @@ export default function MembershipSection() {
               transition={{ delay: 1.1, duration: 0.5 }}
             >
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/SignUp" className="w-full sm:w-auto">
+                <div className="w-full sm:w-auto">
                   <motion.button
                     className="w-full bg-[#fae115] text-black px-8 py-3 font-bold rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg transform hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center justify-center"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={onSignUpClick}
                   >
                     JOIN NOW
                     <svg
@@ -217,9 +224,9 @@ export default function MembershipSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
                     </svg>
                   </motion.button>
-                </Link>
+                </div>
 
-                <Link href="/Pricing" className="w-full sm:w-auto">
+                <Link  href={''} className="w-full sm:w-auto">
                   <motion.button
                     className="w-full bg-transparent border-2 border-gray-300 text-gray-700 px-8 py-3 font-bold rounded-lg hover:border-gray-500 hover:text-black transition-all duration-300 flex items-center justify-center"
                     whileHover={{ scale: 1.03 }}
@@ -239,7 +246,7 @@ export default function MembershipSection() {
               >
                 <div className="text-center sm:text-left">
                   <span className="text-gray-600">Just want tickets? </span>
-                  <Link href="/tickets" className="group inline-flex items-center">
+                  <Link href="/SignIn" className="group inline-flex items-center" prefetch>
                     <span className="font-semibold text-black group-hover:text-[#fae115] transition-colors duration-200">
                       Buy match tickets
                     </span>
@@ -272,9 +279,10 @@ export default function MembershipSection() {
                   />
                 </svg>
                 Already a member?{" "}
-                <Link href="/SignIn" className="text-[#fae115] hover:underline cursor-pointer font-semibold ml-1">
-                  LOG IN HERE
-                </Link>
+                <Button  onClick={onLoginClick} variant={'ghost'}>
+                  <span className="text-[#fae115] hover:underline cursor-pointer font-semibold ml-1"> LOG IN HERE</span>
+                  
+                </Button>
               </div>
             </motion.div>
           </motion.div>
