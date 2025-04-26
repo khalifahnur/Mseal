@@ -1,9 +1,28 @@
+"use client";
+
 import { Shirt, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import PromoHeader from "./PromoHeader"
 import ProductCard from "./ProductCard"
+import { useCart } from "@/hooks/Store/CartContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAllMerchandise } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
+import ProductGrid from "./ProductGrid";
 
 export default function Container() {
+  const { cart } = useCart();
+  const totalItems = cart?.length
+  
+  const { data, isLoading } = useQuery({
+    queryKey: ["allMerchandise"],
+    queryFn: fetchAllMerchandise,
+    staleTime: 1000 * 60 * 5,
+    //cacheTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
+
+  if (isLoading) return <FullScreenLoader />;
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b sticky top-0 bg-white">
@@ -30,9 +49,9 @@ export default function Container() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="#" className="flex items-center gap-1">
+            <Link href="/shop/cart" className="flex items-center gap-1">
               <ShoppingCart className="h-5 w-5" />
-              <span className="text-sm font-medium">Cart (0)</span>
+              <span className="text-sm font-medium">Cart ({totalItems})</span>
             </Link>
           </div>
         </div>
@@ -46,56 +65,7 @@ export default function Container() {
 
           <div className="flex-1">
             <h1 className="text-2xl font-bold mb-6">Player Jerseys & Kits</h1>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <ProductCard
-                id="1"
-                name="Home Stadium Shirt 2024-25"
-                price={99.99}
-                image="/assets/images/jersey-front.png"
-                badge=""
-              />
-
-              <ProductCard
-                id="2"
-                name="Away Stadium Shirt 2024-25 "
-                price={99.99}
-                image="/assets/images/jersey-front.png"
-                badge=""
-              />
-
-              <ProductCard
-                id="3"
-                name="Third Match Shirt 2024-25"
-                price={139.99}
-                image="/assets/images/jersey-front.png"
-                badge="Almost Gone!"
-              />
-
-              <ProductCard
-                id="4"
-                name="Home Stadium Shorts 2024-25"
-                price={39.99}
-                image="/assets/images/jersey-front.png"
-                badge=""
-              />
-
-              <ProductCard
-                id="5"
-                name="Away Stadium Shorts 2024-25"
-                price={39.99}
-                image="/assets/images/jersey-front.png"
-                badge=""
-              />
-
-              <ProductCard
-                id="6"
-                name="Team Socks Home 2024-25"
-                price={19.99}
-                image="/assets/images/jersey-front.png"
-                badge="New"
-              />
-            </div>
+              <ProductGrid items={data.responseItems}/>
           </div>
         </div>
       </main>

@@ -6,7 +6,7 @@ export default function PromoHeader() {
           <div className="text-2xl md:text-3xl font-bold my-2 md:my-0">UP TO 30% OFF</div>
           <div className="text-sm md:text-base">Selected Lines Only</div>
           <div className="mt-2 md:mt-0">
-            <span className="bg-white text-blue-900 font-bold px-4 py-2 rounded">USE CODE: FCPROMO</span>
+            <span className="bg-white text-blue-900 font-bold px-4 py-2 rounded"></span>
           </div>
         </div>
       </div>
