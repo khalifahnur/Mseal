@@ -28,8 +28,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const firstname = user?.firstName;
   const lastName = user?.lastName;
   const initials = `${firstname.charAt(0)}.${lastName.charAt(0)}`.toUpperCase();
-
-  console.log(user);
   return (
     <div className="flex min-h-screen flex-col md:flex-row w-full">
       {user.phoneNumber == null && (
