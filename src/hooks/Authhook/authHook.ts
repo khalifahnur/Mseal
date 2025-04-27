@@ -19,8 +19,8 @@ export function useLogin(): UseMutationResult<
   const { refreshUser } = useAuth();
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: loginUser,
-    onSuccess: () => {
-      refreshUser();
+    onSuccess:async () => {
+      await refreshUser();
     },
     onError: (error: ErrorResponse) => {
       console.error(

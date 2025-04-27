@@ -10,8 +10,9 @@ export default function AuthButtons() {
   const [isNewLogin, setIsNewLogin] = useState(false);
 
   useEffect(() => {
-    if (user) return;
-    refreshUser()
+    async()=>{
+      if (user) return;
+      await refreshUser()
       .then(() => {
           setIsNewLogin(false);
       })
@@ -28,6 +29,8 @@ export default function AuthButtons() {
           theme: "light",
         });
       });
+    }
+    
   }, [user, isNewLogin]);
 
   const handleGoogleSignIn = () => {

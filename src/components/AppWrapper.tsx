@@ -7,6 +7,7 @@ import LandingPage from "./LandingPage";
 function AppContent() {
   const { user, isLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const [redirected, setRedirected] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -14,11 +15,14 @@ function AppContent() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return null;
-  }
+  useEffect(() => {
+    if (mounted && !isLoading && user && pathname !== "/home" && !redirected) {
+      setRedirected(true);
+      router.push("/home");
+    }
+  }, [mounted, isLoading, user, pathname, redirected, router]);
 
-  if (isLoading) {
+  if (!mounted || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div
@@ -29,12 +33,14 @@ function AppContent() {
     );
   }
 
-  if (user && pathname !== "/home") {
-    router.push("/home");
-    return null;
+  if (!user) {
+    return <LandingPage />;
   }
 
-  return <LandingPage />;
+  if (pathname === "/home") {
+    return null;
+  }
+  return null;
 }
 
 export function AppWrapper() {

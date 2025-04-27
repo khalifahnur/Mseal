@@ -1,11 +1,11 @@
 "use client";
-
 import { fetchUserInfo } from "@/api/api";
 import {
   createContext,
   useContext,
   useState,
   useEffect,
+  useCallback,
   type ReactNode,
 } from "react";
 
@@ -30,16 +30,18 @@ interface AuthContextType {
   refreshUser: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
     try {
+      setIsLoading(true);
       const userData = await fetchUserInfo();
       setUser(userData);
     } catch (err) {
@@ -52,12 +54,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // });
     } finally {
       setIsLoading(false);
+      setIsRefreshing(false);
     }
-  };
+  }, [isRefreshing]);
 
   useEffect(() => {
     refreshUser();
-  }, []);
+  }, [refreshUser]);
 
   const signOut = () => {
     setUser(null);
