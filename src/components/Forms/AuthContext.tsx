@@ -1,12 +1,8 @@
-// AuthContext.tsx
 "use client";
+
 import { fetchUserInfo } from "@/api/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  createContext,
-  useContext,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useEffect, type ReactNode } from "react";
 
 type User = {
   firstName: string;
@@ -28,12 +24,20 @@ interface AuthContextType {
   refreshUser: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading, refetch } = useQuery({
+  const {
+    data: user,
+    isLoading,
+    refetch,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
     staleTime: 1000 * 60 * 5,
@@ -41,20 +45,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     retry: false,
   });
 
+  useEffect(() => {
+    if (isError) {
+      console.error("Failed to fetch user:", error);
+      queryClient.setQueryData(["userInfo"], null);
+    }
+  }, [isError, error, queryClient]);
+
   const refreshUser = async () => {
     await refetch();
   };
 
   const signOut = () => {
     queryClient.setQueryData(["userInfo"], null);
-    queryClient.invalidateQueries({ queryKey: ["userInfo"] }); 
+    queryClient.invalidateQueries({ queryKey: ["userInfo"] });
     localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, isLoading, signOut, refreshUser }}
-    >
+    <AuthContext.Provider value={{ user, isLoading, signOut, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

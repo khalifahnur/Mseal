@@ -18,16 +18,30 @@ function AppContent() {
   useEffect(() => {
     if (!mounted || isLoading || redirected) return;
 
-    if (user && pathname !== "/home") {
+    console.log("Redirect Logic - User:", user, "Pathname:", pathname);
+
+    if (user && !pathname.startsWith("/home")) {
+      console.log("Redirecting to /home...");
       setRedirected(true);
       router.push("/home");
     } else if (!user && pathname !== "/") {
+      console.log("Redirecting to /...");
       setRedirected(true);
       router.push("/");
     }
   }, [mounted, isLoading, user, pathname, redirected, router]);
 
-  if (!mounted || isLoading) {
+  // Reset redirected state when user changes (e.g., after login)
+  useEffect(() => {
+    setRedirected(false);
+  }, [user]);
+
+  if (!mounted) {
+    return null; // Wait for mounting
+  }
+
+  if (isLoading) {
+    console.log("Showing loading spinner...");
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div
@@ -38,11 +52,15 @@ function AppContent() {
     );
   }
 
+  console.log("Rendering - User:", user, "Pathname:", pathname);
+
   if (!user && pathname === "/") {
+    console.log("Rendering LandingPage...");
     return <LandingPage />;
   }
 
-  if (user && pathname === "/home") {
+  if (user && pathname.startsWith("/home")) {
+    console.log("Rendering /home page...");
     return null;
   }
 
