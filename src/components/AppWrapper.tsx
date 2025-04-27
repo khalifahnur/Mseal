@@ -1,31 +1,40 @@
-"use client"
-import { redirect } from "next/navigation"
-import { useEffect, useState } from "react"
-import { AuthProvider, useAuth } from "./Forms/AuthContext"
-import LandingPage from "./LandingPage"
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { AuthProvider, useAuth } from "./Forms/AuthContext";
+import LandingPage from "./LandingPage";
 
 function AppContent() {
-  const { user, isLoading } = useAuth()
-  const [mounted, setMounted] = useState(false)
+  const { user, isLoading } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Handle hydration mismatch
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <div
+          aria-label="Loading"
+          className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"
+        ></div>
       </div>
-    )
+    );
   }
 
-  return user ? redirect('/home') : <LandingPage />
+  if (user && pathname !== "/home") {
+    router.push("/home");
+    return null;
+  }
+
+  return <LandingPage />;
 }
 
 export function AppWrapper() {
@@ -33,5 +42,5 @@ export function AppWrapper() {
     <AuthProvider>
       <AppContent />
     </AuthProvider>
-  )
+  );
 }
