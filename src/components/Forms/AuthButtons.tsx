@@ -10,11 +10,11 @@ export default function AuthButtons() {
   const [isNewLogin, setIsNewLogin] = useState(false);
 
   useEffect(() => {
-    async()=>{
-      if (user) return;
-      await refreshUser()
+    async () => {};
+    if (user) return;
+    refreshUser()
       .then(() => {
-          setIsNewLogin(false);
+        setIsNewLogin(false);
       })
       .catch((err) => {
         console.log("No active session:", err);
@@ -29,13 +29,12 @@ export default function AuthButtons() {
           theme: "light",
         });
       });
-    }
-    
   }, [user, isNewLogin]);
 
   const handleGoogleSignIn = () => {
     setIsNewLogin(true);
-    window.location.href = "https://msealserver-production.up.railway.app/mseal/auth-user/google";
+    window.location.href =
+      "https://msealserver-production.up.railway.app/mseal/auth-user/google";
   };
   const handleXSignIn = () => {
     console.log("X sign-in not implemented");
