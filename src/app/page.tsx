@@ -1,6 +1,6 @@
-import LandingPage from "@/components/LandingPage";
+import { AppWrapper } from "@/components/AppWrapper";
 import React from "react";
 
-export default function Home() {
-  return <LandingPage />
+export default function page() {
+  return <AppWrapper />
 }

@@ -1,11 +1,10 @@
+// AuthContext.tsx
 "use client";
 import { fetchUserInfo } from "@/api/api";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createContext,
   useContext,
-  useState,
-  useEffect,
-  useCallback,
   type ReactNode,
 } from "react";
 
@@ -26,50 +25,35 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   signOut: () => void;
-  setUser: (user: User | null) => void;
   refreshUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const queryClient = useQueryClient();
 
-  const refreshUser = useCallback(async () => {
-    if (isRefreshing) return;
-    setIsRefreshing(true);
-    try {
-      setIsLoading(true);
-      const userData = await fetchUserInfo();
-      setUser(userData);
-    } catch (err) {
-      console.error("Failed to refresh user:", err);
-      setUser(null);
-      // toast.error("Failed to load user data. Please try again.", {
-      //   position: "bottom-right",
-      //   autoClose: 5000,
-      //   theme: "light",
-      // });
-    } finally {
-      setIsLoading(false);
-      setIsRefreshing(false);
-    }
-  }, [isRefreshing]);
+  const { data: user, isLoading, refetch } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
 
-  useEffect(() => {
-    refreshUser();
-  }, [refreshUser]);
+  const refreshUser = async () => {
+    await refetch();
+  };
 
   const signOut = () => {
-    setUser(null);
+    queryClient.setQueryData(["userInfo"], null);
+    queryClient.invalidateQueries({ queryKey: ["userInfo"] }); 
     localStorage.removeItem("user");
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, signOut, setUser, refreshUser }}
+      value={{ user, isLoading, signOut, refreshUser }}
     >
       {children}
     </AuthContext.Provider>
