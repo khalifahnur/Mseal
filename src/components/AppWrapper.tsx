@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { AuthProvider, useAuth } from "./Forms/AuthContext";
-import LandingPage from "./LandingPage";
+import LoginForm from "./Forms/Signin/SigninForm";
 
 function AppContent() {
   const { user, isLoading } = useAuth();
@@ -34,7 +34,7 @@ function AppContent() {
     return null;
   }
 
-  return <LandingPage />;
+  return <LoginForm />;
 }
 
 export function AppWrapper() {

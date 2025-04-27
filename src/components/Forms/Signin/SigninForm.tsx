@@ -15,7 +15,7 @@ import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import AuthButtons from "../AuthButtons";
 
 interface signInProps {
-  onSignUpClick: () => void;
+  onSignUpClick?: () => void;
 }
 export default function LoginForm({ onSignUpClick }: signInProps) {
   const [showPassword, setShowPassword] = useState(false);
