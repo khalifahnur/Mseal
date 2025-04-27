@@ -61,7 +61,6 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
         theme: "light",
         //transition: Bounce,
       });
-      router.replace("/home");
     }
 
     if (signInMutation.isError) {
