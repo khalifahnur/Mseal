@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchAllMerchandise } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import ProductGrid from "./ProductGrid";
+import CartButton from "./cart/CartButton";
 
 export default function Container() {
   const { cart } = useCart();
@@ -48,10 +49,11 @@ export default function Container() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="/shop/cart" className="flex items-center gap-1">
+            {/* <Link href="/shop/cart" className="flex items-center gap-1">
               <ShoppingCart className="h-5 w-5" />
               <span className="text-sm font-medium">Cart ({totalItems})</span>
-            </Link>
+            </Link> */}
+            <CartButton variant="full" />
           </div>
         </div>
       </header>
