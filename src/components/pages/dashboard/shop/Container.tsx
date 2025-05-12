@@ -53,7 +53,7 @@ export default function Container() {
               <ShoppingCart className="h-5 w-5" />
               <span className="text-sm font-medium">Cart ({totalItems})</span>
             </Link> */}
-            <CartButton variant="full" />
+            <CartButton />
           </div>
         </div>
       </header>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useCart } from "@/hooks/Store/CartContext"
-import { Minus, Plus, ShoppingCart, X, ChevronRight, ShoppingBag } from "lucide-react"
+import { Minus, Plus, ShoppingCart, ChevronRight, ShoppingBag, Trash2 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -15,8 +15,6 @@ export default function CartContent() {
   const shipping = cart.length > 0 ? 500 : 0
   const total = subtotal + shipping
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
-
   return (
     <SheetContent className="w-full sm:max-w-md flex flex-col p-0">
       <SheetHeader className="p-4 border-b">
@@ -24,16 +22,7 @@ export default function CartContent() {
           <SheetTitle className="flex items-center">
             <ShoppingCart className="mr-2 h-5 w-5" />
             My Cart
-            {totalItems > 0 && (
-              <span className="ml-2 h-5 w-5 rounded-full text-xs flex items-center justify-center bg-primary text-primary-foreground">
-                {totalItems}
-              </span>
-            )}
           </SheetTitle>
-          <SheetClose className="rounded-full h-6 w-6 flex items-center justify-center">
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </SheetClose>
         </div>
       </SheetHeader>
 
@@ -72,7 +61,7 @@ export default function CartContent() {
                         onClick={() => removeFromCart(item.id, item.size)}
                         className="text-muted-foreground hover:text-destructive transition-colors"
                       >
-                        <X className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">{item.size}</p>
