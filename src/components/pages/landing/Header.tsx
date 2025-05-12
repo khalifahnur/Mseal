@@ -1,18 +1,40 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import Image from "next/image";
-import { UsersRound, Menu } from "lucide-react";
-import { MegaMenu } from "@/components/pages/landing/menu";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Link from "next/link"
+import Image from "next/image"
+import { UsersRound, Menu } from "lucide-react"
+import { MegaMenu } from "@/components/pages/landing/menu"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { useEffect, useState } from "react"
 
 interface LandingHeaderProps {
-  onLoginClick: () => void;
-  onSignUpClick: () => void;
+  onLoginClick: () => void
+  onSignUpClick: () => void
 }
 
-export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHeaderProps) {
+export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  // Track scroll position and update state
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll)
+
+    // Clean up event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   const navItems = [
     { label: "HOME", href: "https://www.murangaseal.com/" },
     { label: "NEWS", href: "https://www.murangaseal.com/news" },
@@ -24,21 +46,31 @@ export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHead
     { label: "TICKETS & HOSPITALITY", href: "#" },
     { label: "SHOP", href: "#" },
     { label: "SUPPORT", href: "#" },
-  ];
+  ]
 
   return (
-    <>
-      <div className="bg-[#fae115] h-2 w-full"></div>
-      <header className="text-black border-b border-gray-200 relative z-50">
-        <div className="relative bg-black h-10 w-full" />
-        <nav className="absolute w-[calc(100%-2rem)] bg-[#ffff] left-5 h-12 top-10 -translate-y-1/2 px-2 flex items-center justify-between">
+    <div className={`${isScrolled ? "sticky top-0 z-50" : ""}`}>
+      <div className={`bg-[#fae115] w-full ${isScrolled ? "h-1" : "h-2"}`}></div>
+      <header
+        className={`text-black border-b border-gray-200 relative z-50 transition-all duration-300 ${isScrolled ? "shadow-md" : ""}`}
+      >
+        <div className={`relative bg-black ${isScrolled ? "h-0" : "h-10"} w-full transition-all duration-300`} />
+        <nav
+          className={`${
+            isScrolled
+              ? "sticky top-0 bg-black h-16 flex items-center justify-between px-5 py-2"
+              : "absolute w-[calc(100%-2rem)] bg-[#ffff] left-5 h-12 top-10 -translate-y-1/2 px-2 flex items-center justify-between"
+          } transition-all duration-300`}
+        >
           <Link href="/" className="shrink-0">
             <Image
               src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
               alt="Muranga Seals"
               width={100}
               height={100}
-              className="h-24 w-auto absolute -top-7"
+              className={`w-auto ${
+                isScrolled ? "h-14 relative top-0" : "h-24 absolute -top-7"
+              } transition-all duration-300`}
             />
           </Link>
 
@@ -54,20 +86,28 @@ export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHead
                 >
                   {item.label}
                 </Link>
-              )
+              ),
             )}
           </div>
 
           <div className="flex items-center space-x-4">
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
 
-            <Button className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer" onClick={onSignUpClick} variant={'ghost'}>
+            <Button
+              className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer"
+              onClick={onSignUpClick}
+              variant={"ghost"}
+            >
               <span className="flex items-center">
                 <UsersRound className="mr-2" size={15} /> JOIN
               </span>
             </Button>
 
-            <Button className="hidden lg:block text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer" onClick={onLoginClick} variant={'ghost'}>
+            <Button
+              className="hidden lg:block text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer"
+              onClick={onLoginClick}
+              variant={"ghost"}
+            >
               LOGIN
             </Button>
 
@@ -83,12 +123,7 @@ export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHead
             </div>
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="lg:hidden"
-                  aria-label="Open menu"
-                >
+                <Button variant="ghost" size="icon" className="lg:hidden bg-white" aria-label="Open menu">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -103,10 +138,16 @@ export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHead
                       {item.label}
                     </Link>
                   ))}
-                  <Button className="flex items-center justify-center text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer" onClick={onSignUpClick}>
-                      <UsersRound className="mr-2" size={15} /> JOIN
+                  <Button
+                    className="flex items-center justify-center text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer"
+                    onClick={onSignUpClick}
+                  >
+                    <UsersRound className="mr-2" size={15} /> JOIN
                   </Button>
-                  <Button className="text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer" onClick={onLoginClick}>
+                  <Button
+                    className="text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer"
+                    onClick={onLoginClick}
+                  >
                     LOGIN
                   </Button>
                 </nav>
@@ -115,6 +156,6 @@ export default function LandingHeader({ onLoginClick,onSignUpClick}: LandingHead
           </div>
         </nav>
       </header>
-    </>
-  );
+    </div>
+  )
 }

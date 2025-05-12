@@ -96,8 +96,8 @@ export default function BlobImage() {
               }}
             >
               <div className="relative w-full h-full">
-                <div className="absolute inset-0 rounded-2xl bg-gray-300 transform translate-y-1 translate-x-1" />
-                <div className="absolute inset-0 rounded-2xl bg-white shadow-lg overflow-hidden">
+                <div className="absolute inset-0 rounded-2xl transform translate-y-1 translate-x-1" />
+                <div className="absolute inset-0 rounded-2xl shadow-lg overflow-hidden">
                   <Image
                     src={cardImage || "/placeholder.svg"}
                     alt="Murang'a Seals Membership Card"

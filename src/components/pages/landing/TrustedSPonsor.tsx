@@ -93,11 +93,11 @@ export default function TrustedSponsors() {
                 {sponsorLogos.map((logo, index) => (
                   <CarouselItem
                     key={index}
-                    className="pl-4 md:basis-1/4 lg:basis-1/6"
+                    className="pl-4 md:basis-1/4 lg:basis-1/6 basis-1/4"
                   >
                     <div className="flex h-full items-center justify-center p-2">
                       <Image
-                        className="mx-auto object-contain"
+                        className="mx-auto object-contain max-h-[30px] w-auto"
                         src={logo.imgUrl || "/placeholder.svg"}
                         alt={`${logo.name} Logo`}
                         height={30}
