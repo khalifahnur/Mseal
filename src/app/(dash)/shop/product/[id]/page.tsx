@@ -10,12 +10,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import { ArrowLeft, Heart, ShoppingCart, Star } from "lucide-react";
 import { toast } from "react-toastify";
 import { useCart } from "@/hooks/Store/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllMerchandise } from "@/api/api";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
+import Link from "next/link";
 
 interface PageProps {
   params: Promise<{
@@ -39,7 +40,9 @@ export default function ProductPage({ params }: PageProps) {
   if (!data) return <p className="p-4">Failed to load product data.</p>;
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  const baseProduct = data.responseItems.find((p: any) => p.id === resolvedParams.id);
+  const baseProduct = data.responseItems.find(
+    (p: any) => p.id === resolvedParams.id
+  );
 
   const product = baseProduct && {
     ...baseProduct,
@@ -53,8 +56,6 @@ export default function ProductPage({ params }: PageProps) {
 
   if (!product) return <p className="p-4">Product not found.</p>;
 
-
-
   const handleAddToCart = () => {
     if (!selectedSize) {
       toast.error("Please select a size before adding to cart");
@@ -67,7 +68,7 @@ export default function ProductPage({ params }: PageProps) {
       price: product.price,
       quantity: Number(quantity),
       size: selectedSize,
-      imgUrl:product.images
+      imgUrl: product.images,
     };
 
     addToCart(newItem);
@@ -81,6 +82,13 @@ export default function ProductPage({ params }: PageProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 container mx-auto p-2 py-4">
+        <Link
+          href="/shop"
+          className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          shop
+        </Link>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-1/2">
             <div className="sticky top-24">
@@ -163,12 +171,16 @@ export default function ProductPage({ params }: PageProps) {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="flex-1" onClick={handleAddToCart}>
+                <Button
+                  size="default"
+                  className="flex-1"
+                  onClick={handleAddToCart}
+                >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Add to Cart
                 </Button>
                 <Button
-                  size="lg"
+                  size="default"
                   variant="outline"
                   className="flex-1"
                   onClick={handleAddToWishlist}
