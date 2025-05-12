@@ -1,9 +1,9 @@
 "use client";
 
-import { Shirt, ShoppingCart } from "lucide-react"
+import { Shirt } from "lucide-react"
 import Link from "next/link"
 import PromoHeader from "./PromoHeader"
-import { useCart } from "@/hooks/Store/CartContext";
+//import { useCart } from "@/hooks/Store/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllMerchandise } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
@@ -11,8 +11,8 @@ import ProductGrid from "./ProductGrid";
 import CartButton from "./cart/CartButton";
 
 export default function Container() {
-  const { cart } = useCart();
-  const totalItems = cart?.length
+  //const { cart } = useCart();
+  //const totalItems = cart?.length
   
   const { data, isLoading } = useQuery({
     queryKey: ["allMerchandise"],
