@@ -10,7 +10,6 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import ProgressiveBlur from "./ProgressiveBlur";
 
-// Sample sponsor logos
 const sponsorLogos = [
   {
     name: "Sportpesa",
@@ -55,6 +54,7 @@ const sponsorLogos = [
 ];
 
 export default function TrustedSponsors() {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [ setApi] = useState<any>(null);
   const [isMounted, setIsMounted] = useState(false);
 
