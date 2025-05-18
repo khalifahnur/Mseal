@@ -1,18 +1,17 @@
 "use client";
 
 import React from "react";
-import { Star, Shield, Clock, Check } from "lucide-react";
+import { Star, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { memberInfo, membershipTiers } from "./placeholder";
+import { membershipTiers } from "./placeholder";
 import { BenefitsList } from "./benefits";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserInfo } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
-import { maskExceptLastFour } from "@/lib/utils";
+import MembershipCard from "./MembershipCard";
+import MembershipFAQ from "./MembershipFaqs";
 
 export default function MembershipPage() {
-  
-
   const { data, isLoading } = useQuery({
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
@@ -25,61 +24,20 @@ export default function MembershipPage() {
     return <FullScreenLoader />;
   }
 
-  const {membershipId,membershipTier,expDate,createdAt} = data;
+  const { membershipId, membershipTier, expDate, createdAt } = data;
 
   const activeMembership = membershipTier;
 
   return (
-    <div className="p-4 space-y-6">      
-    {
-      membershipId &&       <Card className="bg-linear-to-br from-[#fae115] to-black p-4">
-      <CardHeader>
-        <CardTitle className="text-white">Your Membership Status</CardTitle>
-      </CardHeader>
-      <CardContent className="grid md:grid-cols-2 gap-6 grid-cols-2">
-        <div className="space-y-4">
-          <div>
-            <p className="text-sm text-white">Member ID</p>
-            <p className="font-bold">{maskExceptLastFour(membershipId)}</p>
-          </div>
-          <div>
-            <p className="text-sm text-white">Current Tier</p>
-            <p className="font-bold flex items-center gap-2">
-              <Shield size={20} className="text-green-600" />
-              {membershipTier}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-white">Member Since</p>
-            <p className="font-bold">
-              {new Date(createdAt).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
-        <div className="space-y-4">
-          <div>
-            <p className="text-sm text-white">Points Earned</p>
-            <p className="font-bold text-green-600">
-              {memberInfo.pointsEarned} points
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-white">Points to Next Tier</p>
-            <p className="font-bold">{memberInfo.pointsToNextTier} points</p>
-          </div>
-          <div>
-            <p className="text-sm text-white">Membership Expires</p>
-            <p className="font-bold">
-              {new Date(expDate).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-    }
+    <div className="p-4 space-y-6">
+            
+      {membershipId && (
+        <MembershipCard membershipId={membershipId} membershipTier={membershipTier} expDate={expDate} createdAt={createdAt} />
+      )}
+
 
       {/* Membership Benefits */}
-      <Card>
+      <Card className="bg-white/5">
         <CardHeader>
           <CardTitle>Membership Tiers & Benefits</CardTitle>
         </CardHeader>
@@ -129,36 +87,7 @@ export default function MembershipPage() {
       {/* Member Benefits */}
       <BenefitsList />
 
-      {/* Membership History */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Membership History</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <Clock size={20} className="text-gray-600" />
-                <div>
-                  <p className="font-medium">Bronze Membership Renewal</p>
-                  <p className="text-sm text-gray-600">Jan 15, 2024</p>
-                </div>
-              </div>
-              <span className="text-[#fae115] font-medium">KSh 2,000</span>
-            </div>
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <Clock size={20} className="text-gray-600" />
-                <div>
-                  <p className="font-medium">Initial Membership Purchase</p>
-                  <p className="text-sm text-gray-600">Jan 15, 2023</p>
-                </div>
-              </div>
-              <span className="text-[#fae115] font-medium">KSh 2,000</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            <MembershipFAQ />
     </div>
   );
 }

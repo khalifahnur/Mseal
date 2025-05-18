@@ -8,11 +8,15 @@ import { Button } from "@/components/ui/button"
 import { SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet"
 import { Separator } from "@/components/ui/separator"
 
-export default function CartContent() {
-  const { cart, removeFromCart } = useCart()
+interface CartContentProps {
+  onCheckout: () => void
+}
+
+export default function CartContent({onCheckout}:CartContentProps) {
+  const { cart, removeFromCart,increaseQuantity, decreaseQuantity } = useCart()
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shipping = cart.length > 0 ? 500 : 0
+  const shipping = cart.length > 0 ? 100 : 0
   const total = subtotal + shipping
 
   return (
@@ -25,6 +29,7 @@ export default function CartContent() {
           </SheetTitle>
         </div>
       </SheetHeader>
+      
 
       {/* Empty Cart */}
       {cart.length === 0 ? (
@@ -69,7 +74,7 @@ export default function CartContent() {
                     <div className="flex justify-between items-center mt-2">
                       <div className="flex items-center border rounded">
                         <button
-                          //onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
+                          onClick={() => decreaseQuantity(item.id, item.size)}
                           disabled={item.quantity <= 1}
                           className="px-2 py-1 text-muted-foreground hover:bg-muted disabled:opacity-50"
                         >
@@ -77,7 +82,7 @@ export default function CartContent() {
                         </button>
                         <span className="px-2 text-sm">{item.quantity}</span>
                         <button
-                          //onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
+                          onClick={() => increaseQuantity(item.id, item.size)}
                           className="px-2 py-1 text-muted-foreground hover:bg-muted"
                         >
                           <Plus className="h-3 w-3" />
@@ -109,12 +114,17 @@ export default function CartContent() {
               </div>
             </div>
             <div className="p-4 pt-0">
-              <SheetClose asChild>
-                <Link href="/checkout">
-                  <Button className="w-full" size="lg">
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+            <SheetClose asChild>
+                <Button
+                  className="w-full"
+                  size="lg"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onCheckout()
+                  }}
+                >
+                  Proceed to Checkout
+                </Button>
               </SheetClose>
             </div>
           </div>

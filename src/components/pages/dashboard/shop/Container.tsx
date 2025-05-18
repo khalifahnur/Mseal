@@ -3,17 +3,13 @@
 import { Shirt } from "lucide-react"
 import Link from "next/link"
 import PromoHeader from "./PromoHeader"
-//import { useCart } from "@/hooks/Store/CartContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllMerchandise } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import ProductGrid from "./ProductGrid";
 import CartButton from "./cart/CartButton";
 
-export default function Container() {
-  //const { cart } = useCart();
-  //const totalItems = cart?.length
-  
+export default function Container() {  
   const { data, isLoading } = useQuery({
     queryKey: ["allMerchandise"],
     queryFn: fetchAllMerchandise,
@@ -49,10 +45,6 @@ export default function Container() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            {/* <Link href="/shop/cart" className="flex items-center gap-1">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="text-sm font-medium">Cart ({totalItems})</span>
-            </Link> */}
             <CartButton />
           </div>
         </div>
@@ -134,17 +126,7 @@ export default function Container() {
                 </li>
                 <li>
                   <Link href="#" className="text-sm hover:underline">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-sm hover:underline">
                     Store Locator
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-sm hover:underline">
-                    Corporate
                   </Link>
                 </li>
               </ul>
