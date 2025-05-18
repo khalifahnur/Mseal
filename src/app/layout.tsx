@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer} from 'react-toastify';
-//import { fetchUserInfo } from "@/api/api";
+import type { Metadata } from 'next'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const metadata: Metadata = {
+  title: 'MSeal Membership',
+  description: 'M-seal membership',
+}
+
 
 const queryClient = new QueryClient();
 
@@ -24,11 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  // queryClient.prefetchQuery({
-  //   queryKey: ["userInfo"],
-  //   queryFn: fetchUserInfo,
-  // });
 
   return (
     <html>
