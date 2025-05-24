@@ -28,7 +28,7 @@ export default function LandingPage() {
     return (
       <div className="relative">
         <button
-          className="absolute top-4 left-4 z-10 hover:underline bg-transparent cursor-pointer"
+          className="absolute hidden md:block md:top-10 md:left-35 z-999 hover:underline bg-transparent cursor-pointer"
           onClick={() => setShowAuth(false)}
         >
           ← Back to Home

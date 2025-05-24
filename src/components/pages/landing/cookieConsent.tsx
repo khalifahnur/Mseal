@@ -91,7 +91,7 @@ export default function CookieConsentModal({
             <DialogDescription className="text-left">
               We use cookies to ensure secure authentication for your MSeal
               membership, enhance your browsing experience, and analyze our
-              traffic. By clicking "Accept All", you consent to our use of
+              traffic. By clicking &apos;Accept All&apos;, you consent to our use of
               cookies.
             </DialogDescription>
           </DialogHeader>
