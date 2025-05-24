@@ -43,9 +43,9 @@ export function useSignUp(): UseMutationResult<
 > {
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: signUpUser,
-    onSuccess: () => {
-      console.log("Sign-up successful:");
-    },
+    // onSuccess: () => {
+    //   console.log("Sign-up successful:");
+    // },
     onError: (error: ErrorResponse) => {
       console.error("Sign-up error:", error.message);
     },

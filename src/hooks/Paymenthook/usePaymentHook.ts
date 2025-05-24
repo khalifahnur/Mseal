@@ -10,9 +10,9 @@ paymentData
 > {
 return useMutation<paymentResponse, paymentError, paymentData>({
   mutationFn: initiateMembershipPayment,
-  onSuccess: (data) => {
-    console.log("Payment initiated successfully:", data);
-  },
+  // onSuccess: (data) => {
+  //   console.log("Payment initiated successfully:", data);
+  // },
   onError: (error: paymentError) => {
     console.error("Payment initiation error:", error.message);
   },
@@ -26,9 +26,9 @@ ticketPayment
 > {
 return useMutation<paymentResponse, paymentError, ticketPayment>({
   mutationFn: initiateTicketPayment,
-  onSuccess: (data) => {
-    console.log("Payment initiated successfully:", data);
-  },
+  // onSuccess: (data) => {
+  //   console.log("Payment initiated successfully:", data);
+  // },
   onError: (error: paymentError) => {
     console.error("Payment initiation error:", error.message);
   },
@@ -42,9 +42,9 @@ orders
 > {
 return useMutation<paymentResponse, paymentError, orders>({
   mutationFn: initiateOrderPayment,
-  onSuccess: (data) => {
-    console.log("Payment initiated successfully:", data);
-  },
+  // onSuccess: (data) => {
+  //   console.log("Payment initiated successfully:", data);
+  // },
   onError: (error: paymentError) => {
     console.error("Payment initiation error:", error.message);
   },
