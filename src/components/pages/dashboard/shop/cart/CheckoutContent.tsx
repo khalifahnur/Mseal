@@ -117,7 +117,7 @@ export default function CheckoutSheet() {
       );
 
       clearCart();
-      redirect("/shop");
+      redirect("/home");
     } catch (error: unknown) {
       setPaymentStatus("error");
       const message =
