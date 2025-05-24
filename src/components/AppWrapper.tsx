@@ -18,14 +18,10 @@ function AppContent() {
   useEffect(() => {
     if (!mounted || isLoading || redirected) return;
 
-    console.log("Redirect Logic - User:", user, "Pathname:", pathname);
-
     if (user && !pathname.startsWith("/home")) {
-      console.log("Redirecting to /home...");
       setRedirected(true);
       router.push("/home");
     } else if (!user && pathname !== "/") {
-      console.log("Redirecting to /...");
       setRedirected(true);
       router.push("/");
     }
@@ -37,11 +33,10 @@ function AppContent() {
   }, [user]);
 
   if (!mounted) {
-    return null; // Wait for mounting
+    return null;
   }
 
   if (isLoading) {
-    console.log("Showing loading spinner...");
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div
@@ -52,15 +47,12 @@ function AppContent() {
     );
   }
 
-  console.log("Rendering - User:", user, "Pathname:", pathname);
 
   if (!user && pathname === "/") {
-    console.log("Rendering LandingPage...");
     return <LandingPage />;
   }
 
   if (user && pathname.startsWith("/home")) {
-    console.log("Rendering /home page...");
     return null;
   }
 
