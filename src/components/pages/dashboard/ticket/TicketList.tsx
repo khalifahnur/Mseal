@@ -16,7 +16,6 @@ import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import { ApiResponse } from "@/types/ticket";
 
 
-// Mock opponent data (you might want to fetch this from your API)
 const opponentData: Record<string, { name: string; logo: string }> = {
   "Gor Mahia": { name: "Gor Mahia", logo: "/assets/images/gor-mahia.png" },
   "AFC Leopards": { name: "AFC Leopards", logo: "/assets/images/afc-leopards.png" },
@@ -29,7 +28,6 @@ export function TicketList() {
   const dateFilter = searchParams.get("date");
   const sortBy = searchParams.get("sort");
 
-  // Fetch tickets using react-query
   const { data, isLoading, error } = useQuery<ApiResponse>({
     queryKey: ["tickets", dateFilter, sortBy],
     queryFn: fetchTickets,
@@ -100,7 +98,6 @@ export function TicketList() {
   return (
     <div className="grid gap-6">
       {filteredEvents.map((event) => {
-        // Calculate opponent from event name
         const opponentName = event.name
           .replace("Muranga Seal vs.", "")
           .replace("vs. Muranga Seal", "")
@@ -110,7 +107,7 @@ export function TicketList() {
           logo: "/placeholder.svg",
         };
 
-        const availableTickets = event.totalTickets;
+        const availableTickets = event.availableTickets;
         const soldPercentage = 0;
         const isSellingFast = false;
 
@@ -143,7 +140,7 @@ export function TicketList() {
                           />
                           <span className="text-sm">vs</span>
                           <Image
-                            src={opponent.logo}
+                            src={opponent.logo || '/placeholder.svg'}
                             alt={opponent.name}
                             width={40}
                             height={40}
