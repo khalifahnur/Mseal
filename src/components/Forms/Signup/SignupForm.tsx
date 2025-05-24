@@ -1,27 +1,30 @@
 "use client";
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeOff, User, Mail, Phone, Lock, ArrowRight } from "lucide-react";
 import { useSignUp } from "@/hooks/Authhook/authHook";
 import { toast } from "react-toastify";
 import { signupSchema } from "@/lib/validationSchema";
-import { features } from "@/lib/placeholderData";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import LeftSection from "./LeftSection";
 
 interface signUpProps {
-  onSignInClick:()=>void;
+  onSignInClick: () => void;
 }
 
-const SignUpPage = ({onSignInClick}:signUpProps) => {
+const SignUpPage = ({ onSignInClick }: signUpProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const signUpMutation = useSignUp();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleSubmit = async (values: {
     firstName: string;
     lastName: string;
@@ -32,15 +35,15 @@ const SignUpPage = ({onSignInClick}:signUpProps) => {
   }) => {
     try {
       setLoading(true);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/ 
       const { confirmPassword, ...submitData } = values;
       await signUpMutation.mutateAsync(submitData);
       setTimeout(() => {
         <FullScreenLoader />;
       }, 3000);
       onSignInClick();
-      
-      toast.success(" 🎉 Registration Successful! You can now sign in.", {
+
+      toast.success("🎉 Registration Successful! You can now sign in.", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -49,9 +52,10 @@ const SignUpPage = ({onSignInClick}:signUpProps) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        //transition: Bounce,
       });
-    } catch (err: any) {
+    } 
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (err: any) {
       toast.error(err.message || "❌ Registration failed. Please try again.");
       setLoading(false);
     }
@@ -74,385 +78,379 @@ const SignUpPage = ({onSignInClick}:signUpProps) => {
   });
 
   return (
-    <div className="grid md:grid-cols-2 min-h-[550px]">
-      {/* Left Side - Features */}
-      <div className="bg-[#fae115] p-8 relative overflow-hidden">
-        <div className="relative z-10 items-center pt-10">
-          <h2 className="text-xl font-bold text-black mb-6">
-            Membership Benefits
-          </h2>
-          <div className="space-y-4">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-center text-center space-x-2"
-              >
-                <svg
-                  className="w-5 h-5 text-black"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-black">{feature}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        {/* Animated Background Pattern */}
+    <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(250,225,21,0.1),transparent_50%)]" />
+
+      <div className="relative z-10 container mx-auto max-h-fit p-4 flex items-center justify-center">
         <motion.div
-          className="absolute inset-0 opacity-10"
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          style={{
-            backgroundImage: `url('https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png')`,
-            backgroundSize: "cover",
-          }}
-        />
-      </div>
-
-      {/* Right Side - Single Form */}
-      <div className="p-4 bg-white items-center">
-        <h1 className="text-xl font-bold text-gray-800 mb-6">Create Account</h1>
-
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* First Name */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <label
-                htmlFor="firstName"
-                className="block text-sm font-medium text-gray-700"
-              >
-                First Name
-              </label>
-              <input
-                id="firstName"
-                name="firstName"
-                type="text"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`mt-1 block w-full rounded-md border ${
-                  formik.touched.firstName && formik.errors.firstName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
-              />
-              {formik.touched.firstName && formik.errors.firstName && (
-                <p className="mt-1 text-sm text-red-500">
-                  {formik.errors.firstName}
-                </p>
-              )}
-            </motion.div>
-
-            {/* Last Name */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <label
-                htmlFor="lastName"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Last Name
-              </label>
-              <input
-                id="lastName"
-                name="lastName"
-                type="text"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`mt-1 block w-full rounded-md border ${
-                  formik.touched.lastName && formik.errors.lastName
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
-              />
-              {formik.touched.lastName && formik.errors.lastName && (
-                <p className="mt-1 text-sm text-red-500">
-                  {formik.errors.lastName}
-                </p>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Email */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`mt-1 block w-full rounded-md border ${
-                formik.touched.email && formik.errors.email
-                  ? "border-red-500"
-                  : "border-gray-300"
-              } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
-            />
-            {formik.touched.email && formik.errors.email && (
-              <p className="mt-1 text-sm text-red-500">{formik.errors.email}</p>
-            )}
-          </motion.div>
-
-          {/* Phone Number */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <label
-              htmlFor="phoneNumber"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Phone Number
-            </label>
-            <div className="flex mt-1">
-              <div className="flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50">
-                {/* <img
-                  src="/api/placeholder/24/16"
-                  alt="Kenya flag"
-                  className="h-4 w-6 mr-2"
-                /> */}
-                <span className="text-gray-500">+254</span>
-              </div>
-              <input
-                id="phoneNumber"
-                name="phoneNumber"
-                type="tel"
-                value={formik.values.phoneNumber}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`block w-full rounded-r-md border ${
-                  formik.touched.phoneNumber && formik.errors.phoneNumber
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500`}
-                placeholder="712345678"
-              />
-            </div>
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <p className="mt-1 text-sm text-red-500">
-                {formik.errors.phoneNumber}
-              </p>
-            )}
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Password */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
-              <div className="relative mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className={`block w-full rounded-md border ${
-                    formik.touched.password && formik.errors.password
-                      ? "border-red-500"
-                      : "border-gray-300"
-                  } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 pr-10`}
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 px-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <FaEyeSlash className="text-gray-400" />
-                  ) : (
-                    <FaEye className="text-gray-400" />
-                  )}
-                </button>
-              </div>
-              {formik.touched.password && formik.errors.password && (
-                <p className="mt-1 text-sm text-red-500">
-                  {formik.errors.password}
-                </p>
-              )}
-            </motion.div>
-
-            {/* Confirm Password */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm Password
-              </label>
-              <div className="relative mt-1">
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className={`block w-full rounded-md border ${
-                    formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
-                      ? "border-red-500"
-                      : "border-gray-300"
-                  } px-3 py-2 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 pr-10`}
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 px-3 flex items-center"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <FaEyeSlash className="text-gray-400" />
-                  ) : (
-                    <FaEye className="text-gray-400" />
-                  )}
-                </button>
-              </div>
-              {formik.touched.confirmPassword &&
-                formik.errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {formik.errors.confirmPassword}
-                  </p>
-                )}
-            </motion.div>
-          </div>
-
-          {/* Terms and Conditions */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex items-start mt-4"
-          >
-            <div className="flex items-center h-5">
-              <input
-                id="agreeTerms"
-                name="agreeTerms"
-                type="checkbox"
-                checked={formik.values.agreeTerms}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-300 rounded"
-              />
-            </div>
-            <div className="ml-3 text-sm">
-              <label htmlFor="agreeTerms" className="font-medium text-gray-700">
-                I agree to the{" "}
-                <a href="#" className="text-yellow-600 hover:text-yellow-500">
-                  Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-yellow-600 hover:text-yellow-500">
-                  Privacy Policy
-                </a>
-              </label>
-              {formik.touched.agreeTerms && formik.errors.agreeTerms && (
-                <p className="mt-1 text-sm text-red-500">
-                  {formik.errors.agreeTerms}
-                </p>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Submit Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="mt-6"
-          >
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-[#fae115] text-black rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors font-medium"
-              disabled={loading}
-              style={{ backgroundColor: loading ? undefined : "#fae115" }}
-            >
-              {loading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
-                  <span>Creating account...</span>
-                </div>
-              ) : (
-                <span>Create Account</span>
-              )}
-            </button>
-          </motion.div>
-        </form>
-
-        {/* Google Sign Up */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="mt-6"
+          transition={{ duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden w-full max-w-7xl"
         >
-          <div className="relative flex items-center justify-center">
-            <div className="absolute border-t border-gray-300 w-full"></div>
-            <div className="relative bg-white px-4 text-sm text-gray-500">
-              Or sign up with
+          <div className="grid lg:grid-cols-2 min-h-10/12">
+            {/* Left Section */}
+            <LeftSection />
+
+            {/* Right Section*/}
+            <div className="p-12 flex flex-col justify-center bg-white/50 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="max-w-lg mx-auto w-full space-y-8"
+              >
+                {/* Header */}
+                <div className="text-center space-y-2">
+                  <h1 className="text-3xl font-bold text-gray-900">
+                    Create Account
+                  </h1>
+                  <p className="text-gray-600">
+                    Join us today and start your journey
+                  </p>
+                </div>
+
+                {/* Form */}
+                <form onSubmit={formik.handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="space-y-2"
+                    >
+                      <Label
+                        htmlFor="firstName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        First Name
+                      </Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          value={formik.values.firstName}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          placeholder="Enter first name"
+                          className={`pl-10 h-12 border-2 transition-all duration-200 ${
+                            formik.touched.firstName && formik.errors.firstName
+                              ? "border-red-300 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                          }`}
+                        />
+                      </div>
+                      {formik.touched.firstName && formik.errors.firstName && (
+                        <p className="text-red-500 text-sm">
+                          {formik.errors.firstName}
+                        </p>
+                      )}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="space-y-2"
+                    >
+                      <Label
+                        htmlFor="lastName"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Last Name
+                      </Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Input
+                          id="lastName"
+                          name="lastName"
+                          type="text"
+                          value={formik.values.lastName}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          placeholder="Enter last name"
+                          className={`pl-10 h-12 border-2 transition-all duration-200 ${
+                            formik.touched.lastName && formik.errors.lastName
+                              ? "border-red-300 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                          }`}
+                        />
+                      </div>
+                      {formik.touched.lastName && formik.errors.lastName && (
+                        <p className="text-red-500 text-sm">
+                          {formik.errors.lastName}
+                        </p>
+                      )}
+                    </motion.div>
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="space-y-2"
+                  >
+                    <Label
+                      htmlFor="email"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Email Address
+                    </Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        placeholder="Enter your email"
+                        className={`pl-10 h-12 border-2 transition-all duration-200 ${
+                          formik.touched.email && formik.errors.email
+                            ? "border-red-300 focus:border-red-500"
+                            : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                        }`}
+                      />
+                    </div>
+                    {formik.touched.email && formik.errors.email && (
+                      <p className="text-red-500 text-sm">
+                        {formik.errors.email}
+                      </p>
+                    )}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="space-y-2"
+                  >
+                    <Label
+                      htmlFor="phoneNumber"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Phone Number
+                    </Label>
+                    <div className="flex">
+                      <div className="flex items-center px-4 rounded-l-lg border-2 border-r-0 border-gray-200 bg-gray-50/50">
+                        <Phone className="w-4 h-4 text-gray-400 mr-2" />
+                        <span className="text-gray-600 font-medium">+254</span>
+                      </div>
+                      <Input
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        type="tel"
+                        value={formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        placeholder="712345678"
+                        className={`rounded-l-none h-12 border-2 transition-all duration-200 ${
+                          formik.touched.phoneNumber &&
+                          formik.errors.phoneNumber
+                            ? "border-red-300 focus:border-red-500"
+                            : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                        }`}
+                      />
+                    </div>
+                    {formik.touched.phoneNumber &&
+                      formik.errors.phoneNumber && (
+                        <p className="text-red-500 text-sm">
+                          {formik.errors.phoneNumber}
+                        </p>
+                      )}
+                  </motion.div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                      className="space-y-2"
+                    >
+                      <Label
+                        htmlFor="password"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Password
+                      </Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Input
+                          id="password"
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          placeholder="Create password"
+                          className={`pl-10 pr-12 h-12 border-2 transition-all duration-200 ${
+                            formik.touched.password && formik.errors.password
+                              ? "border-red-300 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                          }`}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-1 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-gray-100"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4 text-gray-400" />
+                          ) : (
+                            <Eye className="w-4 h-4 text-gray-400" />
+                          )}
+                        </Button>
+                      </div>
+                      {formik.touched.password && formik.errors.password && (
+                        <p className="text-red-500 text-sm">
+                          {formik.errors.password}
+                        </p>
+                      )}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.9 }}
+                      className="space-y-2"
+                    >
+                      <Label
+                        htmlFor="confirmPassword"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Confirm Password
+                      </Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Input
+                          id="confirmPassword"
+                          name="confirmPassword"
+                          type={showConfirmPassword ? "text" : "password"}
+                          value={formik.values.confirmPassword}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          placeholder="Confirm password"
+                          className={`pl-10 pr-12 h-12 border-2 transition-all duration-200 ${
+                            formik.touched.confirmPassword &&
+                            formik.errors.confirmPassword
+                              ? "border-red-300 focus:border-red-500"
+                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                          }`}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                          className="absolute right-1 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-gray-100"
+                        >
+                          {showConfirmPassword ? (
+                            <EyeOff className="w-4 h-4 text-gray-400" />
+                          ) : (
+                            <Eye className="w-4 h-4 text-gray-400" />
+                          )}
+                        </Button>
+                      </div>
+                      {formik.touched.confirmPassword &&
+                        formik.errors.confirmPassword && (
+                          <p className="text-red-500 text-sm">
+                            {formik.errors.confirmPassword}
+                          </p>
+                        )}
+                    </motion.div>
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.0 }}
+                    className="space-y-4"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <Checkbox
+                        id="agreeTerms"
+                        checked={formik.values.agreeTerms}
+                        onCheckedChange={(checked) =>
+                          formik.setFieldValue("agreeTerms", checked)
+                        }
+                        className="border-2 border-gray-300 data-[state=checked]:bg-[#fae115] data-[state=checked]:border-[#fae115] mt-1"
+                      />
+                      <div className="text-sm leading-relaxed">
+                        <Label
+                          htmlFor="agreeTerms"
+                          className="text-gray-700 cursor-pointer"
+                        >
+                          I agree to the{" "}
+                          <a
+                            href="#"
+                            className="text-[#fae115] hover:text-[#e6c200] font-medium underline"
+                          >
+                            Terms of Service
+                          </a>{" "}
+                          and{" "}
+                          <a
+                            href="#"
+                            className="text-[#fae115] hover:text-[#e6c200] font-medium underline"
+                          >
+                            Privacy Policy
+                          </a>
+                        </Label>
+                        {formik.touched.agreeTerms &&
+                          formik.errors.agreeTerms && (
+                            <p className="mt-1 text-red-500 text-sm">
+                              {formik.errors.agreeTerms}
+                            </p>
+                          )}
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Submit Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.1 }}
+                  >
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full h-12 bg-gradient-to-r from-[#fae115] to-[#f5d800] hover:from-[#f5d800] hover:to-[#e6c200] text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    >
+                      {loading ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                          Creating account...
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          Create Account
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      )}
+                    </Button>
+                  </motion.div>
+                </form>
+                <div className="text-center pt-6 border-t border-gray-100">
+                  <p className="text-gray-600">
+                    Already have an account?{" "}
+                    <button
+                      onClick={onSignInClick}
+                      className="text-[#fae115] hover:text-[#e6c200] font-semibold transition-colors hover:underline"
+                    >
+                      Sign in here
+                    </button>
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
-          <button
-            type="button"
-            className="mt-4 w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-          >
-            <FcGoogle className="h-5 w-5 mr-2" />
-            Sign up with Google
-          </button>
-        </motion.div> */}
-
-        {/* Login Link */}
-        <div className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{" "}
-            <button className="text-yellow-600 hover:text-yellow-500 font-medium hover:underline cursor-pointer" onClick={onSignInClick}>Log in</button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
