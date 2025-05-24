@@ -44,6 +44,7 @@ export function ActiveTickets() {
   if (isLoading) return <FullScreenLoader />;
 
   const activeTickets = data?.tickets ?? [];
+
   const qrcodeData = data?.qrcode;
 
   if (activeTickets.length === 0) {
@@ -88,7 +89,7 @@ export function ActiveTickets() {
   return (
     <div className="grid gap-6">
       {/* eslint-disable @typescript-eslint/no-explicit-any */}
-      {activeTickets.map((ticket: any) => {
+      {activeTickets.map((ticket: any, index: number) => {
         const event = ticket.event?.[0];
         return (
           <Card key={ticket._id} className="overflow-hidden">
@@ -138,7 +139,7 @@ export function ActiveTickets() {
                         <DialogTrigger asChild>
                           <Button
                             variant="outline"
-                            onClick={() => generateQRCode(qrcodeData)}
+                            onClick={() => generateQRCode(qrcodeData[index])}
                           >
                             <QrCode className="mr-2 h-4 w-4" />
                             View Ticket
