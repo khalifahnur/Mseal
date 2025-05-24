@@ -6,6 +6,7 @@ export interface Event {
   venue: string;
   ticketPrice: number;
   totalTickets: number;
+  availableTickets:number;
   createdAt: string;
 }
 
