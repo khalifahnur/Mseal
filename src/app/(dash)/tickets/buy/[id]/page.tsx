@@ -83,7 +83,13 @@ const PaymentProcessingOverlay = ({
   );
 };
 
-const StatusBanner = ({ status, message }:{status:"idle" | "initiating" | "pending" | "success" | "error", message:string}) => {
+const StatusBanner = ({
+  status,
+  message,
+}: {
+  status: "idle" | "initiating" | "pending" | "success" | "error";
+  message: string;
+}) => {
   const statusConfig = {
     idle: {
       icon: null,
@@ -177,8 +183,8 @@ export default function BuyTicketPage() {
             Event Not Found
           </h2>
           <p className="text-gray-600 mb-6">
-            We couldn&apos;t find the event you&apos;re looking for or failed to load
-            event details.
+            We couldn&apos;t find the event you&apos;re looking for or failed to
+            load event details.
           </p>
           <Link
             href="/tickets"
@@ -199,7 +205,7 @@ export default function BuyTicketPage() {
 
     return {
       eventId: event._id,
-      match: event.name,
+      match: `${event.homeTeam} vs. ${event.awayTeam}`,
       date: event.date,
       venue: event.venue,
       quantity: quantity,
@@ -218,14 +224,11 @@ export default function BuyTicketPage() {
     }
 
     try {
-      // Short timeout to show the initiating state
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setPaymentStatus("pending");
 
-      // Process payment
       await initiateTicketPayment.mutateAsync(ticketDetails);
 
-      // Short timeout to ensure processing overlay is visible
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setPaymentStatus("success");
 
@@ -242,7 +245,7 @@ export default function BuyTicketPage() {
         }
       );
       /* eslint-disable @typescript-eslint/no-explicit-any */
-    } catch (error: any) { 
+    } catch (error: any) {
       setPaymentStatus("error");
       setErrorMessage(
         error?.message || "An error occurred while processing your payment."
@@ -405,7 +408,26 @@ export default function BuyTicketPage() {
             </CardHeader>
             <CardContent className="space-y-6 pt-6">
               <div>
-                <h3 className="text-xl font-bold">{event.name}</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-lg font-bold">{`${event.homeTeam} vs. ${event.awayTeam}`}</h3>
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      src={event.homeLogoUrl || "/placeholder.svg"}
+                      alt={event.homeTeam}
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                    <span className="text-sm">vs</span>
+                    <Image
+                      src={event.opponentLogoUrl || "/placeholder.svg"}
+                      alt={event.awayTeam}
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                  </div>
+                </div>
 
                 <div className="mt-4 space-y-3 text-sm">
                   <div className="flex items-center text-muted-foreground">
