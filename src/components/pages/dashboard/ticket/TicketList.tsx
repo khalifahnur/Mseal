@@ -15,14 +15,6 @@ import { fetchTickets } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import { ApiResponse } from "@/types/ticket";
 
-
-const opponentData: Record<string, { name: string; logo: string }> = {
-  "Gor Mahia": { name: "Gor Mahia", logo: "/assets/images/gor-mahia.png" },
-  "AFC Leopards": { name: "AFC Leopards", logo: "/assets/images/afc-leopards.png" },
-  "Tusker FC": { name: "Tusker FC", logo: "/assets/images/tusker-fc.png" },
-  "KCB FC": { name: "KCB FC", logo: "/assets/images/kcb-fc.png" },
-};
-
 export function TicketList() {
   const searchParams = useSearchParams();
   const dateFilter = searchParams.get("date");
@@ -58,7 +50,6 @@ export function TicketList() {
       });
     }
 
-    // Apply sorting
     if (sortBy) {
       events.sort((a, b) => {
         if (sortBy === "price-asc") {
@@ -98,27 +89,23 @@ export function TicketList() {
   return (
     <div className="grid gap-6">
       {filteredEvents.map((event) => {
-        const opponentName = event.name
-          .replace("Muranga Seal vs.", "")
-          .replace("vs. Muranga Seal", "")
-          .trim();
-        const opponent = opponentData[opponentName] || {
-          name: opponentName,
-          logo: "/placeholder.svg",
-        };
+        const eventName = `${event.homeTeam} vs. ${event.awayTeam}`;
 
-        const availableTickets = event.availableTickets;
-        const soldPercentage = 0;
-        const isSellingFast = false;
+        const availableTickets = event.availableTickets || 0;
+        const totalTickets = event.totalTickets || 1;
+        const soldPercentage = Math.round(
+          ((totalTickets - availableTickets) / totalTickets) * 100
+        );
+        const isSellingFast = soldPercentage > 75;
 
         return (
           <Card key={event._id} className="overflow-hidden">
             <CardContent className="p-0">
-              <div className="flex flex-col md:flex-row">
-                <div className="relative md:w-1/3 ">
+              <div className="flex flex-col md:flex-row bg-[url('/assets/ticket-bg.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-50 before:absolute before:inset-0 before:z-[-1]">
+                <div className="relative md:w-1/3">
                   <Image
-                    src={`/assets/images/stadi1.jpeg`}
-                    alt={event.name}
+                    src={"/assets/images/stadi1.jpeg"}
+                    alt={eventName}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -129,19 +116,19 @@ export function TicketList() {
                   <div className="flex flex-col h-full justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold">{event.name}</h3>
+                        <h3 className="text-xl font-bold">{eventName}</h3>
                         <div className="flex items-center space-x-2">
                           <Image
-                            src="/assets/images/muranga-seal.png"
-                            alt="Muranga Seal"
+                            src={event.homeLogoUrl || "/placeholder.svg"}
+                            alt={event.homeTeam}
                             width={40}
                             height={40}
                             className="rounded-full"
                           />
                           <span className="text-sm">vs</span>
                           <Image
-                            src={opponent.logo || '/placeholder.svg'}
-                            alt={opponent.name}
+                            src={event.opponentLogoUrl || "/placeholder.svg"}
+                            alt={event.awayTeam}
                             width={40}
                             height={40}
                             className="rounded-full"
@@ -182,8 +169,7 @@ export function TicketList() {
                         <Badge variant="destructive">Selling Fast</Badge>
                       ) : (
                         <Badge variant="outline">On Sale</Badge>
-                    )}
-
+                      )}
                       <Link href={`/tickets/buy/${event._id}`}>
                         <Button>Buy Now</Button>
                       </Link>

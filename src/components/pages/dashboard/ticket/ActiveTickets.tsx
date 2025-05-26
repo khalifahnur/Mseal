@@ -94,9 +94,8 @@ export function ActiveTickets() {
         return (
           <Card key={ticket._id} className="overflow-hidden">
             <CardContent className="p-0">
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col md:flex-row bg-[url('/assets/images/stadi1.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-50 before:absolute before:inset-0 before:z-[-1]">
                 <div className="relative md:w-1/3">
-                  {/* Placeholder image or stadium/event image */}
                   <Image
                     src={`/assets/images/stadi1.jpeg`}
                     alt={event?.match || "Match"}
@@ -108,28 +107,28 @@ export function ActiveTickets() {
                 <div className="flex-1 p-6">
                   <div className="flex flex-col h-full justify-between">
                     <div>
-                      <h3 className="text-xl font-bold mb-2">{event?.match}</h3>
+                      <h3 className="text-xl font-bold mb-2 text-white md:text-black">{event?.match}</h3>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                         <div className="flex items-center text-muted-foreground">
-                          <Calendar className="mr-2 h-4 w-4" />
-                          <span>{formatDate(event?.date)}</span>
+                          <Calendar className="mr-2 h-4 w-4 text-white md:text-black" />
+                          <span className="text-white md:text-black">{formatDate(event?.date)}</span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
-                          <Clock className="mr-2 h-4 w-4" />
-                          <span>15:00 EAT</span>
+                          <Clock className="mr-2 h-4 w-4 text-white md:text-black" />
+                          <span className="text-white md:text-black">15:00 EAT</span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
-                          <MapPin className="mr-2 h-4 w-4" />
-                          <span>{event?.venue}</span>
+                          <MapPin className="mr-2 h-4 w-4 text-white md:text-black" />
+                          <span className="text-white md:text-black">{event?.venue}</span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
-                          <Ticket className="mr-2 h-4 w-4" />
-                          <span>Regular Ticket</span>
+                          <Ticket className="mr-2 h-4 w-4 text-white md:text-black" />
+                          <span className="text-white md:text-black">Regular Ticket</span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
-                          <User className="mr-2 h-4 w-4" />
-                          <span>Section A, Row 5, Seat 12</span>
+                          <User className="mr-2 h-4 w-4 text-white md:text-black" />
+                          <span className="text-white md:text-black">Section A, Row 5, Seat 12</span>
                         </div>
                       </div>
                     </div>
