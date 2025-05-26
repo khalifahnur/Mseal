@@ -76,7 +76,7 @@ export function TicketHistory() {
         <Receipt className="h-12 w-12 text-muted-foreground mb-4" />
         <h3 className="text-xl font-medium mb-2">No ticket history</h3>
         <p className="text-muted-foreground mb-6">
-          You haven't purchased any tickets yet.
+          You haven&apos;t purchased any tickets yet.
         </p>
         <Button asChild>
           <a href="/tickets">Browse Tickets</a>
