@@ -1,12 +1,28 @@
+// export interface Event {
+//   _id: string;
+//   name: string;
+//   date: string;
+//   time: string;
+//   venue: string;
+//   ticketPrice: number;
+//   totalTickets: number;
+//   availableTickets:number;
+//   createdAt: string;
+// }
+
 export interface Event {
   _id: string;
-  name: string;
+  homeTeam: string;
+  awayTeam: string;
   date: string;
   time: string;
   venue: string;
   ticketPrice: number;
   totalTickets: number;
-  availableTickets:number;
+  availableTickets: number;
+  homeLogoUrl?: string;
+  opponentLogoUrl?: string;
+  imageUrl?: string; 
   createdAt: string;
 }
 
