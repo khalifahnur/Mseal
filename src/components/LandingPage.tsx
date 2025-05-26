@@ -9,17 +9,26 @@ import { MembershipBenefits } from "@/components/pages/landing/membershipbenefit
 import Pricing from "@/components/pages/landing/pricesection";
 import Testimonials from "@/components/pages/landing/testimonial";
 import TrustedSponsors from "@/components/pages/landing/TrustedSPonsor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthPage from "./Forms/AuthPage";
+import CookieConsentModal from "./pages/landing/cookieConsent";
 
 export default function LandingPage() {
   const [showAUth, setShowAuth] = useState(false);
+  const [showCookieModal, setShowCookieModal] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem("cookieConsent");
+    if (!consent) {
+      setShowCookieModal(true);
+    }
+  }, []);
 
   if (showAUth) {
     return (
       <div className="relative">
         <button
-          className="absolute top-4 left-4 z-10 hover:underline bg-transparent cursor-pointer"
+          className="absolute hidden md:block md:top-10 md:left-35 z-999 hover:underline bg-transparent cursor-pointer"
           onClick={() => setShowAuth(false)}
         >
           ← Back to Home
@@ -48,6 +57,10 @@ export default function LandingPage() {
         <FAQSection />
       </main>
       <Footer />
+      <CookieConsentModal
+        isOpen={showCookieModal}
+        onOpenChange={setShowCookieModal}
+      />
     </div>
   );
 }
