@@ -279,3 +279,63 @@ export const initiateWalletTopupPayment = async (
     }
   }
 };
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function fetchUserTransactions() {
+  try {
+    const response = await apiClient.get("/transaction/fetch-latest-transaction");
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Error fetching admin info:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "Error fetching admin info.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function fetchUserWalletTransactions() {
+  try {
+    const response = await apiClient.get("/transaction/fetch-wallet-transaction");
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Error fetching admin info:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "Error fetching admin info.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function fetchUpcomingEvents() {
+  try {
+    const response = await apiClient.get("/event/fetch-upcoming-events");
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Error fetching admin info:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "Error fetching admin info.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+}
