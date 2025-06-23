@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/hooks/Store/CartContext";
 import { CreditCard, MapPin, Package, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,11 +23,18 @@ import { useOrderPayment } from "@/hooks/Paymenthook/usePaymentHook";
 import { toast } from "react-toastify";
 import ReactConfetti from "react-confetti";
 import { useWindowSize } from "react-use";
-import { redirect } from "next/navigation";
+import useSocketData from "@/hooks/socket/socketHook";
 
-export default function CheckoutSheet() {
+type checkoutProp = {
+  setActiveSheet: (sheet: "cart" | "checkout" | null) => void;
+};
+
+export default function CheckoutSheet({ setActiveSheet }: checkoutProp) {
   const { user } = useAuth();
   const { cart, clearCart } = useCart();
+  const { width, height } = useWindowSize();
+  const initiateOrderPayment = useOrderPayment();
+
   const [shippingDetails, setShippingDetails] = useState({
     address: "",
     city: "",
@@ -35,16 +42,72 @@ export default function CheckoutSheet() {
     country: "Kenya",
     mpesaNumber: user?.phoneNumber || "",
   });
-  const { width, height } = useWindowSize();
-
   const [paymentStatus, setPaymentStatus] = useState<
-    "idle" | "initiating" | "pending" | "success" | "error"
+    "idle" | "initiating" | "pending" | "success" | "error" | "timeout"
   >("idle");
-  /* eslint-disable @typescript-eslint/no-unused-vars*/
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [transactionReference, setTransactionReference] = useState<
+    string | null
+  >(null);
 
-  const initiateOrderPayment = useOrderPayment();
+  const confirmOrderPaymentStatus = useSocketData(
+    "confirmMembershipPaymentStatus",
+    transactionReference
+  );
+
+  useEffect(() => {
+    if (transactionReference && confirmOrderPaymentStatus) {
+      if (
+        confirmOrderPaymentStatus.orderId &&
+        confirmOrderPaymentStatus.paymentStatus === "Completed"
+      ) {
+        setPaymentStatus("success");
+        toast.success("Payment confirmed! Order placed.", {
+          position: "top-right",
+          autoClose: 5000,
+          toastId: "payment-success",
+        });
+
+        setTimeout(() => {
+          setActiveSheet(null);
+          clearCart();
+          setShowConfetti(false);
+        }, 1000);
+      } else if (confirmOrderPaymentStatus.paymentStatus === "Failed") {
+        setPaymentStatus("error");
+        setErrorMessage("Payment failed. Please try again.");
+        toast.error("Payment failed. Please try again.", {
+          position: "bottom-right",
+          autoClose: 5000,
+          toastId: "payment-failed",
+        });
+      }
+    }
+  }, [
+    transactionReference,
+    confirmOrderPaymentStatus,
+    clearCart,
+    setActiveSheet,
+    paymentStatus,
+  ]);
+
+  // Timeout for payment completion
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (paymentStatus === "pending") {
+      timeout = setTimeout(() => {
+        setPaymentStatus("timeout");
+        setErrorMessage("Payment timed out. Please try again.");
+        toast.error("Payment timed out. Please try again.", {
+          position: "bottom-right",
+          autoClose: 5000,
+          toastId: "payment-timeout",
+        });
+      }, 5 * 60 * 1000); // 5 minutes
+    }
+    return () => clearTimeout(timeout);
+  }, [paymentStatus]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,6 +149,7 @@ export default function CheckoutSheet() {
         {
           position: "top-right",
           autoClose: 5000,
+          toastId: "shipping-error",
         }
       );
       return;
@@ -96,39 +160,16 @@ export default function CheckoutSheet() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setPaymentStatus("pending");
-
-      await initiateOrderPayment.mutateAsync(data);
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setPaymentStatus("success");
+      const paymentResponse = await initiateOrderPayment.mutateAsync(data);
+      setTransactionReference(paymentResponse.reference);
       setShowConfetti(true);
-
-      toast.success(
-        "STK Push sent successfully! Please complete the payment on your phone.",
-        {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-        }
-      );
-
-      clearCart();
-      redirect("/home");
     } catch (error: unknown) {
       setPaymentStatus("error");
       const message =
         error instanceof Error
           ? error.message
-          : "An error occurred while processing your payment.";
+          : "An error occurred while initiating your payment.";
       setErrorMessage(message);
-      toast.error("Payment initiation failed. Please try again.", {
-        position: "bottom-right",
-        autoClose: 5000,
-      });
     }
   };
 
@@ -139,11 +180,23 @@ export default function CheckoutSheet() {
       case "initiating":
         return "Preparing your payment request. This will only take a moment...";
       case "pending":
-        return "Payment request sent. Please check your phone to complete the M-Pesa transaction. Keep this page open until the transaction is complete.";
+        return (
+          <div className="flex items-center space-x-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-500"></div>
+            <span>
+              Payment request sent. Please check your phone to complete the
+              M-Pesa transaction. Keep this page open.
+            </span>
+          </div>
+        );
       case "success":
-        return "Payment request sent successfully! Complete the payment on your phone to confirm your order. You'll receive a confirmation once the payment is complete.";
+        return "Payment confirmed! Your order has been placed successfully.";
       case "error":
-        return "An error occurred while processing your payment.";
+        return (
+          errorMessage || "An error occurred while processing your payment."
+        );
+      case "timeout":
+        return "Payment timed out. Please try again.";
     }
   };
 
@@ -360,11 +413,9 @@ export default function CheckoutSheet() {
             <span>Total</span>
             <span>Ksh.{total.toFixed(2)}</span>
           </div>
-          {paymentStatus !== "idle" && (
-            <div className="text-sm text-muted-foreground">
-              {getStatusMessage()}
-            </div>
-          )}
+          <div className="text-sm text-muted-foreground">
+            {getStatusMessage()}
+          </div>
         </div>
         <div className="p-4 pt-0">
           <Button

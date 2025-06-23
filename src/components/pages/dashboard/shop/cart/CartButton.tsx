@@ -43,7 +43,7 @@ export default function CartButton() {
           if (!open && activeSheet === "checkout") setActiveSheet(null)
         }}
       >
-        <CheckoutSheet />
+        <CheckoutSheet setActiveSheet={setActiveSheet} />
       </Sheet>
     </Sheet>
   )

@@ -14,7 +14,6 @@ interface CartContentProps {
 
 export default function CartContent({onCheckout}:CartContentProps) {
   const { cart, removeFromCart,increaseQuantity, decreaseQuantity } = useCart()
-
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = cart.length > 0 ? 100 : 0
   const total = subtotal + shipping
