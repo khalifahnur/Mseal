@@ -10,6 +10,7 @@ import { fetchUserInfo } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import MembershipCard from "./MembershipCard";
 import MembershipFAQ from "./MembershipFaqs";
+import WalletContainer from "./WalletContainer";
 
 export default function MembershipPage() {
   const { data, isLoading } = useQuery({
@@ -30,11 +31,17 @@ export default function MembershipPage() {
 
   return (
     <div className="p-4 space-y-6">
-            
       {membershipId && (
-        <MembershipCard membershipId={membershipId} membershipTier={membershipTier} expDate={expDate} createdAt={createdAt} />
+        <>
+          <MembershipCard
+            membershipId={membershipId}
+            membershipTier={membershipTier}
+            expDate={expDate}
+            createdAt={createdAt}
+          />
+          <WalletContainer />
+        </>
       )}
-
 
       {/* Membership Benefits */}
       <Card className="bg-white/5">
@@ -87,7 +94,7 @@ export default function MembershipPage() {
       {/* Member Benefits */}
       <BenefitsList />
 
-            <MembershipFAQ />
+      <MembershipFAQ />
     </div>
   );
 }
