@@ -26,7 +26,8 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
   const [showPassword, setShowPassword] = useState(false)
   /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   const router = useRouter()
   const signInMutation = useLogin()
@@ -81,6 +82,10 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
       })
     }
   }, [signInMutation.isSuccess, signInMutation.isError, signInMutation.error, router])
+
+  
+
+  
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
@@ -220,7 +225,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                           </Label>
                         </div>
                         <Link
-                          href="/forgot-password"
+                          href={'/forgot-password'}
                           className="text-sm text-[#fae115] hover:text-[#e6c200] font-medium transition-colors"
                         >
                           Forgot password?
