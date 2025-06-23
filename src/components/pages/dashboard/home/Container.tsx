@@ -49,7 +49,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 pb-2">
+      <section className="grid gap-4 sm:grid-cols-2 mt-2">
         <div className="col-span-full sm:col-span-1" id="membership-card">
           {user?.membershipId == null ? (
             <NoMembership />
@@ -60,6 +60,8 @@ export default function Home() {
               teamName="Murang'a Seals"
               balance={user?.balance}
               qrcode={user?.qrcode}
+              expDate={user?.expDate}
+              createdAt={user?.createdAt}
             />
           )}
         </div>

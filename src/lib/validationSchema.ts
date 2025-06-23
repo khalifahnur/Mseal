@@ -44,3 +44,14 @@ export const loginSchema = Yup.object().shape({
     .required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
+
+export const paymentvalidationSchema = Yup.object({
+    amount: Yup.number()
+      .required("Amount is required")
+      .positive("Amount must be greater than 0")
+      .min(1, "Amount must be at least 1"),
+    phoneNumber: Yup.string()
+      .required("Phone number is required")
+      .matches(/^(\+254|0)[7|1]\d{8}$/, "Enter a valid Kenyan phone number (e.g., +2547XXXXXXXX)"),
+    useDefaultNumber: Yup.boolean(),
+  });

@@ -1,6 +1,6 @@
 import { AuthData, AuthResponse, ErrorResponse, PhoneNumber, PhoneNumberResponse } from "@/types/auth";
 import apiClient from "@/lib/apiClient";
-import { paymentData, paymentResponse, ticketPayment } from "@/types/payment";
+import { paymentData, paymentResponse, ticketPayment, walletPayment } from "@/types/payment";
 import { orders } from "@/types/order";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -212,6 +212,56 @@ export const initiateOrderPayment = async (data: orders): Promise<paymentRespons
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/initiate-order-payment",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Payment error details:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred during payment.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiatePesapalMembershipPayment = async (
+  data: paymentData
+): Promise<paymentResponse> => {
+  try {
+    const response = await apiClient.post<paymentResponse>(
+      "/payment/pesapal/initiate-payment",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Payment error details:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred during payment.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateWalletTopupPayment = async (
+  data: walletPayment
+): Promise<paymentResponse> => {
+  try {
+    const response = await apiClient.post<paymentResponse>(
+      "/payment/mseal-wallet-topup",
       data
     );
     return response.data;

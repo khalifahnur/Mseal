@@ -3,7 +3,8 @@
 import { Card } from "@/components/ui/card";
 import { QRCodeSVG } from "qrcode.react";
 import Image from "next/image";
-import { cn, maskExceptLastFour } from "@/lib/utils";
+import formatMonthYear, { cn, maskExceptLastFour } from "@/lib/utils";
+import { NfcIcon } from "lucide-react";
 
 interface MembershipCardProps {
   memberName: string;
@@ -12,6 +13,8 @@ interface MembershipCardProps {
   balance: number;
   logoUrl?: string;
   qrcode: string | null;
+  createdAt: string | null;
+  expDate: string | null;
 }
 
 export function MembershipCard({
@@ -21,79 +24,128 @@ export function MembershipCard({
   balance,
   logoUrl = "https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png",
   qrcode,
+  createdAt,
+  expDate,
 }: MembershipCardProps) {
   return (
-    <Card className="relative overflow-hidden aspect-[2.3/1]rounded-xl">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500"></div>
-      <div
-        className="absolute inset-0 bg-center bg-contain bg-no-repeat filter blur-xs"
+    <div className="relative w-full max-w-md mx-auto">
+      {/* <Card
+        className="relative overflow-hidden aspect-[2.3/1] rounded-2xl shadow-2xl border-0 mb-1 z-10 transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 hover:scale-105"
         style={{
-          backgroundImage: `url("${logoUrl}")`,
+          transform: "rotate(-2deg)",
         }}
-      ></div>
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 opacity-90"></div>
+        <div
+          className="absolute inset-0 bg-center bg-contain bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: `url("${logoUrl}")`,
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
 
-      <div className="relative p-4 flex flex-col justify-between text-white">
-        <div className="flex items-center gap-3">
-          <div className="w-16 h-16 relative">
-            <Image
-              src={logoUrl || "/placeholder.svg"}
-              alt={`${teamName} logo`}
-              fill
-              className="object-contain"
-            />
+        <div className="relative p-6 flex flex-col justify-between text-white h-full">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 relative bg-white/20 rounded-lg p-2 backdrop-blur-md">
+                <Image
+                  src={logoUrl || "/placeholder.svg"}
+                  alt={`${teamName} logo`}
+                  fill
+                  className="object-contain p-1"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="text-lg font-bold uppercase tracking-wide">{teamName}</h3>
+                <p className="text-xs font-medium text-white/80 uppercase tracking-widest">Membership Card</p>
+              </div>
+            </div>
+            <div
+              className={cn(
+                "bg-white rounded-lg shadow-lg",
+                qrcode ? "w-16 h-16 p-2" : "p-3"
+              )}
+            >
+              {qrcode ? (
+                <QRCodeSVG
+                  value={qrcode}
+                  size={48}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                  level="M"
+                  className="w-full h-full"
+                />
+              ) : (
+                <p className="text-gray-600 text-xs font-medium">No QR</p>
+              )}
+            </div>
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-xl font-bold uppercase">{teamName}</h3>
-            <p className="text-sm font-medium text-white/90">Membership Card</p>
+
+          <div className="flex justify-between items-end mt-8">
+            <div className="space-y-4">
+              {memberName && (
+                <div>
+                  <div className="text-xs opacity-70 uppercase tracking-widest mb-1">Member Name</div>
+                  <div className="text-sm font-semibold">{memberName}</div>
+                </div>
+              )}
+              <div>
+                <div className="text-xs opacity-70 uppercase tracking-widest mb-1">Balance</div>
+                <div className="font-mono text-lg font-bold">
+                  KSh {balance ? balance.toLocaleString("en-KE", { minimumFractionDigits: 2 }) : "0.00"}
+                </div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-xs opacity-70 uppercase tracking-widest mb-1">Member ID</div>
+              <div className="font-mono text-sm font-semibold">
+                {memberNumber ? maskExceptLastFour(memberNumber) : "N/A"}
+              </div>
+            </div>
           </div>
         </div>
+      </Card> */}
 
-        <div className="flex justify-between items-end">
-          <div>
-            {memberName && (
-              <div className="mb-2">
-                <div className="text-sm opacity-80">Member Name</div>
-                <div className="text-base font-bold">{memberName}</div>
-              </div>
-            )}
+      {/* payment Card */}
+      <Card
+        className="relative overflow-hidden rounded-2xl shadow-2xl border-0  transition-transform duration-300 hover:-translate-y-2 hover:rotate-[-1deg] hover:scale-105"
+        style={{
+          transform: "rotate(0deg) translateY(-5px)",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-tl from-gray-800 via-black to-gray-600 opacity-90"></div>
+        <div
+          className="absolute inset-0 bg-center bg-contain bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: `url("${logoUrl}")`,
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"></div>
 
+        <div className="relative p-6 flex flex-col justify-between text-white h-full">
+          <div className="flex justify-between items-start mb-4">
             <div>
-              <div className="text-sm opacity-80">Balance</div>
-              <div className="font-mono text-base font-bold">
-                Ksh.{balance ? balance.toFixed(2) : "N/A"}
-              </div>
+              <p className="text-sm opacity-80">Muranga Seal</p>
+              <p className="text-lg font-semibold">Gold Member</p>
             </div>
+            <NfcIcon className="h-8 w-8 opacity-60 transition-transform duration-300 hover:scale-110" />
           </div>
-
-          <div>
-            <div className="text-sm opacity-80">Member Number</div>
-            <div className="font-mono text-base font-bold">
-              {memberNumber ? maskExceptLastFour(memberNumber) : "N/A"}
+          <div className="space-y-2">
+            <p className="text-sm opacity-80">Card Number</p>
+            <p className="text-xl font-mono tracking-wider">•••• •••• •••• 1234</p>
+          </div>
+          <div className="flex justify-between items-end mt-4">
+            <div>
+              <p className="text-xs opacity-80">Member Since</p>
+              <p className="text-sm">{formatMonthYear(createdAt)}</p>
             </div>
-          </div>
-          {/* QR Code */}
-          <div
-            className={cn(
-              "bg-white p-2 rounded-lg",
-              qrcode ? "w-24 h-24" : "p-4"
-            )}
-          >
-            {qrcode ? (
-              <QRCodeSVG
-                value={qrcode}
-                size={88}
-                bgColor="#ffffff"
-                fgColor="#000000"
-                level="M"
-                className="w-full h-full"
-              />
-            ) : (
-              <p className="text-black text-xs">No QR Code</p>
-            )}
+            <div>
+              <p className="text-xs opacity-80">Expires</p>
+              <p className="text-sm">{formatMonthYear(expDate)}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }

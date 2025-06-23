@@ -20,10 +20,10 @@ function AppContent() {
 
     if (user && !pathname.startsWith("/home")) {
       setRedirected(true);
-      router.push("/home");
+      router.replace('/home');
     } else if (!user && pathname !== "/") {
       setRedirected(true);
-      router.push("/");
+      router.replace("/");
     }
   }, [mounted, isLoading, user, pathname, redirected, router]);
 

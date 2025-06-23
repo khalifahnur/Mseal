@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect, useState } from "react";
 import {
   Home,
   Ticket,
@@ -32,20 +32,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "@/components/Forms/AuthContext";
 import { Skeleton } from "../ui/skeleton";
 
-const baseSidebarItems = [
-  { name: "Home", href: "/home", icon: Home },
-  { name: "Tickets", href: "/tickets", icon: Ticket },
-  { name: "Matches", href: "/matches", icon: Calendar },
-  { name: "Membership", href: "/membership", icon: CreditCard },
-];
 
-const shopItem = { name: "Shop", href: "/shop", icon: StoreIcon };
-
-const footerItems = [
-  { name: "Settings", href: "/settings", icon: Settings },
-  { name: "Logout", href: "#", icon: LogOut },
-  { name: "Need Help", href: "#", icon: HelpCircle },
-];
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -64,7 +51,7 @@ export function AppSidebar() {
     onSuccess: () => {
       toast.success("Logged- You have logged out successfully.", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -88,6 +75,21 @@ export function AppSidebar() {
     },
   });
 
+  const baseSidebarItems = [
+  { name: "Home", href: '/home', icon: Home },
+  { name: "Tickets", href: '/tickets', icon: Ticket },
+  { name: "Matches", href: '/matches', icon: Calendar },
+  { name: "Membership", href: '/membership', icon: CreditCard },
+];
+
+const shopItem = { name: "Shop", href: '/shop', icon: StoreIcon };
+
+const footerItems = [
+  { name: "Settings", href: '/settings', icon: Settings },
+  { name: "Logout", href: "#", icon: LogOut },
+  { name: "Need Help", href: "#", icon: HelpCircle },
+];
+
   const handleLogout = useCallback(async () => {
     try {
       await logoutMutation.mutateAsync();
@@ -101,6 +103,8 @@ export function AppSidebar() {
       data?.membershipId ? [...baseSidebarItems, shopItem] : baseSidebarItems,
     [data?.membershipId]
   );
+
+
 
   if (isLoading) {
     return (
@@ -127,6 +131,7 @@ export function AppSidebar() {
       </Sidebar>
     );
   }
+
 
   return (
     <Sidebar variant="floating">

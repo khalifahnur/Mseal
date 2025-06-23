@@ -24,3 +24,11 @@ export function maskExceptLastFour(value: string | null | undefined): string {
   return maskedPart + lastFour;
 }
 
+  const formatMonthYear = (date: string | null | undefined) => {
+    const d = new Date(date);
+    const year = String(d.getFullYear());
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    return `${month}/${year}`;
+  };
+  export default formatMonthYear
+
