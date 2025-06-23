@@ -15,6 +15,7 @@ type User = {
   createdAt: string | null;
   expDate: string | null;
   qrcode: string | null;
+  walletId : string | null;
 };
 
 interface AuthContextType {
