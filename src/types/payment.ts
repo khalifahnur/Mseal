@@ -1,18 +1,22 @@
 export interface paymentData {
-  email: string;
-  phoneNumber: string;
-  membershipTier: string;
+  email?: string;
+  phoneNumber?: string;
+  membershipTier?: string;
   dob: string;
   amount: number;
   physicalAddress: string;
   city: string;
-  useDefaultNumber: boolean;
+  useDefaultNumber?: boolean;
+  paymentMethod?: string;
+  isUpgrade?: boolean
 }
 
 export interface paymentResponse {
   message: string;
   status: boolean;
   reference: string;
+  data:any
+  redirectUrl:string
 }
 
 export interface paymentError {
@@ -27,4 +31,9 @@ export interface ticketPayment{
   quantity:number;
   amount:number;
   // phoneNUmber:string;
+}
+
+export interface walletPayment{
+  amount:number;
+  phoneNumber:string
 }
