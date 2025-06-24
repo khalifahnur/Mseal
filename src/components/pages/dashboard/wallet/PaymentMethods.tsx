@@ -23,6 +23,7 @@ interface PaymentFormProps {
   email: string | undefined;
   phoneNumber: string | undefined | null;
   amount: number;
+  wallet?:boolean
 }
 
 export default function PaymentForm({
@@ -31,7 +32,9 @@ export default function PaymentForm({
   email,
   phoneNumber,
   amount,
+  wallet
 }: PaymentFormProps) {
+  
   const paymentMethods = [
     {
       id: "mpesa",
@@ -62,6 +65,13 @@ export default function PaymentForm({
       popular: false,
       imgUrl: "/assets/payment/airtel.png",
     },
+    {
+      id: "msealwallet",
+      name: "Mseal Wallet",
+      description: "Pay with mseal wallet",
+      popular: true,
+      imgUrl: "/assets/payment/msealwallet.png",
+    },
   ];
 
   return (
@@ -82,7 +92,7 @@ export default function PaymentForm({
                 onValueChange={(value) => setFieldValue("paymentMethod", value)}
                 className="grid grid-rows-4 gap-2"
               >
-                {paymentMethods.map((method) => {
+                {paymentMethods.filter((item)=> item.id !== "msealwallet" || wallet).map((method) => {
                   const IconComponent = method.imgUrl;
                   return (
                     <div key={method.id}>
@@ -271,10 +281,10 @@ export default function PaymentForm({
             </div>
           )}
 
-          {values.paymentMethod === "wallet" && (
+          {values.paymentMethod === "msealwallet" && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                Pay using your preferred digital wallet service.
+                Pay using your mseal wallet service.
               </p>
 
               <div>
@@ -282,46 +292,12 @@ export default function PaymentForm({
                 <Input value={email} disabled className="bg-gray-100" />
               </div>
 
-              <div>
-                <Label className="text-sm font-medium">Wallet Provider</Label>
-                <Select
-                  onValueChange={(value) =>
-                    setFieldValue("walletProvider", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select wallet provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="paypal">PayPal</SelectItem>
-                    <SelectItem value="skrill">Skrill</SelectItem>
-                    <SelectItem value="payoneer">Payoneer</SelectItem>
-                    <SelectItem value="wise">Wise</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label className="text-sm font-medium">Wallet Email/ID</Label>
-                <Field
-                  name="walletId"
-                  as={Input}
-                  placeholder="Enter your wallet email or ID"
-                />
-                <ErrorMessage
-                  name="walletId"
-                  component="div"
-                  className="text-sm text-red-600 mt-1"
-                />
-              </div>
-
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                 <h4 className="font-medium text-amber-900 mb-2">
                   Payment Process
                 </h4>
                 <p className="text-sm text-amber-800">
-                  You'll be redirected to your selected wallet provider to
-                  complete the payment securely.
+                  Your Mseal Wallet will be debited automatically. Please confirm and complete this payment.
                 </p>
               </div>
             </div>

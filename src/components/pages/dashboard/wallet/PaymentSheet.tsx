@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { useWalletTopupPayment } from "@/hooks/Paymenthook/usePaymentHook";
 import useSocketData from "@/hooks/socket/walletSocket";
-import { CreditCard, MapPin, Package } from "lucide-react";
+import { Package } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import ReactConfetti from "react-confetti";
 import { toast } from "react-toastify";
@@ -72,9 +72,9 @@ export default function PaymentSheet({
     }
   }, [transactionReference, confirmWalletPaymentStatus, setSheetModalVisible]);
 
-  if ( !user) {
-      return <FullScreenLoader />;
-    }
+  if (!user) {
+    return <FullScreenLoader />;
+  }
 
   return (
     <SheetContent className="w-full sm:max-w-md flex flex-col p-0 overflow-x-scroll">
@@ -96,44 +96,108 @@ export default function PaymentSheet({
         </SheetDescription>
       </SheetHeader>
       <Formik
-      enableReinitialize
+        enableReinitialize
         initialValues={{
           amount: "",
           phoneNumber: user?.phoneNumber || "",
           useDefaultNumber: !!user?.phoneNumber,
-          paymentMethod: "mpesa",
+          paymentMethod: "",
         }}
         validationSchema={paymentvalidationSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
         onSubmit={async (values, { setSubmitting }) => {
           setPaymentStatus("initiating");
+
           try {
             const amount = Number(values.amount);
-            const paymentResponse = await initiateWalletPayment.mutateAsync({
-              amount,
-              phoneNumber: values.phoneNumber,
-            });
-            setTransactionReference(paymentResponse.reference);
-            setPaymentStatus("pending");
-            toast.info(
-              "M-Pesa STK push sent to your phone. Please complete the payment.",
-              {
+            const method = values.paymentMethod;
+
+            let paymentResponse;
+
+            if (method === "mpesa") {
+              // M-Pesa flow
+              paymentResponse = await initiateWalletPayment.mutateAsync({
+                amount,
+                phoneNumber: values.phoneNumber,
+              });
+              toast.info(
+                "M-Pesa STK push sent to your phone. Please complete the payment.",
+                {
+                  position: "top-right",
+                  autoClose: 10000,
+                  toastId: "stk-push",
+                }
+              );
+            } else if (method === "card") {
+              // Card Payment Flow
+              // paymentResponse = await initiateCardPayment.mutateAsync({
+              //   amount,
+              //   email: user?.email,
+              // });
+
+              // // Redirect to payment gateway
+              // window.location.href = paymentResponse.redirectUrl;
+              console.warn("card initiation");
+            } else if (method === "bank") {
+              // Bank Payment Flow
+              // paymentResponse = await initiateBankTransfer.mutateAsync({
+              //   amount,
+              //   accountName: values.bankAccountName,
+              //   bank: values.preferredBank,
+              //   email: user?.email,
+              // });
+              console.warn("bank initiation");
+
+              toast.info("Check your email for bank transfer instructions.", {
                 position: "top-right",
-                autoClose: 10000,
-                toastId: "stk-push",
-              }
-            );
+                autoClose: 8000,
+                toastId: "bank-info",
+              });
+            } else if (method === "wallet") {
+              // Wallet Payment Flow
+              // paymentResponse = await initiateWalletProviderPayment.mutateAsync({
+              //   amount,
+              //   provider: values.walletProvider,
+              //   walletId: values.walletId,
+              // });
+              //window.location.href = paymentResponse.redirectUrl;
+            } else if (method === "airtel") {
+              // Airtel money flow (similar to M-Pesa)
+              // paymentResponse = await initiateAirtelPayment.mutateAsync({
+              //   amount,
+              //   phoneNumber: values.phoneNumber,
+              // });
+
+              toast.info(
+                "Airtel STK push sent. Complete the payment on your phone.",
+                {
+                  position: "top-right",
+                  autoClose: 8000,
+                  toastId: "airtel-push",
+                }
+              );
+            }
+
+            if (paymentResponse?.reference) {
+              setTransactionReference(paymentResponse.reference);
+              setPaymentStatus("pending");
+            }
           } catch (error: unknown) {
             setPaymentStatus("error");
+
             const message =
               error instanceof Error
                 ? error.message
                 : "Failed to initiate payment.";
+
             toast.error(message, {
               position: "bottom-right",
               autoClose: 5000,
               toastId: "payment-error",
             });
           }
+
           setSubmitting(false);
         }}
       >
@@ -162,6 +226,7 @@ export default function PaymentSheet({
                 <div className="grid grid-cols-4 gap-2 mt-2">
                   {quickAmounts.map((amount) => (
                     <Button
+                      type="button"
                       key={amount}
                       variant="outline"
                       size="sm"
@@ -189,7 +254,6 @@ export default function PaymentSheet({
             </div>
             <div className="border-t p-4">
               <Button
-                //type="button"
                 type="submit"
                 className="w-full"
                 size="lg"
