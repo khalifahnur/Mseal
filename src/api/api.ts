@@ -339,3 +339,26 @@ export async function fetchUpcomingEvents() {
     }
   }
 }
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateTicketWalletPayment = async (data: ticketPayment): Promise<paymentResponse> => {
+  try {
+    const response = await apiClient.post<paymentResponse>(
+      "/payment/mseal-wallet/initiate-ticket-payment",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      console.error("Payment error details:", error.response);
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred during payment.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      console.error("Network error or no response:", error);
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
