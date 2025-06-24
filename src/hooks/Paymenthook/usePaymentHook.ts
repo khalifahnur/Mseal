@@ -3,6 +3,7 @@ import {
   initiateOrderPayment,
   initiatePesapalMembershipPayment,
   initiateTicketPayment,
+  initiateTicketWalletPayment,
   initiateWalletTopupPayment,
 } from "@/api/api";
 import { orders } from "@/types/order";
@@ -106,6 +107,22 @@ export function useWalletTopupPayment(): UseMutationResult<
 > {
   return useMutation<paymentResponse, paymentError, walletPayment>({
     mutationFn: initiateWalletTopupPayment,
+    // onSuccess: (data) => {
+    //   console.log("Payment initiated successfully:", data);
+    // },
+    onError: (error: paymentError) => {
+      console.error("Payment initiation error:", error.message);
+    },
+  });
+}
+
+export function useTicketWalletPayment(): UseMutationResult<
+  paymentResponse,
+  paymentError,
+  ticketPayment
+> {
+  return useMutation<paymentResponse, paymentError, ticketPayment>({
+    mutationFn: initiateTicketWalletPayment,
     // onSuccess: (data) => {
     //   console.log("Payment initiated successfully:", data);
     // },
