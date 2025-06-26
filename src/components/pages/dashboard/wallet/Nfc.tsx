@@ -25,12 +25,12 @@ import { Switch } from "@/components/ui/switch";
 import formatMonthYear from "@/lib/utils";
 
 type nfcProp = {
-  nfcId: string | null | undefined;
+  nfcId?: string | null | undefined;
   expDate: string | null | undefined;
   createdAt: string | null | undefined;
   tier: string | undefined | null;
 };
-export default function Nfc({ expDate, createdAt, tier, nfcId }: nfcProp) {
+export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
   const [nfcEnabled, setNfcEnabled] = useState(true);
 
   return (
@@ -68,7 +68,7 @@ export default function Nfc({ expDate, createdAt, tier, nfcId }: nfcProp) {
             <div className="space-y-2">
               <p className="text-sm opacity-80">Card Number</p>
               <p className="text-xl font-mono tracking-wider">
-                •••• •••• •••• 1234
+                •••• •••• •••• {nfcId?.slice(-4) ?? "****"}
               </p>
             </div>
             <div className="flex justify-between items-end mt-4">

@@ -13,7 +13,7 @@ export const loginUser = async (data: AuthData): Promise<AuthResponse> => {
     );
     return response.data;
   } catch (error: any) {
-    throw new Error(error?.response?.data?.message || "An error occurred");
+    throw new Error(error?.response?.data?.error || "An error occurred");
   }
 };
 
@@ -27,14 +27,11 @@ export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Sign-up error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during sign up.";
+        error?.response?.data?.error || "An error occurred during sign up.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -46,15 +43,14 @@ export async function fetchUserInfo() {
     const response = await apiClient.get("/auth-user/fetch-user-info");
     return response.data;
   } catch (error: any) {
-    if (error?.response) {
-      console.error("Error fetching admin info:", error.response);
-      // Show a more specific error message
+    if (error?.response?.status === 401) {
+      // User is not logged in
+      return null;
+    } else if (error?.response) {
       const errorMessage =
-        error?.response?.data?.message || "Error fetching admin info.";
+        error?.response?.data?.error || "Error fetching user info.";
       throw new Error(errorMessage);
     } else {
-      // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -72,14 +68,11 @@ export const initiateMembershipPayment = async (
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during payment.";
+        error?.response?.data?.error || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -92,14 +85,11 @@ export async function fetchTickets() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching all events:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching all events.";
+        error?.response?.data?.error || "Error fetching all events.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -112,14 +102,11 @@ export async function fetchActiveTickets() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching active ticket:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching active ticket.";
+        error?.response?.data?.error || "Error fetching active ticket.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -132,14 +119,11 @@ export async function fetchUsedTickets() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching used ticket:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching used ticket.";
+        error?.response?.data?.error || "Error fetching used ticket.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -155,14 +139,11 @@ export const initiateTicketPayment = async (data: ticketPayment): Promise<paymen
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during payment.";
+        error?.response?.data?.error || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -175,14 +156,11 @@ export async function fetchAllMerchandise() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching merchandise:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching merchandise.";
+        error?.response?.data?.error || "Error fetching merchandise.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -217,14 +195,11 @@ export const initiateOrderPayment = async (data: orders): Promise<paymentRespons
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during payment.";
+        error?.response?.data?.error || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -242,14 +217,11 @@ export const initiatePesapalMembershipPayment = async (
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during payment.";
+        error?.response?.data?.error || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -267,14 +239,11 @@ export const initiateWalletTopupPayment = async (
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
-      // Show a more specific error message
       const errorMessage =
         error?.response?.data?.message || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -287,14 +256,11 @@ export async function fetchUserTransactions() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching admin info:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching admin info.";
+        error?.response?.data?.error || "Error fetching admin info.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -307,14 +273,10 @@ export async function fetchUserWalletTransactions() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching admin info:", error.response);
-      // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching admin info.";
+        error?.response?.data?.error || "Error fetching admin info.";
       throw new Error(errorMessage);
     } else {
-      // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -327,14 +289,11 @@ export async function fetchUpcomingEvents() {
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Error fetching admin info:", error.response);
       // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "Error fetching admin info.";
+        error?.response?.data?.error || "Error fetching admin info.";
       throw new Error(errorMessage);
     } else {
-      // response (network issues, etc.)
-      console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }
@@ -350,14 +309,33 @@ export const initiateTicketWalletPayment = async (data: ticketPayment): Promise<
     return response.data;
   } catch (error: any) {
     if (error?.response) {
-      console.error("Payment error details:", error.response);
+      const errorMessage =
+        error?.response?.data?.error || "An error occurred during payment.";
+      throw new Error(errorMessage);
+    } else {
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateOrderWalletPayment = async (data: orders): Promise<paymentResponse> => {
+  try {
+    const response = await apiClient.post<paymentResponse>(
+      "/payment/mseal-wallet/initiate-order-payment",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      //console.error("Payment error details:", error.response);
       // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.message || "An error occurred during payment.";
+        error?.response?.data?.error || "An error occurred during payment.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
-      console.error("Network error or no response:", error);
+      //console.error("Network error or no response:", error);
       throw new Error("Network error or no response from server.");
     }
   }

@@ -5,39 +5,38 @@ import { Star, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { membershipTiers } from "./placeholder";
 import { BenefitsList } from "./benefits";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUserInfo } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import MembershipCard from "./MembershipCard";
 import MembershipFAQ from "./MembershipFaqs";
 import WalletContainer from "./WalletContainer";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export default function MembershipPage() {
-  const { data, isLoading } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: fetchUserInfo,
-    staleTime: 1000 * 60 * 5,
-    //cacheTime: 1000 * 60 * 30,
-    refetchOnWindowFocus: false,
-  });
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["userInfo"],
+  //   queryFn: fetchUserInfo,
+  //   staleTime: 1000 * 60 * 5,
+  //   //cacheTime: 1000 * 60 * 30,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  const { user, isLoading } = useAuth();
 
   if (isLoading) {
     return <FullScreenLoader />;
   }
 
-  const { membershipId, membershipTier, expDate, createdAt } = data;
-
-  const activeMembership = membershipTier;
+  const activeMembership = user?.membershipTier;
 
   return (
     <div className="p-4 space-y-6">
-      {membershipId && (
+      {user?.membershipId && (
         <>
           <MembershipCard
-            membershipId={membershipId}
-            membershipTier={membershipTier}
-            expDate={expDate}
-            createdAt={createdAt}
+            membershipId={user?.membershipId}
+            membershipTier={user?.membershipTier}
+            expDate={user?.expDate}
+            createdAt={user?.createdAt}
           />
           <WalletContainer />
         </>

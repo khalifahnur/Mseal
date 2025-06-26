@@ -10,7 +10,7 @@ export interface paymentData {
   paymentMethod?: string;
   isUpgrade?: boolean
 }
-
+/*eslint-disable @typescript-eslint/no-explicit-any*/ 
 export interface paymentResponse {
   message: string;
   status: boolean;

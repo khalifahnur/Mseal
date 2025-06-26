@@ -1,9 +1,9 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { QRCodeSVG } from "qrcode.react";
-import Image from "next/image";
-import formatMonthYear, { cn, maskExceptLastFour } from "@/lib/utils";
+// import { QRCodeSVG } from "qrcode.react";
+// import Image from "next/image";
+import formatMonthYear from "@/lib/utils";
 import { NfcIcon } from "lucide-react";
 
 interface MembershipCardProps {
@@ -15,17 +15,19 @@ interface MembershipCardProps {
   qrcode: string | null;
   createdAt: string | null;
   expDate: string | null;
+  walletId:string | null
 }
 
 export function MembershipCard({
-  memberName,
-  memberNumber,
-  teamName,
-  balance,
+  // memberName,
+  // memberNumber,
+  // teamName,
+  // balance,
   logoUrl = "https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png",
-  qrcode,
+  // qrcode,
   createdAt,
   expDate,
+  walletId,
 }: MembershipCardProps) {
   return (
     <div className="relative w-full max-w-md mx-auto">
@@ -132,7 +134,7 @@ export function MembershipCard({
           </div>
           <div className="space-y-2">
             <p className="text-sm opacity-80">Card Number</p>
-            <p className="text-xl font-mono tracking-wider">•••• •••• •••• 1234</p>
+            <p className="text-xl font-mono tracking-wider">•••• •••• •••• {walletId?.slice(-4) ?? "****"}</p>
           </div>
           <div className="flex justify-between items-end mt-4">
             <div>

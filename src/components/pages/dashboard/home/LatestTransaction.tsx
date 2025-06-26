@@ -61,7 +61,9 @@ export default function LatestTransaction() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {transactions.map((tx: any) => (
+                {
+                /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+                transactions.map((tx: any) => (
                   <TableRow key={tx._id}>
                     <TableCell className="font-medium">
                       {new Date(tx.createdAt).toLocaleDateString()}

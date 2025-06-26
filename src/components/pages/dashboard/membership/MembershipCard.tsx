@@ -7,13 +7,13 @@ import {
   TrendingUp,
   Gift,
 } from "lucide-react";
-import { maskExceptLastFour } from "@/lib/utils";
+import formatMonthYear, { maskExceptLastFour } from "@/lib/utils";
 
 interface membershipCardProps {
   membershipId: string;
-  membershipTier: string;
-  expDate: Date;
-  createdAt: Date;
+  membershipTier: string | null;
+  expDate: string | null;
+  createdAt: string | null;
 }
 export default function MembershipCard({
   membershipId,
@@ -87,7 +87,7 @@ export default function MembershipCard({
                   </p>
                 </div>
                 <p className="font-bold text-white">
-                  {new Date(createdAt).toLocaleDateString()}
+                  {formatMonthYear(createdAt)}
                 </p>
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function MembershipCard({
                   </p>
                 </div>
                 <p className="font-bold text-white">
-                  {new Date(expDate).toLocaleDateString()}
+                  {formatMonthYear(expDate)}
                 </p>
               </div>
             </div>

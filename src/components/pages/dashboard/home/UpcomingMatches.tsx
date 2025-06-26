@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUpcomingEvents } from "@/api/api";
+import Image from "next/image";
 
 export default function UpcomingMatches() {
   const {
@@ -60,16 +61,19 @@ export default function UpcomingMatches() {
             </TableHeader>
             <TableBody>
               {events && events.length > 0 ? (
+                /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
                 events.map((event: any) => (
                   <TableRow key={event._id}>
                     <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
                     <TableCell>{event.time}</TableCell>
                     <TableCell>{event.venue}</TableCell>
                     <TableCell className="flex items-center gap-2">
-                      <img
+                      <Image
                         src={event.opponentLogoUrl}
                         alt={event.awayTeam}
                         className="h-6 w-6 rounded-full"
+                        height={20}
+                        width={20}
                       />
                       {event.awayTeam}
                     </TableCell>

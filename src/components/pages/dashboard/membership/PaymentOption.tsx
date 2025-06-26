@@ -1,8 +1,7 @@
-// components/PaymentForm.tsx
 "use client";
 
 import { Field, ErrorMessage } from "formik";
-import { Phone, CreditCard, Building2, Smartphone, Wallet } from "lucide-react";
+import { Phone, CreditCard } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -11,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
+/*eslint-disable @typescript-eslint/no-explicit-any*/ 
 interface PaymentFormProps {
   values: any;
   setFieldValue: (field: string, value: any) => void;
@@ -69,7 +69,9 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
         <div className="space-y-4">
           <Label className="text-sm font-medium">Choose Payment Method</Label>
           <Field name="paymentMethod">
-            {({ field }: any) => (
+            {
+            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+            ({ field }: any) => (
               <RadioGroup
                 value={field.value}
                 onValueChange={(value) => setFieldValue("paymentMethod", value)}
@@ -139,7 +141,9 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
 
               <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <Field name="useDefaultNumber">
-                  {({ field }: any) => (
+                  {
+                   /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+                  ({ field }: any) => (
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={(checked) => {
@@ -163,7 +167,7 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">What happens next?</h4>
               <ul className="text-sm text-blue-800 space-y-1">
-                <li>• You'll be redirected to complete the payment securely.</li>
+                <li>• You&apos;ll be redirected to complete the payment securely.</li>
                 <li>• Complete the Visa payment within the provided timeframe.</li>
                 <li>• Your membership will be activated once payment is confirmed.</li>
               </ul>
@@ -211,7 +215,7 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h4 className="font-medium text-blue-900 mb-2">What happens next?</h4>
                 <ul className="text-sm text-blue-800 space-y-1">
-                  <li>• You'll receive detailed payment instructions via email</li>
+                  <li>• You&apos;ll receive detailed payment instructions via email</li>
                   <li>• Complete the bank transfer within 24 hours</li>
                   <li>• Your membership will be activated once payment is confirmed</li>
                 </ul>
@@ -252,7 +256,7 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                 <h4 className="font-medium text-amber-900 mb-2">Payment Process</h4>
                 <p className="text-sm text-amber-800">
-                  You'll be redirected to your selected wallet provider to complete the payment securely.
+                  You&apos;ll be redirected to your selected wallet provider to complete the payment securely.
                 </p>
               </div>
             </div>

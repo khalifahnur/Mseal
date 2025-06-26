@@ -2,7 +2,13 @@
 
 import { fetchUserInfo } from "@/api/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 type User = {
   firstName: string;
@@ -15,7 +21,7 @@ type User = {
   createdAt: string | null;
   expDate: string | null;
   qrcode: string | null;
-  walletId : string | null;
+  walletId: string | null;
 };
 
 interface AuthContextType {
@@ -31,6 +37,11 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const {
     data: user,
@@ -41,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   } = useQuery({
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
+    enabled: hasMounted,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     retry: false,

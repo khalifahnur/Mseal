@@ -55,3 +55,25 @@ export const paymentvalidationSchema = Yup.object({
       .matches(/^(\+254|0)[7|1]\d{8}$/, "Enter a valid Kenyan phone number (e.g., +2547XXXXXXXX)"),
     useDefaultNumber: Yup.boolean(),
   });
+
+  export const shippingSchema = Yup.object().shape({
+    address: Yup.string().trim().required("Address is required"),
+    city: Yup.string().trim().required("City is required"),
+    street: Yup.string().trim().required("Street is required"),
+    country: Yup.string().required("Country is required"),
+  });
+
+  export const paymentSchema = Yup.object().shape({
+    phoneNumber: Yup.string().when("paymentMethod", {
+      is: "mpesa",
+      then: (schema) => schema.trim().required("Phone number is required for M-Pesa"),
+    }),
+    bankAccountName: Yup.string().when("paymentMethod", {
+      is: "bank",
+      then: (schema) => schema.trim().required("Account name is required for bank transfer"),
+    }),
+    preferredBank: Yup.string().when("paymentMethod", {
+      is: "bank",
+      then: (schema) => schema.required("Please select a bank"),
+    }),
+  });

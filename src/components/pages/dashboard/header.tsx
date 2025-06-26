@@ -9,6 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { useAuth } from "@/components/Forms/AuthContext";
+import { useMutation } from "@tanstack/react-query";
+import { fetchLogout } from "@/hooks/Authhook/authHook";
+import { toast } from "react-toastify";
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   currentTab: string;
@@ -16,6 +23,48 @@ interface HeaderProps {
 }
 
 export function Header({ currentTab,initials}: HeaderProps) {
+
+  const { signOut } = useAuth();
+  const router = useRouter();
+
+  const logoutMutation = useMutation({
+    mutationFn: fetchLogout,
+    onSuccess: () => {
+      toast.success("Logged- You have logged out successfully.", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+      localStorage.removeItem("authToken");
+      signOut();
+      router.replace("/");
+    },
+    onError: () => {
+      toast.error("Logout failed.", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
+    },
+  });
+
+  const handleLogout = useCallback(async () => {
+      try {
+        await logoutMutation.mutateAsync();
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    }, [logoutMutation]);
+
+
   return (
     <>
     <header className="sticky top-0 z-10 flex h-12 items-center justify-between border-b bg-gradient-to-r from-black via-gray-600 to-primary px-4 md:px-6">
@@ -37,9 +86,9 @@ export function Header({ currentTab,initials}: HeaderProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Notifications</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>New event created</DropdownMenuItem>
-              <DropdownMenuItem>Ticket sales report ready</DropdownMenuItem>
-              <DropdownMenuItem>System update available</DropdownMenuItem>
+              <DropdownMenuItem>Null</DropdownMenuItem>
+              {/* <DropdownMenuItem>Ticket sales report ready</DropdownMenuItem>
+              <DropdownMenuItem>System update available</DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
@@ -55,10 +104,10 @@ export function Header({ currentTab,initials}: HeaderProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem><Link href={'/settings'}>Profile</Link></DropdownMenuItem>
+              <DropdownMenuItem><Link href={'/settings'}>Settings</Link></DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

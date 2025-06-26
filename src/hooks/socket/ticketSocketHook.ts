@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 
 const SOCKET_URL = process.env.NODE_ENV === "production"
-  ? "https://your-server.com" // Replace with your production server URL
-  : "http://localhost:3002"; // Match server port from server.ts (HTTP for local dev)
+  ? "https://msealserver-production.up.railway.app"
+  : "http://localhost:3002";
 
 interface WebSocketData {
   paymentStatus: "Pending" | "Completed" | "Failed";

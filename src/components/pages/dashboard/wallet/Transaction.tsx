@@ -61,7 +61,9 @@ export default function Transaction() {
           </div>
         ) : (
           <div className="space-y-4">
-            {transactions.map((tx: any) => (
+            {
+            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+            transactions.map((tx: any) => (
               <div
                 key={tx._id}
                 className="flex items-center justify-between p-4 border rounded-lg"

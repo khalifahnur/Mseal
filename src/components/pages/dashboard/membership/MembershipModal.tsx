@@ -1,10 +1,8 @@
-// components/MembershipModal.tsx
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
 import {
   Formik,
-  Form,
   Field,
   ErrorMessage,
   type FormikHelpers,
@@ -30,7 +28,6 @@ import {
   useMembershipPayment,
   usePesapalMembershipPayment,
 } from "@/hooks/Paymenthook/usePaymentHook";
-import apiClient from "@/lib/apiClient";
 import { DateOfBirthPicker } from "../Dob";
 import { useRouter } from "next/navigation";
 import PaymentForm from "./PaymentOption";
@@ -52,6 +49,7 @@ export function MembershipModal({
 }) {
   const [step, setStep] = useState(1);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
+  /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/ 
   const [error, setError] = useState("");
   const [iframeUrl, setIframeUrl] = useState("");
   const router = useRouter();
@@ -110,6 +108,7 @@ export function MembershipModal({
     }, [
       transactionReference,
       confirmOrderPaymentStatus,
+      onOpenChange
     ]);
 
   const handleVisaPayment = async (
@@ -141,7 +140,9 @@ export function MembershipModal({
       setIframeUrl(response.redirectUrl);
       toast.info("Redirecting to Pesapal for Visa payment...");
       setSubmitting(false);
-    } catch (err: any) {
+    } 
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (err: any) {
       console.error("Visa payment error:", err);
       const errorMessage = err.message || "Visa payment initiation failed";
       setError(errorMessage);
@@ -258,7 +259,9 @@ export function MembershipModal({
         //     setSubmitting(false);
         //   }
         // }, 2000);
-      } catch (err: any) {
+      } 
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+      catch (err: any) {
         console.error("Payment error:", err);
         const errorMessage = err.message || "Payment failed";
         setError(errorMessage);

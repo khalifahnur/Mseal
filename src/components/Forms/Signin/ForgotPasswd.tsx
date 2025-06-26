@@ -232,7 +232,7 @@ export default function ForgotPassword() {
               </div>
               <div className="text-center">
                 <Button variant="link" className="text-sm">
-                  Didn't receive the code? Resend
+                  Didn&apos;t receive the code? Resend
                 </Button>
               </div>
             </form>

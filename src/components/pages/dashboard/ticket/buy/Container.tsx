@@ -74,14 +74,14 @@ export default function Container({ eventId }: { eventId: string }) {
         }, 2000);
       } else if (confirmTicketPaymentStatus.paymentStatus === "Failed") {
         setPaymentStatus("error");
-        toast.error("Payment failed. Please try again.", {
-          position: "bottom-right",
-          autoClose: 5000,
-          toastId: "payment-failed",
-        });
+        // toast.error("Payment failed. Please try again.", {
+        //   position: "bottom-right",
+        //   autoClose: 5000,
+        //   toastId: "payment-failed",
+        // });
       }
     }
-  }, [transactionReference, confirmTicketPaymentStatus]);
+  }, [transactionReference, confirmTicketPaymentStatus,router]);
 
   useEffect(() => {
     if (paymentStatus === "success") {
@@ -146,7 +146,7 @@ export default function Container({ eventId }: { eventId: string }) {
                 "M-Pesa STK push sent to your phone. Please complete the payment.",
                 {
                   position: "top-right",
-                  autoClose: 10000,
+                  autoClose: 2500,
                   toastId: "stk-push",
                 }
               );
@@ -184,7 +184,7 @@ export default function Container({ eventId }: { eventId: string }) {
                 "Payment initialized. Please wait for the ticket payment confirmation.",
                 {
                   position: "top-right",
-                  autoClose: 10000,
+                  autoClose: 2500,
                   toastId: "wallet",
                 }
               );
@@ -209,7 +209,9 @@ export default function Container({ eventId }: { eventId: string }) {
               setTransactionReference(paymentResponse.reference);
               setPaymentStatus("pending");
             }
-          } catch (error: any) {
+          } 
+          /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+          catch (error: any) {
             setPaymentStatus("error");
             toast.error(error.message || "Failed to initiate payment.");
           }
@@ -232,6 +234,7 @@ export default function Container({ eventId }: { eventId: string }) {
                         name="quantity"
                         type="number"
                         as={Input}
+                        /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
                         onChange={(e: any) => {
                           const qty = parseInt(e.target.value);
                           setFieldValue("quantity", qty);

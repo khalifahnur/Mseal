@@ -28,7 +28,7 @@ export default function AuthButtons() {
           theme: "light",
         });
       });
-  }, [user, isNewLogin]);
+  }, [user, isNewLogin,refreshUser]);
 
   const handleGoogleSignIn = () => {
     setIsNewLogin(true);

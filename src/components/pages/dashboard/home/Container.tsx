@@ -10,15 +10,6 @@ import UpcomingMatches from "./UpcomingMatches";
 
 export default function Home() {
   const { user, isLoading } = useAuth();
-
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["userInfo"],
-  //   queryFn: fetchUserInfo,
-  //   staleTime: 1000 * 60 * 5,
-  //   //cacheTime: 1000 * 60 * 30,
-  //   refetchOnWindowFocus: false,
-  // });
-
   if (isLoading) {
     return <FullScreenLoader />;
   }
@@ -53,6 +44,7 @@ export default function Home() {
               qrcode={user?.qrcode}
               expDate={user?.expDate}
               createdAt={user?.createdAt}
+              walletId={user?.walletId}
             />
           )}
         </div>
