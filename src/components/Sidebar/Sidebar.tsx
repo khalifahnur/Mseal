@@ -101,7 +101,7 @@ const footerItems = [
 
   const sidebarItems = useMemo(
     () =>
-      data?.membershipId ? [...baseSidebarItems, shopItem , membershipItem] : baseSidebarItems,
+      data?.membershipId ? [...baseSidebarItems, membershipItem, shopItem ] : baseSidebarItems,
     [data?.membershipId]
   );
 
