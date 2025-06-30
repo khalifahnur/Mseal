@@ -1,5 +1,5 @@
 export const membershipTiers = [
-  { label: "None", value: "none", price: 0 },
+  //{ label: "None", value: "none", price: 0 },
   { label: "Bronze", value: "bronze", price: 5000 },
   { label: "Silver", value: "silver", price: 10000 },
   { label: "Gold", value: "gold", price: 20000 },
@@ -11,6 +11,7 @@ export const cities = [
   { label: "Kisumu", value: "kisumu" },
   { label: "Nakuru", value: "nakuru" },
   { label: "Eldoret", value: "eldoret" },
+  { label: "Muranga", value: "muranga" },
 ];
 
 export const features = [

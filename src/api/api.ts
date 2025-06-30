@@ -13,7 +13,14 @@ export const loginUser = async (data: AuthData): Promise<AuthResponse> => {
     );
     return response.data;
   } catch (error: any) {
-    throw new Error(error?.response?.data?.error || "An error occurred");
+    if (error?.response) {
+      const errorMessage =
+        error?.response?.data?.message || "An error occurred during sign in.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      throw new Error("Network error or no response from server.");
+    }
   }
 };
 
