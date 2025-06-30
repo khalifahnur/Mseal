@@ -74,10 +74,11 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
         age--;
       }
 
-      if (age < 18) {
-        setError("You must be at least 18 years old.");
-        form.setFieldError(field.name, "You must be at least 18 years old.");
-      } else if (error || form.errors[field.name]) {
+      // if (age < 18) {
+      //   setError("You must be at least 18 years old.");
+      //   form.setFieldError(field.name, "You must be at least 18 years old.");
+      // } 
+      if (error || form.errors[field.name]) {
         setError("");
         form.setFieldError(field.name, undefined);
       }
@@ -102,7 +103,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
 
   return (
     <div className="grid gap-2">
-      <Label htmlFor={field.name}>{label} (18+ only)</Label>
+      <Label htmlFor={field.name}>{label}</Label>
       <div className="grid grid-cols-3 gap-2">
         <div>
           <Select value={month} onValueChange={setMonth}>
@@ -148,7 +149,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
         </div>
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
-      <p className="text-sm text-muted-foreground">You must be at least 18 years old to register.</p>
+      {/* <p className="text-sm text-muted-foreground">You must be at least 18 years old to register.</p> */}
     </div>
   );
 }

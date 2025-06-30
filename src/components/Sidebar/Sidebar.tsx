@@ -79,10 +79,11 @@ export function AppSidebar() {
   { name: "Home", href: '/home', icon: Home },
   { name: "Tickets", href: '/tickets', icon: Ticket },
   { name: "Matches", href: '/matches', icon: Calendar },
-  { name: "Membership", href: '/membership', icon: CreditCard },
+  
 ];
 
 const shopItem = { name: "Shop", href: '/shop', icon: StoreIcon };
+const membershipItem = { name: "Membership", href: '/membership', icon: CreditCard };
 
 const footerItems = [
   { name: "Settings", href: '/settings', icon: Settings },
@@ -100,7 +101,7 @@ const footerItems = [
 
   const sidebarItems = useMemo(
     () =>
-      data?.membershipId ? [...baseSidebarItems, shopItem] : baseSidebarItems,
+      data?.membershipId ? [...baseSidebarItems, shopItem , membershipItem] : baseSidebarItems,
     [data?.membershipId]
   );
 

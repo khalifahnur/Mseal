@@ -48,6 +48,8 @@ export function Footer() {
   }
 
   return (
+
+    
     <footer className="relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden">
       {/* Background grid pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />

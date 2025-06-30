@@ -133,7 +133,7 @@ export default function MembershipSection({ onLoginClick,onSignUpClick}: Landing
                 Official Membership
               </motion.h3>
               <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-black"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-black to-gray-800 bg-clip-text text-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
@@ -141,7 +141,7 @@ export default function MembershipSection({ onLoginClick,onSignUpClick}: Landing
                 MURANGA SEAL FC
               </motion.h1>
               <motion.h2
-                className="text-2xl sm:text-3xl font-bold text-[#fae115] flex items-center"
+                className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}

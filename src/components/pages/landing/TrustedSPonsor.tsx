@@ -1,134 +1,152 @@
-"use client";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import ProgressiveBlur from "./ProgressiveBlur";
+const TrustedSponsors = () => {
+  const sponsors = [
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    },
 
-const sponsorLogos = [
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 20,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 16,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 16,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 20,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 20,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 16,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 28,
-  },
-  {
-    name: "Sportpesa",
-    imgUrl: "/assets/sportpesa.jpeg",
-    height: 24,
-  },
-];
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sportpesa-seeklogo.png",
+      alt: "SportPesa - Official Sports Betting Partner",
+      text: "SportPesa"
+    }
+  ];
 
-export default function TrustedSponsors() {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const [ setApi] = useState<any>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const plugin = Autoplay({ delay: 1500, stopOnInteraction: true });
-
-  if (!isMounted) {
-    return null;
-  }
+  const duplicatedSponsors = [...sponsors, ...sponsors, ...sponsors];
 
   return (
-    <section className="bg-background/90 pb-4 md:p-10">
-      <div className="relative m-auto max-w-6xl px-6">
-        <div className="flex flex-col items-center md:flex-row">
-          <div className="md:max-w-44 md:border-r md:pr-6">
-            <p className="text-end text-sm text-gray-600">
-              Powering the pride of Muranga Seal
+    <section className="relative w-full bg-gradient-to-r from-gray-50 to-white border-t border-gray-200 shadow-sm">
+      <div className="container mx-auto px-4 py-6 md:py-8">
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          
+          {/* Header Section */}
+          <div className="md:min-w-[280px] md:max-w-[320px] text-center md:text-left md:border-r md:border-gray-300 md:pr-8">
+            <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-2">
+              Official Partners
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Powering the pride of <span className="font-semibold bg-gradient-to-r from-primary via-black to-gray-800 bg-clip-text text-transparent">Muranga Seal</span>
             </p>
+            <div className="hidden md:block mt-3">
+              <div className="w-12 h-1 bg-gradient-to-r from-primary to-gray-800 rounded-full"></div>
+            </div>
           </div>
-          <div className="relative py-6 md:w-[calc(100%-11rem)]">
-            <Carousel
-              setApi={setApi}
-              className="w-full"
-              plugins={[plugin]}
-              opts={{
-                align: "start",
-                loop: true,
-                dragFree: true,
-                containScroll: "trimSnaps",
-              }}
-            >
-              <CarouselContent className="-ml-4">
-                {sponsorLogos.map((logo, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-4 md:basis-1/4 lg:basis-1/6 basis-1/4"
-                  >
-                    <div className="flex h-full items-center justify-center p-2">
-                      <Image
-                        className="mx-auto object-contain max-h-[30px] w-auto"
-                        src={logo.imgUrl || "/placeholder.svg"}
-                        alt={`${logo.name} Logo`}
-                        height={30}
-                        width={40}
-                        onError={(e) => {
-                          console.error(`Failed to load image: ${logo.imgUrl}`);
-                          e.currentTarget.src =
-                            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='30' viewBox='0 0 40 30'%3E%3Crect width='40' height='30' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' fontFamily='Arial' fontSize='6' textAnchor='middle' dominantBaseline='middle' fill='%23999'%3ELogo%3C/text%3E%3C/svg%3E";
-                        }}
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
 
-            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background z-10"></div>
-            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background z-10"></div>
-            <ProgressiveBlur
-          className="pointer-events-none absolute left-0 top-0 h-full w-20"
-          direction="left"
-          blurIntensity={1}
-        />
-        <ProgressiveBlur
-          className="pointer-events-none absolute right-0 top-0 h-full w-20"
-          direction="right"
-          blurIntensity={1}
-        />
+          {/* Sponsors Marquee */}
+          <div className="flex-1 w-full overflow-hidden">
+            <div className="relative">
+              <div className="flex animate-marquee items-center whitespace-nowrap hover:pause-animation">
+                {duplicatedSponsors.map((sponsor, index) => (
+                  <div key={`sponsor-${index}`} className="flex items-center mx-6 md:mx-8">
+                    
+                    {/* Separator Dot */}
+                    {index > 0 && (
+                      <span className="block text-lg font-bold text-gray-400 mr-6 md:mr-8">
+                        •
+                      </span>
+                    )}
+                    
+                    {/* Sponsor Link */}
+                    <Link
+                      href={sponsor.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-center p-3 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:shadow-md hover:scale-105"
+                      aria-label={`Visit ${sponsor.text} - Official Partner`}
+                    >
+                      <div className="relative w-[120px] h-[40px]">
+                        <Image
+                          src={sponsor.image}
+                          alt={sponsor.alt}
+                          fill
+                          className="object-contain transition-opacity duration-300 group-hover:opacity-90 filter hover:brightness-110"
+                          loading="lazy"
+                          unoptimized={true}
+                        />
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Gradient Fade Effects */}
+              <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10"></div>
+              <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Enhanced CSS Animations */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-33.333%);
+          }
+        }
+        
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
+        }
+        
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+        
+        .pause-animation {
+          animation-play-state: paused;
+        }
+        
+        /* Smooth hover effects */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-marquee {
+            animation-duration: 60s;
+          }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+          .animate-marquee {
+            animation-duration: 20s;
+          }
+        }
+      `}</style>
     </section>
   );
-}
+};
+
+export default TrustedSponsors;

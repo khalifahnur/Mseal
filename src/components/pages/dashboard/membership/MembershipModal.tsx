@@ -49,15 +49,15 @@ export function MembershipModal({
 }) {
   const [step, setStep] = useState(1);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-  /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/ 
+  /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/
   const [error, setError] = useState("");
   const [iframeUrl, setIframeUrl] = useState("");
   const router = useRouter();
-    const [transactionReference, setTransactionReference] = useState<
-      string | null
-    >(null);
-    const [showConfetti, setShowConfetti] = useState(false);
-    const { width, height } = useWindowSize();
+  const [transactionReference, setTransactionReference] = useState<
+    string | null
+  >(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const { width, height } = useWindowSize();
 
   const paymentMutation = useMembershipPayment();
   const pesapalPaymentMutation = usePesapalMembershipPayment();
@@ -74,42 +74,33 @@ export function MembershipModal({
     paymentMethod: "mpesa",
   };
 
+  const confirmOrderPaymentStatus = useSocketData(
+    "confirmMembershipPaymentStatus",
+    transactionReference
+  );
 
+  useEffect(() => {
+    if (transactionReference && confirmOrderPaymentStatus) {
+      if (confirmOrderPaymentStatus.paymentStatus === "Completed") {
+        toast.success("Payment confirmed!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          toastId: "payment-success",
+        });
 
-  
-    const confirmOrderPaymentStatus = useSocketData(
-      "confirmMembershipPaymentStatus",
-      transactionReference
-    );
-  
-    useEffect(() => {
-      if (transactionReference && confirmOrderPaymentStatus) {
-        if (
-          confirmOrderPaymentStatus.paymentStatus === "Completed"
-        ) {
-          toast.success("Payment confirmed!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            toastId: "payment-success",
-          });
-  
-          setTimeout(() => {
-            onOpenChange(false);
-            setShowConfetti(false);
-          }, 1000);
-        } else if (confirmOrderPaymentStatus.paymentStatus === "Failed") {
-          toast.error("Payment failed. Please try again.", {
-            position: "bottom-right",
-            autoClose: 5000,
-            toastId: "payment-failed",
-          });
-        }
+        setTimeout(() => {
+          onOpenChange(false);
+          setShowConfetti(false);
+        }, 1000);
+      } else if (confirmOrderPaymentStatus.paymentStatus === "Failed") {
+        toast.error("Payment failed. Please try again.", {
+          position: "bottom-right",
+          autoClose: 5000,
+          toastId: "payment-failed",
+        });
       }
-    }, [
-      transactionReference,
-      confirmOrderPaymentStatus,
-      onOpenChange
-    ]);
+    }
+  }, [transactionReference, confirmOrderPaymentStatus, onOpenChange]);
 
   const handleVisaPayment = async (
     values: paymentData,
@@ -131,8 +122,7 @@ export function MembershipModal({
         dob: values.dob,
         physicalAddress: values.physicalAddress,
         city: values.city,
-        amount:values.amount,
-
+        amount: values.amount,
       };
 
       const response = await pesapalPaymentMutation.mutateAsync(paymentValues);
@@ -140,9 +130,8 @@ export function MembershipModal({
       setIframeUrl(response.redirectUrl);
       toast.info("Redirecting to Pesapal for Visa payment...");
       setSubmitting(false);
-    } 
-    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
-    catch (err: any) {
+    } catch (err: any) {
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
       console.error("Visa payment error:", err);
       const errorMessage = err.message || "Visa payment initiation failed";
       setError(errorMessage);
@@ -197,10 +186,7 @@ export function MembershipModal({
   }, [step]);
 
   const handleSubmit = useCallback(
-    async (
-      values: paymentData,
-      formikHelpers: FormikHelpers<paymentData>
-    ) => {
+    async (values: paymentData, formikHelpers: FormikHelpers<paymentData>) => {
       const { setSubmitting, setErrors } = formikHelpers;
       if (values.paymentMethod === "card") {
         return handleVisaPayment(values, formikHelpers);
@@ -221,11 +207,13 @@ export function MembershipModal({
           amount: selectedTier.price,
         };
 
-        const paymentResponse = await paymentMutation.mutateAsync(paymentValues);
+        const paymentResponse = await paymentMutation.mutateAsync(
+          paymentValues
+        );
 
         toast.info("STK push sent to your phone. Please complete the payment.");
 
-        setTransactionReference(paymentResponse.reference)
+        setTransactionReference(paymentResponse.reference);
 
         // let attempts = 0;
         // const maxAttempts = 60;
@@ -259,9 +247,8 @@ export function MembershipModal({
         //     setSubmitting(false);
         //   }
         // }, 2000);
-      } 
-      /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
-      catch (err: any) {
+      } catch (err: any) {
+        /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
         console.error("Payment error:", err);
         const errorMessage = err.message || "Payment failed";
         setError(errorMessage);
@@ -311,7 +298,7 @@ export function MembershipModal({
                   step === i
                     ? "bg-primary text-primary-foreground border-primary"
                     : step > i
-                    ? "bg-primary/20 border-primary/20"
+                    ? "bg-primary/20 border-primary/20 z-50"
                     : "bg-muted border-muted-foreground/20"
                 )}
               >
@@ -321,8 +308,8 @@ export function MembershipModal({
           </div>
           <div className="absolute top-4 left-8 right-8 h-0.5 bg-muted-foreground/20">
             <div
-              className="h-full bg-primary transition-all duration-300"
-              style={{ width: `${((step - 1) / 2) * 100}%` }}
+              className="h-full bg-primary transition-all duration-300 z-0"
+              style={{ width: `${((step - 1) / 1.9) * 100}%` }}
             />
           </div>
         </div>
@@ -342,7 +329,7 @@ export function MembershipModal({
               isSubmitting,
               setTouched,
               validateForm,
-              handleSubmit
+              handleSubmit,
             }) => (
               <form className="space-y-6" onSubmit={handleSubmit}>
                 {step === 1 && (
@@ -479,7 +466,6 @@ export function MembershipModal({
                 )}
 
                 {step === 3 && (
-                  
                   <PaymentForm
                     values={values}
                     setFieldValue={setFieldValue}
@@ -518,15 +504,10 @@ export function MembershipModal({
                       }
                       disabled={isSubmitting || isNextDisabled}
                     >
-                      {step === 1 && values.membershipTier === "none"
-                        ? "Finish"
-                        : "Next"}
+                      Next
                     </Button>
                   ) : (
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
+                    <Button type="submit" disabled={isSubmitting}>
                       {isSubmitting ? "Processing..." : "Pay Now"}
                     </Button>
                   )}
