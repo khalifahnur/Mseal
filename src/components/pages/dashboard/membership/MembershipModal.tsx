@@ -130,8 +130,9 @@ export function MembershipModal({
       setIframeUrl(response.redirectUrl);
       toast.info("Redirecting to Pesapal for Visa payment...");
       setSubmitting(false);
-    } catch (err: any) {
-      /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
+    }
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (err: any) {
       console.error("Visa payment error:", err);
       const errorMessage = err.message || "Visa payment initiation failed";
       setError(errorMessage);
@@ -247,8 +248,9 @@ export function MembershipModal({
         //     setSubmitting(false);
         //   }
         // }, 2000);
-      } catch (err: any) {
-        /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
+      } 
+      /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
+      catch (err: any) {
         console.error("Payment error:", err);
         const errorMessage = err.message || "Payment failed";
         setError(errorMessage);

@@ -65,14 +65,14 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
         form.setFieldValue(field.name, formattedDate);
       }
 
-      const birthDate = new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
+      //const birthDate = new Date(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day));
+      // const today = new Date();
+      // let age = today.getFullYear() - birthDate.getFullYear();
+      // const monthDiff = today.getMonth() - birthDate.getMonth();
 
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
+      // if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      //   age--;
+      // }
 
       // if (age < 18) {
       //   setError("You must be at least 18 years old.");
