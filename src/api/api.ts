@@ -69,7 +69,7 @@ export const initiateMembershipPayment = async (
 ): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
-      "/payment/initiate-payment",
+      "/payment/initiate-membership-payment",
       data
     );
     return response.data;

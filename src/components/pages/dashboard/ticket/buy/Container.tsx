@@ -70,7 +70,7 @@ export default function Container({ eventId }: { eventId: string }) {
         setTimeout(() => {
           setShowConfetti(false);
           setTransactionReference(null);
-          router.replace("/ticket");
+          router.replace("/tickets");
         }, 2000);
       } else if (confirmTicketPaymentStatus.paymentStatus === "Failed") {
         setPaymentStatus("error");
