@@ -56,6 +56,7 @@ export function MembershipModal({
   const [transactionReference, setTransactionReference] = useState<
     string | null
   >(null);
+  const [paymentStatus, setPaymentStatus] = useState("idle");
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
 
@@ -82,17 +83,21 @@ export function MembershipModal({
   useEffect(() => {
     if (transactionReference && confirmOrderPaymentStatus) {
       if (confirmOrderPaymentStatus.paymentStatus === "Completed") {
+        setPaymentStatus("success");
         toast.success("Payment confirmed!", {
-          position: "bottom-right",
-          autoClose: 5000,
+          position: "top-right",
+          autoClose: 3000,
           toastId: "payment-success",
         });
+
 
         setTimeout(() => {
           onOpenChange(false);
           setShowConfetti(false);
+          window.location.reload()
         }, 1000);
       } else if (confirmOrderPaymentStatus.paymentStatus === "Failed") {
+        setPaymentStatus("error");
         toast.error("Payment failed. Please try again.", {
           position: "bottom-right",
           autoClose: 5000,
@@ -192,9 +197,10 @@ export function MembershipModal({
       if (values.paymentMethod === "card") {
         return handleVisaPayment(values, formikHelpers);
       }
-
+      setPaymentStatus("initiating");
       try {
         setSubmitting(true);
+        
 
         const selectedTier = membershipTiers.find(
           (t) => t.value === values.membershipTier
@@ -212,46 +218,16 @@ export function MembershipModal({
           paymentValues
         );
 
+        setShowConfetti(true);
         toast.info("STK push sent to your phone. Please complete the payment.");
 
         setTransactionReference(paymentResponse.reference);
+        setPaymentStatus("pending");
 
-        // let attempts = 0;
-        // const maxAttempts = 60;
-        // const interval = setInterval(async () => {
-        //   try {
-        //     const { data } = await apiClient.get<{ status: string }>(
-        //       `/api/payment/pesastatus?reference=${paymentResponse.reference}`
-        //     );
-
-        //     if (data.status === "success") {
-        //       clearInterval(interval);
-        //       toast.success("Payment successful!");
-        //       onOpenChange(false);
-        //       router.push("/home");
-        //       setSubmitting(false);
-        //     } else if (data.status === "failed") {
-        //       clearInterval(interval);
-        //       toast.error("Payment failed.");
-        //       setSubmitting(false);
-        //     }
-
-        //     if (attempts >= maxAttempts) {
-        //       clearInterval(interval);
-        //       toast.error("Payment verification timed out.");
-        //       setSubmitting(false);
-        //     }
-        //   } catch (err) {
-        //     console.error("Polling error:", err);
-        //     //clearInterval(interval);
-        //     toast.error("Error verifying payment.");
-        //     setSubmitting(false);
-        //   }
-        // }, 2000);
       } 
       /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
       catch (err: any) {
-        console.error("Payment error:", err);
+        setPaymentStatus("error");
         const errorMessage = err.message || "Payment failed";
         setError(errorMessage);
         setErrors({ paymentMethod: errorMessage });
@@ -510,6 +486,9 @@ export function MembershipModal({
                     </Button>
                   ) : (
                     <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting || paymentStatus === "initiating"
+                        ? "Initiating..."
+                        : `Pay Ksh ${values.amount.toLocaleString()}`}
                       {isSubmitting ? "Processing..." : "Pay Now"}
                     </Button>
                   )}

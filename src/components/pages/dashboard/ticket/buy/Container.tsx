@@ -141,7 +141,7 @@ export default function Container({ eventId }: { eventId: string }) {
               paymentResponse = await initiateTicketPayment.mutateAsync(
                 ticketDetails
               );
-              setPaymentStatus("success");
+              
               toast.info(
                 "M-Pesa STK push sent to your phone. Please complete the payment.",
                 {
@@ -179,7 +179,7 @@ export default function Container({ eventId }: { eventId: string }) {
               paymentResponse = await initiateTicketWalletPayment.mutateAsync(
                 ticketDetails
               );
-              setPaymentStatus("success");
+              setPaymentStatus("pending");
               toast.info(
                 "Payment initialized. Please wait for the ticket payment confirmation.",
                 {
