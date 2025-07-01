@@ -19,7 +19,7 @@ export default function Pricing() {
               </p>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-3 max-w-5xl mx-auto">
+            <div className="grid gap-8 lg:grid-cols-3 lg:max-w-5xl mx-auto">
               {[
                 {
                   id: 1,

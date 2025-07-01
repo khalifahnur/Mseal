@@ -50,7 +50,7 @@ export function Footer() {
   return (
 
     
-    <footer className="relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden md:px-20">
       {/* Background grid pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
 
@@ -70,7 +70,7 @@ export function Footer() {
           <motion.div variants={itemVariants}>
             <div className="mb-2">
               <Image
-                src="https://www.murangaseal.com/assets/logo-a25ccce319b09f73006dc94d71887dbd26f5afeec59c2fa5dca6afaf101fe82c.png"
+                src="https://res.cloudinary.com/dfuh1q6ic/image/upload/v1751304986/mseal-logo_dcsiqz.png"
                 alt="Muranga Seal FC Logo"
                 width={180}
                 height={60}

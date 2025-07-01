@@ -11,7 +11,7 @@ interface LandingHeaderProps {
 }
 export default function MembershipSection({ onLoginClick,onSignUpClick}: LandingHeaderProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
+    <section className="relative md:px-20 overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
       {/* Background animated elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating colored shapes */}
