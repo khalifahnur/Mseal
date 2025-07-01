@@ -7,11 +7,11 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "**",
       },
-      {
-        protocol: "https",
-        hostname: "www.murangaseal.com",
-        pathname: "**",
-      },
+      // {
+      //   protocol: "https",
+      //   hostname: "www.murangaseal.com",
+      //   pathname: "**",
+      // },
       {
         protocol: "https",
         hostname: "img.icons8.com",
