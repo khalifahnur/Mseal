@@ -1,8 +1,8 @@
 export const membershipTiers = [
   //{ label: "None", value: "none", price: 0 },
-  { label: "Bronze", value: "bronze", price: 5000 },
-  { label: "Silver", value: "silver", price: 10000 },
-  { label: "Gold", value: "gold", price: 20000 },
+  { label: "Bronze", value: "bronze", price: 2000 },
+  { label: "Silver", value: "silver", price: 5000 },
+  { label: "Gold", value: "gold", price: 10000 },
 ];
 
 export const cities = [
