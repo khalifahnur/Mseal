@@ -13,8 +13,18 @@ import { PhoneNumberModal } from "@/components/Forms/PhoneNumberModal";
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, isLoading } = useAuth();
-  const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(true);
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(true);
+  const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+
+  useState(() => {
+    if (user) {
+      if (user.phoneNumber == null) {
+        setIsPhoneModalOpen(true);
+      } else if (user.membershipId == null) {
+        setIsMembershipModalOpen(true);
+      }
+    }
+  });
 
   const getCurrentTabName = () => {
     const path = pathname.split("/")[1];
@@ -28,15 +38,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const firstname = user?.firstName;
   const lastName = user?.lastName;
   const initials = `${firstname.charAt(0)}.${lastName.charAt(0)}`.toUpperCase();
+
+  const handlePhoneModalClose = () => {
+    setIsPhoneModalOpen(false);
+    if (user.membershipId == null) {
+      setIsMembershipModalOpen(true);
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row w-full">
-      {user.phoneNumber == null && (
-        <PhoneNumberModal
-          open={isPhoneModalOpen}
-          onOpenChange={setIsPhoneModalOpen}
-        />
-      )}
-
       <AppSidebar />
       <SidebarInset className="flex flex-1 flex-col">
         <Header currentTab={getCurrentTabName()} initials={initials} />
@@ -45,7 +56,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </main>
       </SidebarInset>
 
-      {user.membershipId == null && (
+      {user.phoneNumber == null && (
+        <PhoneNumberModal
+          open={isPhoneModalOpen}
+          onOpenChange={handlePhoneModalClose}
+        />
+      )}
+
+      {user.phoneNumber != null && user.membershipId == null && (
         <MembershipModal
           open={isMembershipModalOpen}
           onOpenChange={setIsMembershipModalOpen}

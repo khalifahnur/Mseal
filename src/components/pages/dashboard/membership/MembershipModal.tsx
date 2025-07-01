@@ -251,7 +251,7 @@ export function MembershipModal({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[600px] [&>button]:hidden max-w-fit overflow-y-auto h-5/6">
+      <DialogContent className="[&>button]:hidden max-w-fit overflow-y-auto h-5/6">
         <DialogHeader>
           <DialogTitle>Membership Registration</DialogTitle>
           <DialogDescription>
