@@ -1,6 +1,22 @@
-import { AuthData, AuthResponse, ErrorResponse, PhoneNumber, PhoneNumberResponse } from "@/types/auth";
+import {
+  AuthData,
+  AuthResponse,
+  ErrorResponse,
+  forgotData,
+  ForgotPsswdResponse,
+  newPsswd,
+  newPsswdResponse,
+  PhoneNumber,
+  PhoneNumberResponse,
+  verifyCode,
+} from "@/types/auth";
 import apiClient from "@/lib/apiClient";
-import { paymentData, paymentResponse, ticketPayment, walletPayment } from "@/types/payment";
+import {
+  paymentData,
+  paymentResponse,
+  ticketPayment,
+  walletPayment,
+} from "@/types/payment";
 import { orders } from "@/types/order";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -36,6 +52,74 @@ export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
     if (error?.response) {
       const errorMessage =
         error?.response?.data?.error || "An error occurred during sign up.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const forgotUserPasswd = async (
+  data: forgotData
+): Promise<ForgotPsswdResponse> => {
+  try {
+    const response = await apiClient.post<ForgotPsswdResponse>(
+      "/auth-user/forgot-password/verify-email",
+      data,
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        "An error occurred during forgot password.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const verifyPsswdCode = async (
+  data: verifyCode
+): Promise<ForgotPsswdResponse> => {
+  try {
+    const response = await apiClient.post<ForgotPsswdResponse>(
+      "/auth-user/forgot-password/verify-code",
+      data,
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        "An error occurred during forgot password.";
+      throw new Error(errorMessage);
+    } else {
+      // response (network issues, etc.)
+      throw new Error("Network error or no response from server.");
+    }
+  }
+};
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const setupNewPsswd = async (data: newPsswd): Promise<newPsswdResponse> => {
+  try {
+    const response = await apiClient.post<newPsswdResponse>(
+      "/auth-user/forgot-password/new-passowrd",
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      const errorMessage =
+        error?.response?.data?.error || "An error occurred during new password setup.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)
@@ -137,7 +221,9 @@ export async function fetchUsedTickets() {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const initiateTicketPayment = async (data: ticketPayment): Promise<paymentResponse> => {
+export const initiateTicketPayment = async (
+  data: ticketPayment
+): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/initiate-ticket-payment",
@@ -159,7 +245,9 @@ export const initiateTicketPayment = async (data: ticketPayment): Promise<paymen
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchAllMerchandise() {
   try {
-    const response = await apiClient.get("/merchandise/fetch-users-merchandise");
+    const response = await apiClient.get(
+      "/merchandise/fetch-users-merchandise"
+    );
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -174,17 +262,19 @@ export async function fetchAllMerchandise() {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const updateUserPhoneNumber = async (data: PhoneNumber): Promise<PhoneNumberResponse> => {
+export const updateUserPhoneNumber = async (
+  data: PhoneNumber
+): Promise<PhoneNumberResponse> => {
   try {
     const response = await apiClient.patch<PhoneNumberResponse>(
-      '/auth-user/update-user-phone-number',
+      "/auth-user/update-user-phone-number",
       data,
       { withCredentials: true }
     );
     return response.data;
   } catch (error: any) {
     const errorResponse: ErrorResponse = {
-      message: error.response?.data?.error || 'Failed to update phone number',
+      message: error.response?.data?.error || "Failed to update phone number",
       statusCode: error.response?.status,
       details: error.response?.data?.details,
     };
@@ -193,7 +283,9 @@ export const updateUserPhoneNumber = async (data: PhoneNumber): Promise<PhoneNum
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const initiateOrderPayment = async (data: orders): Promise<paymentResponse> => {
+export const initiateOrderPayment = async (
+  data: orders
+): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/initiate-order-payment",
@@ -259,7 +351,9 @@ export const initiateWalletTopupPayment = async (
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchUserTransactions() {
   try {
-    const response = await apiClient.get("/transaction/fetch-latest-transaction");
+    const response = await apiClient.get(
+      "/transaction/fetch-latest-transaction"
+    );
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -276,7 +370,9 @@ export async function fetchUserTransactions() {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchUserWalletTransactions() {
   try {
-    const response = await apiClient.get("/transaction/fetch-wallet-transaction");
+    const response = await apiClient.get(
+      "/transaction/fetch-wallet-transaction"
+    );
     return response.data;
   } catch (error: any) {
     if (error?.response) {
@@ -298,7 +394,7 @@ export async function fetchUpcomingEvents() {
     if (error?.response) {
       // Show a more specific error message
       const errorMessage =
-        error?.response?.data?.error || "Error fetching admin info.";
+        error?.response?.data?.error || "Error fetching upcoming events.";
       throw new Error(errorMessage);
     } else {
       throw new Error("Network error or no response from server.");
@@ -307,7 +403,26 @@ export async function fetchUpcomingEvents() {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const initiateTicketWalletPayment = async (data: ticketPayment): Promise<paymentResponse> => {
+export async function fetchTodayEvents() {
+  try {
+    const response = await apiClient.get("/event/fetch-today-events");
+    return response.data;
+  } catch (error: any) {
+    if (error?.response) {
+      // Show a more specific error message
+      const errorMessage =
+        error?.response?.data?.error || "Error fetching todays events.";
+      throw new Error(errorMessage);
+    } else {
+      throw new Error("Network error or no response from server.");
+    }
+  }
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const initiateTicketWalletPayment = async (
+  data: ticketPayment
+): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/mseal-wallet/initiate-ticket-payment",
@@ -326,7 +441,9 @@ export const initiateTicketWalletPayment = async (data: ticketPayment): Promise<
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const initiateOrderWalletPayment = async (data: orders): Promise<paymentResponse> => {
+export const initiateOrderWalletPayment = async (
+  data: orders
+): Promise<paymentResponse> => {
   try {
     const response = await apiClient.post<paymentResponse>(
       "/payment/mseal-wallet/initiate-order-payment",
@@ -347,3 +464,4 @@ export const initiateOrderWalletPayment = async (data: orders): Promise<paymentR
     }
   }
 };
+

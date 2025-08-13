@@ -3,10 +3,22 @@ import {
   AuthData,
   AuthResponse,
   ErrorResponse,
+  forgotData,
+  ForgotPsswdResponse,
+  newPsswd,
+  newPsswdResponse,
   PhoneNumber,
   PhoneNumberResponse,
+  verifyCode,
 } from "@/types/auth";
-import { loginUser, signUpUser, updateUserPhoneNumber } from "@/api/api";
+import {
+  forgotUserPasswd,
+  loginUser,
+  setupNewPsswd,
+  signUpUser,
+  updateUserPhoneNumber,
+  verifyPsswdCode,
+} from "@/api/api";
 import apiClient from "@/lib/apiClient";
 import { toast } from "react-toastify";
 import { useAuth } from "@/components/Forms/AuthContext";
@@ -19,7 +31,7 @@ export function useLogin(): UseMutationResult<
   const { refreshUser } = useAuth();
   return useMutation<AuthResponse, ErrorResponse, AuthData>({
     mutationFn: loginUser,
-    onSuccess:async () => {
+    onSuccess: async () => {
       await refreshUser();
     },
     onError: (error: ErrorResponse) => {
@@ -106,6 +118,70 @@ export function useUpdatePhone(): UseMutationResult<
         theme: "light",
       });
 
+      if (error.details) {
+        console.error("Additional error details:", error.details);
+      }
+    },
+  });
+}
+
+export function useForgotPasswd(): UseMutationResult<
+  ForgotPsswdResponse,
+  ErrorResponse,
+  forgotData
+> {
+  return useMutation<ForgotPsswdResponse, ErrorResponse, forgotData>({
+    mutationFn: forgotUserPasswd,
+    onError: (error: ErrorResponse) => {
+      console.error(
+        `Reset code error (${error.statusCode || "Unknown"}): ${error.message}`
+      );
+      toast.error(
+        error.message || "An unexpected error occurred. Please try again."
+      );
+      if (error.details) {
+        console.error("Additional error details:", error.details);
+      }
+    },
+  });
+}
+
+export function useVerifyCode(): UseMutationResult<
+  ForgotPsswdResponse,
+  ErrorResponse,
+  verifyCode
+> {
+  return useMutation<ForgotPsswdResponse, ErrorResponse, verifyCode>({
+    mutationFn: verifyPsswdCode,
+    onError: (error: ErrorResponse) => {
+      console.error(
+        `Verify code error (${error.statusCode || "Unknown"}): ${error.message}`
+      );
+      toast.error(
+        error.message || "An unexpected error occurred. Please try again."
+      );
+      if (error.details) {
+        console.error("Additional error details:", error.details);
+      }
+    },
+  });
+}
+
+export function useNewPsswd(): UseMutationResult<
+  newPsswdResponse,
+  ErrorResponse,
+  newPsswd
+> {
+  return useMutation<newPsswdResponse, ErrorResponse, newPsswd>({
+    mutationFn: setupNewPsswd,
+    // onSuccess: () => {
+    //   console.log("Sign-up successful:");
+    // },
+    onError: (error: ErrorResponse) => {
+      console.error("new psswd setup error:", error.message);
+      toast.error(
+        error.message || "An unexpected error occurred. Please try again."
+      );
       if (error.details) {
         console.error("Additional error details:", error.details);
       }

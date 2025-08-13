@@ -1,6 +1,6 @@
 export interface AuthData {
   firstName?: string;
-  lastName?:string;
+  lastName?: string;
   email: string;
   phoneNumber?: string;
   password: string;
@@ -23,11 +23,31 @@ export interface ErrorResponse {
   details?: { reason?: string; [key: string]: any };
 }
 
-export interface PhoneNumber{
-  phoneNumber:string;
+export interface PhoneNumber {
+  phoneNumber: string;
 }
 
-export interface PhoneNumberResponse{
-  message:string
+export interface PhoneNumberResponse {
+  message: string;
 }
 
+export interface ForgotPsswdResponse {
+  message: string;
+}
+export interface forgotData {
+  email: string;
+}
+
+export interface verifyCode {
+  email: string;
+  code: string;
+}
+
+export interface newPsswd{
+  email:string;
+  newPassword:string;
+}
+
+export interface newPsswdResponse{
+  message:string;
+}

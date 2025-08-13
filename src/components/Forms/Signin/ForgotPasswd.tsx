@@ -1,10 +1,8 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { ArrowLeft, Mail, Shield, Lock, Check } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useForgotPasswd, useNewPsswd, useVerifyCode } from "@/hooks/Authhook/authHook";
 
 type Step = "email" | "code" | "password" | "success";
 
@@ -25,6 +24,11 @@ export default function ForgotPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const sendEmailMutation = useForgotPasswd();
+  const sendVerifyCode = useVerifyCode();
+  const setNewPsswd = useNewPsswd();
 
   const handleCodeChange = (index: number, value: string) => {
     if (value.length > 1) return; // Prevent multiple characters
@@ -71,11 +75,21 @@ export default function ForgotPassword() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setIsLoading(false);
-    setCurrentStep("code");
+    try {
+      await sendEmailMutation.mutateAsync({ email });
+      setIsLoading(false);
+      setCurrentStep("code");
+    } catch (error: any) {
+      const errorMessage =
+        error?.message ||
+        (error.statusCode === 401
+          ? "Invalid email"
+          : "Please verify your email.");
+      setError(errorMessage);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCodeSubmit = async (e: React.FormEvent) => {
@@ -89,11 +103,21 @@ export default function ForgotPassword() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setIsLoading(false);
-    setCurrentStep("password");
+    try {
+      await sendVerifyCode.mutateAsync({ email,code:codeString });
+      setIsLoading(false);
+      setCurrentStep("password");
+    } catch (error: any) {
+      const errorMessage =
+        error?.message ||
+        (error.statusCode === 401
+          ? "Invalid reset code"
+          : "Please verify your code.");
+      setError(errorMessage);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
@@ -104,13 +128,21 @@ export default function ForgotPassword() {
       return;
     }
 
-    setIsLoading(true);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setIsLoading(false);
-    setCurrentStep("success");
+    try {
+      await setNewPsswd.mutateAsync({ email,newPassword:password });
+      setIsLoading(false);
+      setCurrentStep("success");
+    } catch (error: any) {
+      const errorMessage =
+        error?.message ||
+        (error.statusCode === 401
+          ? "Invalid password"
+          : "Please enter new password.");
+      setError(errorMessage);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const goBack = () => {
@@ -183,6 +215,7 @@ export default function ForgotPassword() {
                   required
                 />
               </div>
+              {/* {error && <span className="text-red-500">error</span>} */}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Sending Code..." : "Send Verification Code"}
               </Button>
@@ -289,7 +322,7 @@ export default function ForgotPassword() {
               </p>
               <Button
                 className="w-full"
-                onClick={() => (window.location.href = "/login")}
+                onClick={() => (window.location.href = "/")}
               >
                 Go to Sign In
               </Button>

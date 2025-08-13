@@ -1,130 +1,72 @@
 "use client";
-import { useState } from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { MatchFilter } from "@/components/pages/dashboard/match/matchfilter";
-import { MatchList } from "@/components/pages/dashboard/match/matchlist";
-import { FanEngagement } from "@/components/pages/dashboard/match/fans";
-import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
-interface Match {
-  id: string;
-  homeTeam: string;
-  awayTeam: string;
-  date: string;
-  venue: string;
-  competition: string;
-  ticketStatus: string;
-  isHome: boolean;
-  isDerby: boolean;
-  isFinal: boolean;
-  result: string | null;
-  attended: boolean;
-  highlights: string | null;
-}
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Share, ShoppingBag, Ticket } from "lucide-react";
+import { FanFacts } from "./fans";
+import Feeds from "./Feeds";
+import LIvePoll from "./LIvePoll";
+import Quiz from "./Quiz";
+import HeaderSection from "./HeaderSection";
 
-export default function MatchesPage() {
-  const [upcomingMatches, setUpcomingMatches] = useState<Match[]>([]);
-  const [pastMatches, setPastMatches] = useState<Match[]>([]);
-
-  // Replace with your API key
-  const API_KEY = "9cb2a41cc65ce85eae236769f2eec2f1";
-
-  const TEAM_NAME = "Muranga Seal";
-  const SEASON = "2024";
-
-  // Axios instance for API-Football
-  const apiClient = axios.create({
-    baseURL: "https://v3.football.api-sports.io/",
-    headers: { "x-apisports-key": API_KEY },
-  });
-
-  // Query 1: Fetch team ID
-  const teamQuery = useQuery({
-    queryKey: ["team", TEAM_NAME],
-    queryFn: async () => {
-      const response = await apiClient.get(`teams?search=${TEAM_NAME}`);
-      const teamId = response.data.response[0]?.team.id;
-      if (!teamId) throw new Error("Muranga Seal team not found");
-      return teamId;
-    },
-    staleTime: Infinity,
-    gcTime: Infinity,
-  });
-
-  // Query 2: Fetch fixtures (dependent on team ID)
-  const fixturesQuery = useQuery({
-    queryKey: ["fixtures", TEAM_NAME, SEASON],
-    queryFn: async () => {
-      const response = await apiClient.get(
-        `fixtures?team=${teamQuery.data}&season=${SEASON}`
-      );
-      return response.data.response;
-    },
-    enabled: !!teamQuery.data, // Only run if teamId exists
-    staleTime: 24 * 60 * 60 * 1000, // Cache for 24 hours
-    gcTime: 24 * 60 * 60 * 1000,
-  });
-
-  if (fixturesQuery.data && !upcomingMatches.length && !pastMatches.length) {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const matches: Match[] = fixturesQuery.data.map((fixture: any) => ({
-      id: fixture.fixture.id.toString(),
-      homeTeam: fixture.teams.home.name,
-      awayTeam: fixture.teams.away.name,
-      date: fixture.fixture.date,
-      venue: fixture.fixture.venue.name || "TBD",
-      competition: fixture.league.name || "Kenyan Premier League",
-      ticketStatus:
-        new Date(fixture.fixture.date) > new Date() ? "Available" : "Closed",
-      isHome: fixture.teams.home.name === TEAM_NAME,
-      isDerby: false,
-      isFinal: fixture.league.round.includes("Final"),
-      result:
-        fixture.fixture.status.short === "FT"
-          ? `${fixture.goals.home} - ${fixture.goals.away}`
-          : null,
-      attended: false,
-      highlights:
-        fixture.fixture.status.short === "FT"
-          ? "https://example.com/highlights"
-          : null,
-    }));
-
-    const currentDate = new Date();
-    setUpcomingMatches(
-      matches.filter((match) => new Date(match.date) >= currentDate)
-    );
-    setPastMatches(
-      matches.filter((match) => new Date(match.date) < currentDate)
-    );
-  }
-
-  // Handle loading and error states
-  if (teamQuery.isLoading || fixturesQuery.isLoading) {
-    return <FullScreenLoader />;
-  }
-
-  if (teamQuery.isError || fixturesQuery.isError) {
-    return (
-      <div className="text-red-500">
-        Failed to fetch matches:{" "}
-        {teamQuery.error?.message || fixturesQuery.error?.message}
-      </div>
-    );
-  }
-
+export default function Container() {
   return (
-    <div className="space-y-6">
-      <MatchFilter />
-      <div className="grid gap-6 md:grid-cols-3">
-        <div className="space-y-6 md:col-span-2">
-          <MatchList matches={upcomingMatches} title="Upcoming Matches" />
-          <MatchList matches={pastMatches} title="Past Matches" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
+        {/* Header Section */}
+        <HeaderSection />
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Fan Facts Carousel */}
+
+            <FanFacts />
+            {/* X Feed */}
+            <Feeds />
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* Live Poll */}
+            <LIvePoll />
+
+            {/* More Fun */}
+            <Quiz />
+          </div>
         </div>
-        <div>
-          <FanEngagement />
-        </div>
+
+        {/* Footer CTA */}
+        <Card className="border-0 shadow-lg bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+          <CardContent className="p-8">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold mb-2">Ready for Match Day?</h3>
+              <p className="text-gray-300">
+                Don't miss out on the action - get your tickets and gear now!
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-0 shadow-lg hover:shadow-xl transition-all duration-200 h-12 px-8">
+                <Share className="h-5 w-5 mr-2" />
+                Share on X
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/20 text-white hover:bg-white/10 h-12 px-8 bg-transparent"
+              >
+                <Ticket className="h-5 w-5 mr-2" />
+                Buy Tickets
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/20 text-white hover:bg-white/10 h-12 px-8 bg-transparent"
+              >
+                <ShoppingBag className="h-5 w-5 mr-2" />
+                Visit Team Store
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

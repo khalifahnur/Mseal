@@ -61,7 +61,7 @@ export default function Container({ eventId }: { eventId: string }) {
     if (transactionReference && confirmTicketPaymentStatus.paymentStatus) {
       if (confirmTicketPaymentStatus.paymentStatus === "Completed") {
         setPaymentStatus("success");
-        toast.success(`Successfully added to wallet!`, {
+        toast.success(`Successfully debited your mseal wallet!`, {
           position: "top-right",
           autoClose: 3000,
           toastId: "payment-success",
