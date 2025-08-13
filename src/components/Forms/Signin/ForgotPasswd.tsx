@@ -24,6 +24,7 @@ export default function ForgotPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  /*eslint-disable-next-line @typescript-eslint/no-unused-vars*/ 
   const [error, setError] = useState("");
 
   const sendEmailMutation = useForgotPasswd();
@@ -79,7 +80,9 @@ export default function ForgotPassword() {
       await sendEmailMutation.mutateAsync({ email });
       setIsLoading(false);
       setCurrentStep("code");
-    } catch (error: any) {
+    } 
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (error: any) {
       const errorMessage =
         error?.message ||
         (error.statusCode === 401
@@ -107,7 +110,9 @@ export default function ForgotPassword() {
       await sendVerifyCode.mutateAsync({ email,code:codeString });
       setIsLoading(false);
       setCurrentStep("password");
-    } catch (error: any) {
+    } 
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (error: any) {
       const errorMessage =
         error?.message ||
         (error.statusCode === 401
@@ -132,7 +137,9 @@ export default function ForgotPassword() {
       await setNewPsswd.mutateAsync({ email,newPassword:password });
       setIsLoading(false);
       setCurrentStep("success");
-    } catch (error: any) {
+    } 
+    /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+    catch (error: any) {
       const errorMessage =
         error?.message ||
         (error.statusCode === 401

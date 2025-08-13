@@ -1,23 +1,25 @@
-import { fetchTodayEvents } from "@/api/api";
+//import { fetchTodayEvents } from "@/api/api";
 import { Card, CardContent } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+//import { useQuery } from "@tanstack/react-query";
 import { Clock, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { FullScreenLoader } from "../../loading/FullScreenLoader";
+//import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 export default function HeaderSection() {
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["todaysEvents"],
-    queryFn: fetchTodayEvents,
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
-    retry: false,
-  });
+  // const { data, isLoading, error } = useQuery({
+  //   queryKey: ["todaysEvents"],
+  //   queryFn: fetchTodayEvents,
+  //   staleTime: 1000 * 60 * 5,
+  //   refetchOnWindowFocus: false,
+  //   retry: false,
+  // });
 
-  if (isLoading) return <FullScreenLoader />;
-  if (error) return <div>Error loading todays events: {error.message}</div>;
+  // console.log(data)
+
+  // if (isLoading) return <FullScreenLoader />;
+  // if (error) return <div>Error loading todays events: {error.message}</div>;
 
   return (
     <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white">
@@ -37,8 +39,8 @@ export default function HeaderSection() {
                   HOME
                 </div>
               </div>
-              <h3 className="font-bold text-lg">Thunder FC</h3>
-              <p className="text-white/80 text-sm">The Lightning Bolts</p>
+              <h3 className="font-bold text-lg">Mseal FC</h3>
+              <p className="text-white/80 text-sm">Mseal</p>
             </div>
 
             <div className="text-center">
@@ -63,8 +65,8 @@ export default function HeaderSection() {
                   AWAY
                 </div>
               </div>
-              <h3 className="font-bold text-lg">Lightning United</h3>
-              <p className="text-white/80 text-sm">The Storm Riders</p>
+              <h3 className="font-bold text-lg">Mseal</h3>
+              <p className="text-white/80 text-sm">Mseal</p>
             </div>
           </div>
 

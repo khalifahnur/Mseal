@@ -42,7 +42,7 @@ export default function Container() {
             <div className="text-center mb-6">
               <h3 className="text-xl font-bold mb-2">Ready for Match Day?</h3>
               <p className="text-gray-300">
-                Don't miss out on the action - get your tickets and gear now!
+                Don&apos;t miss out on the action - get your tickets and gear now!
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
