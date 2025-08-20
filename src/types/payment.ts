@@ -30,6 +30,7 @@ export interface ticketPayment{
   venue:string;
   quantity:number;
   amount:number;
+  time:string;
   // phoneNUmber:string;
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Formik, Form, Field } from "formik";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchTickets } from "@/api/api";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +34,7 @@ export default function Container({ eventId }: { eventId: string }) {
   const { width, height } = useWindowSize();
   const [paymentStatus, setPaymentStatus] = useState("idle");
   const [showConfetti, setShowConfetti] = useState(false);
+  const queryClient = useQueryClient()
   
   const serviceFee = 50;
   const { user } = useAuth();
@@ -67,6 +68,8 @@ export default function Container({ eventId }: { eventId: string }) {
           toastId: "payment-success",
         });
         setShowConfetti(true);
+        queryClient.invalidateQueries({ queryKey: ['activeTickets'] })
+        queryClient.invalidateQueries({ queryKey: ['userInfo'] })
         setTimeout(() => {
           setShowConfetti(false);
           setTransactionReference(null);
@@ -128,10 +131,12 @@ export default function Container({ eventId }: { eventId: string }) {
             match: `${event.homeTeam} vs. ${event.awayTeam}`,
             date: event.date,
             venue: event.venue,
+            time: event.time,
             quantity: values.quantity,
             amount: values.amount,
             phoneNumber: values.phoneNumber,
             paymentMethod: values.paymentMethod,
+
           };
 
           try {

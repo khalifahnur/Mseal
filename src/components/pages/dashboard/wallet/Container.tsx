@@ -10,7 +10,6 @@ import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 export default function WalletPage() {
   const { user, isLoading } = useAuth();
-  console.log(user);
   if (isLoading) {
     return <FullScreenLoader />;
   }
