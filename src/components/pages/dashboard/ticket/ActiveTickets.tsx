@@ -116,7 +116,7 @@ export function ActiveTickets() {
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Clock className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">15:00 EAT</span>
+                          <span className="text-white md:text-black">{event?.time} EAT</span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <MapPin className="mr-2 h-4 w-4 text-white md:text-black" />
@@ -170,7 +170,7 @@ export function ActiveTickets() {
                             </div>
                             <div className="text-center space-y-2">
                               <h4 className="font-bold">{event?.match}</h4>
-                              <p>{formatDate(event?.date)} • 15:00 EAT</p>
+                              <p>{formatDate(event?.date)} • {event?.time} EAT</p>
                               <p>{event?.venue}</p>
                               <p className="font-mono text-xs">
                                 {ticket.ticketId}
