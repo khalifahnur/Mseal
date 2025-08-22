@@ -7,6 +7,7 @@ import {
   ForgotPsswdResponse,
   newPsswd,
   newPsswdResponse,
+  NfcResponse,
   PhoneNumber,
   PhoneNumberResponse,
   verifyCode,
@@ -16,6 +17,7 @@ import {
   loginUser,
   setupNewPsswd,
   signUpUser,
+  updateNfcStatus,
   updateUserPhoneNumber,
   verifyPsswdCode,
 } from "@/api/api";
@@ -188,3 +190,29 @@ export function useNewPsswd(): UseMutationResult<
     },
   });
 }
+
+export function useUpdateNfc(): UseMutationResult<NfcResponse, ErrorResponse, "Active" | "Inactive" | "Suspended" | "Pending"> {
+  const { refreshUser } = useAuth();
+
+  return useMutation<NfcResponse, ErrorResponse, "Active" | "Inactive" | "Suspended" | "Pending">({
+    mutationFn: updateNfcStatus,
+    onSuccess: (data: NfcResponse) => {
+      refreshUser();
+      toast.success(data.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    },
+    onError: (error: ErrorResponse) => {
+      console.error("Update nfc status error:", error.message, error.details);
+      toast.error("Failed to update Mseal NFC status. Please try again.", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    },
+  });
+}
+
+

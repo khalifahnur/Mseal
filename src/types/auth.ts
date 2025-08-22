@@ -51,3 +51,11 @@ export interface newPsswd{
 export interface newPsswdResponse{
   message:string;
 }
+
+export interface NfcResponse {
+  message: string;
+}
+
+export interface NfcStatus {
+  nfcStatus: boolean;
+}

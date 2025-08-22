@@ -6,6 +6,7 @@ import {
   ForgotPsswdResponse,
   newPsswd,
   newPsswdResponse,
+  NfcResponse,
   PhoneNumber,
   PhoneNumberResponse,
   verifyCode,
@@ -281,6 +282,26 @@ export const updateUserPhoneNumber = async (
     throw errorResponse;
   }
 };
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const updateNfcStatus = async (status: "Active" | "Inactive" | "Suspended" | "Pending"): Promise<NfcResponse> => {
+  try {
+    const response = await apiClient.patch<NfcResponse>(
+      `/auth-user/wallet/nfc`,
+      { status },
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error: any) {
+    const errorResponse: ErrorResponse = {
+      message: error.response?.data?.error || "Failed to update nfc status",
+      statusCode: error.response?.status,
+      details: error.response?.data?.details,
+    };
+    throw errorResponse;
+  }
+};
+
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const initiateOrderPayment = async (

@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import BalanceWallet from "./BalanceWallet";
 import Nfc from "./Nfc";
-import Transaction from "./Transaction";
 import { useAuth } from "@/components/Forms/AuthContext";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
@@ -34,10 +33,10 @@ export default function WalletPage() {
         createdAt={user?.createdAt}
         tier={user?.membershipTier}
         nfcId={user?.walletId}
+        nfcEnabled={user?.walletStatus}
       />
 
-      {/* Transaction History */}
-      <Transaction />
+      
     </div>
   );
 }

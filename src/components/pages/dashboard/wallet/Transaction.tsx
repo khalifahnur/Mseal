@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownLeft, ArrowUpRight, History } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 export default function Transaction() {
+  const [showAll, setShowAll] = useState(false);
+
   const {
     data: transactions,
     isLoading,
@@ -39,6 +41,11 @@ export default function Transaction() {
     );
   }
 
+  // If not showing all, slice only 4
+  const visibleTransactions = showAll
+    ? transactions
+    : transactions?.slice(0, 4);
+
   return (
     <Card>
       <CardHeader>
@@ -47,23 +54,27 @@ export default function Transaction() {
             <CardTitle>Recent Transactions</CardTitle>
             <CardDescription>Your latest wallet activity</CardDescription>
           </div>
-          <Button variant="outline" size="sm">
-            <History className="h-4 w-4 mr-2" />
-            View All
-          </Button>
+          {transactions && transactions.length > 4 && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAll(!showAll)}
+            >
+              <History className="h-4 w-4 mr-2" />
+              {showAll ? "Show Less" : "View All"}
+            </Button>
+          )}
         </div>
       </CardHeader>
       <CardContent>
         {!transactions || transactions.length === 0 ? (
           <div className="text-center py-10 text-muted-foreground">
             <p className="text-sm">No wallet transactions have been made.</p>
-            {/* You can replace this with an animation or illustration */}
           </div>
         ) : (
           <div className="space-y-4">
-            {
-            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
-            transactions.map((tx: any) => (
+            {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
+            {visibleTransactions.map((tx: any) => (
               <div
                 key={tx._id}
                 className="flex items-center justify-between p-4 border rounded-lg"
@@ -94,8 +105,15 @@ export default function Transaction() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium text-green-600">
-                    +Ksh {Number(tx.amount).toLocaleString()}
+                  <p
+                    className={`font-medium ${
+                      tx.transactionType === "prepaid"
+                        ? "text-red-600"
+                        : "text-green-600"
+                    }`}
+                  >
+                    {tx.transactionType === "prepaid" ? "-Ksh " : "+Ksh "}
+                    {Number(tx.amount).toLocaleString()}
                   </p>
                   <Badge variant="outline" className="text-xs">
                     {tx.status}

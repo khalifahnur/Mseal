@@ -22,6 +22,7 @@ type User = {
   expDate: string | null;
   qrcode: string | null;
   walletId: string | null;
+  walletStatus: "Active" | "Inactive" | "Suspended" | "Pending" | null;
 };
 
 interface AuthContextType {

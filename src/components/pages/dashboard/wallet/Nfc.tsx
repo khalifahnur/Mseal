@@ -3,35 +3,41 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
-  CreditCard,
-  Smartphone,
-  Plus,
-  Shield,
   NfcIcon,
-  QrCode,
-  Settings,
 } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import formatMonthYear from "@/lib/utils";
+import { useUpdateNfc } from "@/hooks/Authhook/authHook";
+import Transaction from "./Transaction";
 
 type nfcProp = {
   nfcId?: string | null | undefined;
   expDate: string | null | undefined;
   createdAt: string | null | undefined;
   tier: string | undefined | null;
+  nfcEnabled:
+    | "Active"
+    | "Inactive"
+    | "Suspended"
+    | "Pending"
+    | null
+    | undefined;
 };
-export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
-  const [nfcEnabled, setNfcEnabled] = useState(true);
+export default function Nfc({
+  expDate,
+  createdAt,
+  tier,
+  nfcId,
+  nfcEnabled,
+}: nfcProp) {
+  const updateNfc = useUpdateNfc();
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -44,7 +50,7 @@ export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
               <CardTitle>NFC Membership Card</CardTitle>
             </div>
             <Badge variant={nfcEnabled ? "default" : "secondary"}>
-              {nfcEnabled ? "Active" : "Inactive"}
+              {nfcEnabled === "Active" ? "Active" : "Inactive"}
             </Badge>
           </div>
           <CardDescription>
@@ -94,13 +100,15 @@ export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
               </div>
               <Switch
                 id="nfc-payments"
-                checked={nfcEnabled}
-                onCheckedChange={setNfcEnabled}
+                checked={nfcEnabled === "Active"}
+                onCheckedChange={(checked) => {
+                  updateNfc.mutate(checked ? "Active" : "Inactive");
+                }}
               />
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex gap-2">
+        {/* <CardFooter className="flex gap-2">
           <Button variant="outline" className="flex-1">
             <Settings className="h-4 w-4 mr-2" />
             Card Settings
@@ -109,11 +117,11 @@ export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
             <Shield className="h-4 w-4 mr-2" />
             Security
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
 
       {/* Quick Actions */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
           <CardDescription>Common wallet and payment actions</CardDescription>
@@ -130,7 +138,6 @@ export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
             </Button>
           </div>
 
-          {/* Payment Methods */}
           <div className="space-y-3">
             <h4 className="font-medium">Saved Payment Methods</h4>
             <div className="space-y-2">
@@ -164,7 +171,9 @@ export default function Nfc({ expDate, createdAt, tier,nfcId }: nfcProp) {
             Add Payment Method
           </Button>
         </CardFooter>
-      </Card>
+      </Card> */}
+      {/* Transaction History */}
+      <Transaction />
     </div>
   );
 }
