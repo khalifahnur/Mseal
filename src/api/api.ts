@@ -173,7 +173,7 @@ export const initiateMembershipPayment = async (
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export async function fetchTickets() {
   try {
-    const response = await apiClient.get("/event/fetch-all-events");
+    const response = await apiClient.get("/event/fetch-upcoming-events");
     return response.data;
   } catch (error: any) {
     if (error?.response) {

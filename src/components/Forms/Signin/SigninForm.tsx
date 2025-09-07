@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik"
@@ -92,10 +92,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,225,21,0.1),transparent_50%)]" />
 
       <div className="relative z-10 container mx-auto min-h-screen p-4 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <div
           className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden w-full max-w-6xl"
         >
           <div className="grid lg:grid-cols-2 min-h-[700px]">
@@ -104,10 +101,10 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
 
             {/* Right Section */}
             <div className="p-12 flex flex-col justify-center bg-white/50 backdrop-blur-sm">
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+              <div
+                // initial={{ opacity: 0, x: 30 }}
+                // animate={{ opacity: 1, x: 0 }}
+                // transition={{ duration: 0.8, delay: 0.3 }}
                 className="max-w-md mx-auto w-full space-y-8"
               >
                 <div className="text-center space-y-2">
@@ -264,10 +261,10 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                     </button>
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )
