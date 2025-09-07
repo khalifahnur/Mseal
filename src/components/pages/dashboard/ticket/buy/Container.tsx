@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ApiResponse, Event } from "@/types/ticket";
+import { Event } from "@/types/ticket";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import { useState, useEffect } from "react";
 import { useTicketPayment, useTicketWalletPayment } from "@/hooks/Paymenthook/usePaymentHook";

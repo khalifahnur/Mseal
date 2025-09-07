@@ -35,7 +35,7 @@ const useSocketData = (event: string, transactionReference: string | null) => {
       setData(newData);
     });
 
-    socket.on("connect_error", (err) => {
+    socket.on("connect_error", () => {
       //console.error("Socket.IO connection error:", err.message);
       toast.error("Failed to connect to server. Please try again.", {
         position: "bottom-right",

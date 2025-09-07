@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CalendarX, Share, ShoppingBag, Ticket } from "lucide-react";
+import { CalendarX } from "lucide-react";
 import { FanFacts } from "./fans";
 import Feeds from "./Feeds";
 import LIvePoll from "./LIvePoll";

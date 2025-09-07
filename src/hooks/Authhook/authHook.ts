@@ -201,7 +201,7 @@ export function useUpdateNfc(): UseMutationResult<NfcResponse, ErrorResponse, "A
         theme: "light",
       });
     },
-    onError: (error: ErrorResponse) => {
+    onError: () => {
       //console.error("Update nfc status error:", error.message, error.details);
       toast.error("Failed to update Mseal NFC status. Please try again.", {
         position: "bottom-right",
