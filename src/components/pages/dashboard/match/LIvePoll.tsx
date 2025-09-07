@@ -1,32 +1,53 @@
+"use client";
+
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
-export default function LIvePoll() {
-  const [pollVote, setPollVote] = useState<string | null>(null);
-  const [pollResults, setPollResults] = useState({ teamA: 55, teamB: 45 });
-  const handleVote = (team: string) => {
-    if (pollVote) return;
+type Event = {
+  homeTeam: string;
+  awayTeam: string;
+};
 
+interface LivePollProps {
+  event: Event | null;
+}
+
+export default function LivePoll({ event }: LivePollProps) {
+  const [pollVote, setPollVote] = useState<string | null>(null);
+
+  const [pollResults, setPollResults] = useState({
+    home: 10,
+    away: 8,
+  });
+
+  const handleVote = (team: "home" | "away") => {
+    if (pollVote) return;
     setPollVote(team);
-    if (team === "teamA") {
-      setPollResults({
-        teamA: pollResults.teamA + 1,
-        teamB: pollResults.teamB,
-      });
-    } else {
-      setPollResults({
-        teamA: pollResults.teamA,
-        teamB: pollResults.teamB + 1,
-      });
-    }
+
+    setPollResults((prev) => ({
+      ...prev,
+      [team]: prev[team] + 1,
+    }));
+
   };
 
-  const totalVotes = pollResults.teamA + pollResults.teamB;
-  const teamAPercentage = Math.round((pollResults.teamA / totalVotes) * 100);
-  const teamBPercentage = Math.round((pollResults.teamB / totalVotes) * 100);
+  if (!event) {
+    return (
+      <Card className="border-0 shadow-lg bg-gray-100 text-center py-8">
+        <p className="text-gray-500 font-medium">No match available to poll</p>
+      </Card>
+    );
+  }
+
+  const totalVotes = pollResults.home + pollResults.away;
+  const homePercentage =
+    totalVotes > 0 ? Math.round((pollResults.home / totalVotes) * 100) : 0;
+  const awayPercentage =
+    totalVotes > 0 ? Math.round((pollResults.away / totalVotes) * 100) : 0;
+
   return (
     <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="pb-4">
@@ -48,42 +69,39 @@ export default function LIvePoll() {
 
           <div className="space-y-3">
             <Button
-              variant={pollVote === "teamA" ? "default" : "outline"}
-              onClick={() => handleVote("teamA")}
+              variant={pollVote === "home" ? "default" : "outline"}
+              onClick={() => handleVote("home")}
               disabled={!!pollVote}
               className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-0 shadow-md hover:shadow-lg transition-all duration-200"
             >
-              ⚡ Thunder FC
+              ⚡ {event.homeTeam}
             </Button>
+
             <Button
-              variant={pollVote === "teamB" ? "default" : "outline"}
-              onClick={() => handleVote("teamB")}
+              variant={pollVote === "away" ? "default" : "outline"}
+              onClick={() => handleVote("away")}
               disabled={!!pollVote}
               className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 border-0 shadow-md hover:shadow-lg transition-all duration-200"
             >
-              ⚡ Lightning United
+              ⚡ {event.awayTeam}
             </Button>
           </div>
 
           <div className="space-y-4 bg-gray-50 p-4 rounded-xl">
             <div className="space-y-2">
               <div className="flex justify-between text-sm font-medium">
-                <span className="text-blue-600">Thunder FC</span>
-                <span className="text-blue-600">{teamAPercentage}%</span>
+                <span className="text-blue-600">{event.homeTeam}</span>
+                <span className="text-blue-600">{homePercentage}%</span>
               </div>
-              <Progress value={teamAPercentage} className="h-3 bg-gray-200">
-                <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500" />
-              </Progress>
+              <Progress value={homePercentage} className="h-3 bg-gray-200" />
             </div>
 
             <div className="space-y-2">
               <div className="flex justify-between text-sm font-medium">
-                <span className="text-purple-600">Lightning United</span>
-                <span className="text-purple-600">{teamBPercentage}%</span>
+                <span className="text-purple-600">{event.awayTeam}</span>
+                <span className="text-purple-600">{awayPercentage}%</span>
               </div>
-              <Progress value={teamBPercentage} className="h-3 bg-gray-200">
-                <div className="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-500" />
-              </Progress>
+              <Progress value={awayPercentage} className="h-3 bg-gray-200" />
             </div>
 
             <div className="text-center pt-2">

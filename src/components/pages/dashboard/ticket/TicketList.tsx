@@ -13,14 +13,14 @@ import { formatDate } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTickets } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
-import { ApiResponse } from "@/types/ticket";
+import { Event } from "@/types/ticket";
 
 export function TicketList() {
   const searchParams = useSearchParams();
   const dateFilter = searchParams.get("date");
   const sortBy = searchParams.get("sort");
 
-  const { data, isLoading, error } = useQuery<ApiResponse>({
+  const { data, isLoading, error } = useQuery<Event[]>({
     queryKey: ["tickets", dateFilter, sortBy],
     queryFn: fetchTickets,
     staleTime: 5 * 60 * 1000,
@@ -28,16 +28,19 @@ export function TicketList() {
   });
 
   const filteredEvents = useMemo(() => {
-    if (!data?.events) return [];
+    if (!data) return [];
 
-    let events = [...data.events];
+    let events = [...data];
 
-    // Apply date filter
     if (dateFilter) {
       const today = new Date();
       const thisWeekEnd = new Date(today);
       thisWeekEnd.setDate(today.getDate() + (7 - today.getDay()));
-      const thisMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      const thisMonthEnd = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        0
+      );
 
       events = events.filter((event) => {
         const eventDate = new Date(event.date);
@@ -64,7 +67,7 @@ export function TicketList() {
     }
 
     return events;
-  }, [data?.events, dateFilter, sortBy]);
+  }, [data, dateFilter, sortBy]);
 
   if (isLoading) {
     return <FullScreenLoader />;
@@ -73,7 +76,9 @@ export function TicketList() {
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-red-500">Error loading events: {(error as Error).message}</p>
+        <p className="text-red-500">
+          Error loading events: {(error as Error).message}
+        </p>
       </div>
     );
   }
@@ -157,8 +162,12 @@ export function TicketList() {
 
                       <div className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Ticket availability</span>
-                          <span className="text-sm font-medium">{availableTickets} left</span>
+                          <span className="text-sm text-muted-foreground">
+                            Ticket availability
+                          </span>
+                          <span className="text-sm font-medium">
+                            {availableTickets} left
+                          </span>
                         </div>
                         <Progress value={soldPercentage} className="h-2" />
                       </div>

@@ -17,7 +17,7 @@ const useSocketData = (event: string, transactionReference: string | null) => {
 
   useEffect(() => {
     if (!transactionReference) {
-      console.log("No transactionReference, skipping Socket.IO connection");
+      //console.log("No transactionReference, skipping Socket.IO connection");
       return;
     }
 
@@ -27,16 +27,16 @@ const useSocketData = (event: string, transactionReference: string | null) => {
     });
 
     socket.on("connect", () => {
-      console.log("Socket.IO connected to", SOCKET_URL, "with transactionReference:", transactionReference);
+      //console.log("Socket.IO connected to", SOCKET_URL, "with transactionReference:", transactionReference);
     });
 
     socket.on(event, (newData: WebSocketData) => {
-      console.log("Received data:", newData);
+     // console.log("Received data:", newData);
       setData(newData);
     });
 
     socket.on("connect_error", (err) => {
-      console.error("Socket.IO connection error:", err.message);
+      //console.error("Socket.IO connection error:", err.message);
       toast.error("Failed to connect to server. Please try again.", {
         position: "bottom-right",
         autoClose: 5000,
@@ -48,7 +48,7 @@ const useSocketData = (event: string, transactionReference: string | null) => {
       socket.off("connect");
       socket.off("connect_error");
       socket.disconnect();
-      console.log("Socket.IO disconnected");
+     // console.log("Socket.IO disconnected");
     };
   }, [event, transactionReference]);
 

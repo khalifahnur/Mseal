@@ -1,36 +1,31 @@
-//import { fetchTodayEvents } from "@/api/api";
 import { Card, CardContent } from "@/components/ui/card";
-//import { useQuery } from "@tanstack/react-query";
 import { Clock, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-//import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
-export default function HeaderSection() {
+type Event = {
+  homeTeam: string;
+  awayTeam: string;
+  date: string;
+  time: string;
+  venue: string;
+  homeLogoUrl?: string;
+  opponentLogoUrl?: string;
+};
 
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey: ["todaysEvents"],
-  //   queryFn: fetchTodayEvents,
-  //   staleTime: 1000 * 60 * 5,
-  //   refetchOnWindowFocus: false,
-  //   retry: false,
-  // });
-
-  // console.log(data)
-
-  // if (isLoading) return <FullScreenLoader />;
-  // if (error) return <div>Error loading todays events: {error.message}</div>;
+export default function HeaderSection({ event }: { event: Event }) {
+  const matchDate = new Date(event.date);
 
   return (
-    <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white">
+    <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-r from-primary via-gray-900 to-blue-800 text-white">
       <CardContent className="p-8">
         <div className="text-center space-y-6">
           <div className="flex items-center justify-center gap-8 lg:gap-12">
             <div className="text-center transform hover:scale-105 transition-transform duration-200">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=80&width=80"
-                  alt="Thunder FC Logo"
+                  src={event.homeLogoUrl || "/placeholder.svg"}
+                  alt={`${event.homeTeam} Logo`}
                   width={80}
                   height={80}
                   className="mx-auto mb-3 rounded-full border-4 border-white/20 shadow-lg"
@@ -39,10 +34,11 @@ export default function HeaderSection() {
                   HOME
                 </div>
               </div>
-              <h3 className="font-bold text-lg">Mseal FC</h3>
-              <p className="text-white/80 text-sm">Mseal</p>
+              <h3 className="font-bold text-lg">{event.homeTeam}</h3>
+              <p className="text-white/80 text-sm">{event.venue}</p>
             </div>
 
+            {/* VS */}
             <div className="text-center">
               <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 mb-2">
                 <span className="text-3xl font-bold">VS</span>
@@ -52,11 +48,12 @@ export default function HeaderSection() {
               </div>
             </div>
 
+            {/* Away Team */}
             <div className="text-center transform hover:scale-105 transition-transform duration-200">
               <div className="relative">
                 <Image
-                  src="/placeholder.svg?height=80&width=80"
-                  alt="Lightning United Logo"
+                  src={event.opponentLogoUrl || "/placeholder.svg"}
+                  alt={`${event.awayTeam} Logo`}
                   width={80}
                   height={80}
                   className="mx-auto mb-3 rounded-full border-4 border-white/20 shadow-lg"
@@ -65,23 +62,26 @@ export default function HeaderSection() {
                   AWAY
                 </div>
               </div>
-              <h3 className="font-bold text-lg">Mseal</h3>
-              <p className="text-white/80 text-sm">Mseal</p>
+              <h3 className="font-bold text-lg">{event.awayTeam}</h3>
+              <p className="text-white/80 text-sm">{event.venue}</p>
             </div>
           </div>
 
+          {/* Match Info */}
           <div>
             <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-              Thunder FC vs Lightning United
+              {event.homeTeam} vs {event.awayTeam}
             </h1>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-8 text-white/90">
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <Clock className="h-5 w-5" />
-                <span className="font-medium">July 15, 2025 • 3:00 PM EST</span>
+                <span className="font-medium">
+                  {matchDate.toDateString()} • {event.time}
+                </span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                 <MapPin className="h-5 w-5" />
-                <span className="font-medium">Thunder Stadium</span>
+                <span className="font-medium">{event.venue}</span>
               </div>
             </div>
           </div>

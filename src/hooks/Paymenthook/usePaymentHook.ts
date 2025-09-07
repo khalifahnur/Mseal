@@ -28,9 +28,9 @@ export function useMembershipPayment(): UseMutationResult<
     // onSuccess: (data) => {
     //   console.log("Payment initiated successfully:", data);
     // },
-    onError: (error: paymentError) => {
-      console.error("Payment initiation error:", error.message);
-    },
+    // onError: (error: paymentError) => {
+    //   console.error("Payment initiation error:", error.message);
+    // },
   });
 }
 
@@ -44,9 +44,9 @@ export function usePesapalMembershipPayment(): UseMutationResult<
     // onSuccess: (data) => {
     //   console.log("Payment initiated successfully:", data);
     // },
-    onError: (error: paymentError) => {
-      console.error("Payment initiation error:", error.message);
-    },
+    // onError: (error: paymentError) => {
+    //   console.error("Payment initiation error:", error.message);
+    // },
   });
 }
 
@@ -60,9 +60,9 @@ export function useTicketPayment(): UseMutationResult<
     // onSuccess: (data) => {
     //   console.log("Payment initiated successfully:", data);
     // },
-    onError: (error: paymentError) => {
-      console.error("Payment initiation error:", error.message);
-    },
+    // onError: (error: paymentError) => {
+    //   console.error("Payment initiation error:", error.message);
+    // },
   });
 }
 
@@ -111,9 +111,9 @@ export function useWalletTopupPayment(): UseMutationResult<
     // onSuccess: (data) => {
     //   console.log("Payment initiated successfully:", data);
     // },
-    onError: (error: paymentError) => {
-      console.error("Payment initiation error:", error.message);
-    },
+    // onError: (error: paymentError) => {
+    //   console.error("Payment initiation error:", error.message);
+    // },
   });
 }
 

@@ -37,15 +37,15 @@ export function useLogin(): UseMutationResult<
       await refreshUser();
     },
     onError: (error: ErrorResponse) => {
-      console.error(
-        `Login error (${error.statusCode || "Unknown"}): ${error.message}`
-      );
+      // console.error(
+      //   `Login error (${error.statusCode || "Unknown"}): ${error.message}`
+      // );
       toast.error(
         error.message || "An unexpected error occurred. Please try again."
       );
-      if (error.details) {
-        console.error("Additional error details:", error.details);
-      }
+      // if (error.details) {
+      //   console.error("Additional error details:", error.details);
+      // }
     },
   });
 }
@@ -60,9 +60,6 @@ export function useSignUp(): UseMutationResult<
     // onSuccess: () => {
     //   console.log("Sign-up successful:");
     // },
-    onError: (error: ErrorResponse) => {
-      console.error("Sign-up error:", error.message);
-    },
   });
 }
 
@@ -96,7 +93,7 @@ export function useUpdatePhone(): UseMutationResult<
       });
     },
     onError: (error: ErrorResponse) => {
-      console.error("Update phone number error:", error.message, error.details);
+      //console.error("Update phone number error:", error.message, error.details);
       let toastMessage = error.message;
       if (error.statusCode === 409) {
         toastMessage =
@@ -120,9 +117,9 @@ export function useUpdatePhone(): UseMutationResult<
         theme: "light",
       });
 
-      if (error.details) {
-        console.error("Additional error details:", error.details);
-      }
+      // if (error.details) {
+      //   console.error("Additional error details:", error.details);
+      // }
     },
   });
 }
@@ -135,15 +132,15 @@ export function useForgotPasswd(): UseMutationResult<
   return useMutation<ForgotPsswdResponse, ErrorResponse, forgotData>({
     mutationFn: forgotUserPasswd,
     onError: (error: ErrorResponse) => {
-      console.error(
-        `Reset code error (${error.statusCode || "Unknown"}): ${error.message}`
-      );
+      // console.error(
+      //   `Reset code error (${error.statusCode || "Unknown"}): ${error.message}`
+      // );
       toast.error(
         error.message || "An unexpected error occurred. Please try again."
       );
-      if (error.details) {
-        console.error("Additional error details:", error.details);
-      }
+      // if (error.details) {
+      //   console.error("Additional error details:", error.details);
+      // }
     },
   });
 }
@@ -156,15 +153,15 @@ export function useVerifyCode(): UseMutationResult<
   return useMutation<ForgotPsswdResponse, ErrorResponse, verifyCode>({
     mutationFn: verifyPsswdCode,
     onError: (error: ErrorResponse) => {
-      console.error(
-        `Verify code error (${error.statusCode || "Unknown"}): ${error.message}`
-      );
+      // console.error(
+      //   `Verify code error (${error.statusCode || "Unknown"}): ${error.message}`
+      // );
       toast.error(
         error.message || "An unexpected error occurred. Please try again."
       );
-      if (error.details) {
-        console.error("Additional error details:", error.details);
-      }
+      // if (error.details) {
+      //   console.error("Additional error details:", error.details);
+      // }
     },
   });
 }
@@ -180,13 +177,13 @@ export function useNewPsswd(): UseMutationResult<
     //   console.log("Sign-up successful:");
     // },
     onError: (error: ErrorResponse) => {
-      console.error("new psswd setup error:", error.message);
+      //console.error("new psswd setup error:", error.message);
       toast.error(
         error.message || "An unexpected error occurred. Please try again."
       );
-      if (error.details) {
-        console.error("Additional error details:", error.details);
-      }
+      // if (error.details) {
+      //   console.error("Additional error details:", error.details);
+      // }
     },
   });
 }
@@ -205,7 +202,7 @@ export function useUpdateNfc(): UseMutationResult<NfcResponse, ErrorResponse, "A
       });
     },
     onError: (error: ErrorResponse) => {
-      console.error("Update nfc status error:", error.message, error.details);
+      //console.error("Update nfc status error:", error.message, error.details);
       toast.error("Failed to update Mseal NFC status. Please try again.", {
         position: "bottom-right",
         autoClose: 5000,

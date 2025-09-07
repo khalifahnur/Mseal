@@ -54,21 +54,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
     enabled: hasMounted,
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,         
+    //cacheTime: Infinity,
     refetchOnWindowFocus: false,
     retry: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   useEffect(() => {
     if (isError) {
-      console.error("Failed to fetch user:", error);
+     // console.error("Failed to fetch user:", error);
       queryClient.setQueryData(["userInfo"], null);
     }
   }, [isError, error, queryClient]);
 
   const refreshUser = async () => {
-    await refetch();
-  };
+  const { data } = await refetch();
+  if (!data) {
+    queryClient.setQueryData(["userInfo"], null);
+  }
+};
+
 
   const signOut = () => {
     queryClient.setQueryData(["userInfo"], null);

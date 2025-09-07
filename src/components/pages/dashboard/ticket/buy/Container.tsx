@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ApiResponse } from "@/types/ticket";
+import { ApiResponse, Event } from "@/types/ticket";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import { useState, useEffect } from "react";
 import { useTicketPayment, useTicketWalletPayment } from "@/hooks/Paymenthook/usePaymentHook";
@@ -50,13 +50,13 @@ export default function Container({ eventId }: { eventId: string }) {
     transactionReference
   );
 
-  const { data, isLoading, error } = useQuery<ApiResponse>({
+  const { data, isLoading, error } = useQuery<Event[]>({
     queryKey: ["tickets"],
     queryFn: fetchTickets,
     staleTime: 1000 * 60 * 5,
   });
 
-  const event = data?.events?.find((e) => e._id === eventId);
+  const event = data?.find((e) => String(e._id) === String(eventId));
 
   useEffect(() => {
     if (transactionReference && confirmTicketPaymentStatus.paymentStatus) {

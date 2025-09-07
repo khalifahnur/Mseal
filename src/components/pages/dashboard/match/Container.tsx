@@ -2,20 +2,56 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Share, ShoppingBag, Ticket } from "lucide-react";
+import { CalendarX, Share, ShoppingBag, Ticket } from "lucide-react";
 import { FanFacts } from "./fans";
 import Feeds from "./Feeds";
 import LIvePoll from "./LIvePoll";
 import Quiz from "./Quiz";
 import HeaderSection from "./HeaderSection";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTodayEvents } from "@/api/api";
+import { FullScreenLoader } from "../../loading/FullScreenLoader";
 
 export default function Container() {
+  const {
+    data: events,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["todaysEvents"],
+    queryFn: fetchTodayEvents,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+
+  if (isLoading) return <FullScreenLoader />;
+  if (error) return <div>Error loading todays events: {error.message}</div>;
+
+  const event = events?.[0];
+
+  if (!event)
+    return (
+    <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white mb-20">
+      <CardContent className="p-10 flex flex-col items-center justify-center text-center space-y-6">
+        <div className="bg-red-500/20 rounded-full p-6">
+          <CalendarX className="h-12 w-12 text-red-400" />
+        </div>
+        <h2 className="text-2xl font-bold">No Match Today</h2>
+        <p className="text-white/70 max-w-md">
+          There are no scheduled matches for today. Please check back later or
+          explore upcoming fixtures.
+        </p>
+      </CardContent>
+    </Card>
+  );
+  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
         {/* Header Section */}
-        <HeaderSection />
-        {/* Main Content Grid */}
+        <HeaderSection event={event} />;{/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
@@ -29,44 +65,13 @@ export default function Container() {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Live Poll */}
-            <LIvePoll />
+            <LIvePoll event={event} />
 
             {/* More Fun */}
             <Quiz />
           </div>
         </div>
 
-        {/* Footer CTA */}
-        <Card className="border-0 shadow-lg bg-gradient-to-r from-gray-900 to-gray-800 text-white">
-          <CardContent className="p-8">
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-bold mb-2">Ready for Match Day?</h3>
-              <p className="text-gray-300">
-                Don&apos;t miss out on the action - get your tickets and gear now!
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-0 shadow-lg hover:shadow-xl transition-all duration-200 h-12 px-8">
-                <Share className="h-5 w-5 mr-2" />
-                Share on X
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 h-12 px-8 bg-transparent"
-              >
-                <Ticket className="h-5 w-5 mr-2" />
-                Buy Tickets
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 h-12 px-8 bg-transparent"
-              >
-                <ShoppingBag className="h-5 w-5 mr-2" />
-                Visit Team Store
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
