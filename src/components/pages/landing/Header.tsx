@@ -16,7 +16,6 @@ interface LandingHeaderProps {
 export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
 
-  // Track scroll position and update state
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -26,10 +25,8 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
       }
     }
 
-    // Add scroll event listener
     window.addEventListener("scroll", handleScroll)
 
-    // Clean up event listener
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
@@ -64,7 +61,7 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
         >
           <Link href="/" className="shrink-0">
             <Image
-              src="https://res.cloudinary.com/dfuh1q6ic/image/upload/v1751304986/mseal-logo_dcsiqz.png"
+              src="/assets/mseal-logo.png"
               alt="Muranga Seals"
               width={100}
               height={100}
@@ -112,9 +109,9 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
             </Button>
 
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
-            <div className="hidden lg:block bg-[#000] p-2">
+            <div className="hidden lg:block p-2">
               <Image
-                src="https://www.ke.sportpesa.com/img/actionbar_logo.png?v3.15.0.1"
+                src="/assets/sponsors/sp-logo.jpg"
                 alt="Muranga Seals"
                 width={100}
                 height={100}

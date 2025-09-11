@@ -47,11 +47,10 @@ export default function LandingPage() {
       <main className="overflow-x-hidden">
         <MembershipSection
           onLoginClick={() => setShowAuth(true)}
-          onSignUpClick={() => setShowAuth(true)}
         />
         <TrustedSponsors />
         <MembershipBenefits />
-        <Pricing />
+        <Pricing onLoginClick={() => setShowAuth(true)}/>
         <CTASection />
         <Testimonials />
         <FAQSection />

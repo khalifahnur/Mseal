@@ -1,5 +1,5 @@
 export const membershipTiers = [
-  //{ label: "None", value: "none", price: 0 },
+  { label: "Ordinary", value: "ordinary", price: 500 },
   { label: "Bronze", value: "bronze", price: 2000 },
   { label: "Silver", value: "silver", price: 5000 },
   { label: "Gold", value: "gold", price: 10000 },

@@ -112,7 +112,7 @@ const footerItems = [
       <Sidebar variant="floating">
         <SidebarHeader className="items-center justify-center">
           <Image
-            src="./assets/images/logo.png"
+            src="/assets/mseal-logo.png"
             alt="Muranga Seals"
             width={50}
             height={50}
@@ -137,9 +137,9 @@ const footerItems = [
   return (
     <Sidebar variant="floating">
       <SidebarHeader className="items-center justify-center">
-        <Link href="/home" className="z-50">
+        <Link href="/" className="z-50">
           <Image
-            src="/assets/images/logo.png"
+            src="/assets/mseal-logo.png"
             alt="Muranga Seals"
             width={50}
             height={50}

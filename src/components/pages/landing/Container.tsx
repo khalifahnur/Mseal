@@ -7,14 +7,11 @@ import { Button } from "@/components/ui/button"
 
 interface LandingHeaderProps {
   onLoginClick: () => void;
-  onSignUpClick: () => void;
 }
-export default function MembershipSection({ onLoginClick,onSignUpClick}: LandingHeaderProps) {
+export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
   return (
     <section className="relative md:px-20 overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
-      {/* Background animated elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating colored shapes */}
         <motion.div
           className="absolute w-20 h-20 rounded-lg bg-[#fae11a] opacity-20"
           style={{ top: "15%", right: "20%" }}
@@ -206,11 +203,11 @@ export default function MembershipSection({ onLoginClick,onSignUpClick}: Landing
             >
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="w-full sm:w-auto">
+                  <Link href='#pricing'>
                   <motion.button
                     className="w-full bg-[#fae115] text-black px-8 py-3 font-bold rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg transform hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center justify-center"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={onSignUpClick}
                   >
                     JOIN NOW
                     <svg
@@ -223,17 +220,9 @@ export default function MembershipSection({ onLoginClick,onSignUpClick}: Landing
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
                     </svg>
                   </motion.button>
+                  </Link>
                 </div>
 
-                <Link  href={''} className="w-full sm:w-auto">
-                  <motion.button
-                    className="w-full bg-transparent border-2 border-gray-300 text-gray-700 px-8 py-3 font-bold rounded-lg hover:border-gray-500 hover:text-black transition-all duration-300 flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    VIEW PLANS
-                  </motion.button>
-                </Link>
               </div>
 
               {/* Ticket purchase option */}
@@ -244,8 +233,8 @@ export default function MembershipSection({ onLoginClick,onSignUpClick}: Landing
                 transition={{ delay: 1.2, duration: 0.5 }}
               >
                 <div className="text-center sm:text-left">
-                  <span className="text-gray-600">Just want tickets? </span>
-                  <Link href="/SignIn" className="group inline-flex items-center" prefetch>
+                  <span className="text-gray-600 font-extrabold">Just want tickets? </span>
+                  <Link href="/" className="group inline-flex items-center" prefetch>
                     <span className="font-semibold text-black group-hover:text-[#fae115] transition-colors duration-200">
                       Buy match tickets
                     </span>

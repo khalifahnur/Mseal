@@ -162,14 +162,12 @@ export function BenefitsPath() {
         }}
       />
 
-      <div className="absolute inset-0 rounded-3xl bg-opacity-30 overflow-hidden">
+      {/* <div className="absolute inset-0 rounded-3xl bg-opacity-30 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-      </div>
+      </div> */}
       
-      {/* Animated particles */}
       <BackgroundParticles count={15} />
       
-      {/* Main content container */}
       <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4 z-10">
         <div className="text-center mb-12">
           <motion.div 

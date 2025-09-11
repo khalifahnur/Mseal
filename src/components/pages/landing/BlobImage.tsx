@@ -37,7 +37,7 @@ export default function BlobImage() {
           zIndex: 3 - index,
         }));
       });
-    }, 4000); // Shuffle every 4 seconds
+    }, 4000); 
 
     return () => clearInterval(shuffleInterval);
   }, [isHovering]);
@@ -48,9 +48,9 @@ export default function BlobImage() {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="absolute inset-0 rounded-3xl bg-opacity-30 overflow-hidden">
+      {/* <div className="absolute inset-0 rounded-3xl bg-opacity-30 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-      </div>
+      </div> */}
 
       <div className="absolute inset-0 flex items-center justify-center">
         <AnimatePresence>

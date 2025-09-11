@@ -9,6 +9,10 @@ interface CartItem {
   quantity: number;
   size: string;
   imgUrl: string;
+  customization?: {
+    name: string;
+    number: string;
+  } | null;
 }
 
 interface CartContextType {
@@ -18,7 +22,7 @@ interface CartContextType {
   increaseQuantity: (id: string, size: string) => void;
   decreaseQuantity: (id: string, size: string) => void;
   cartCount: number;
-  clearCart:()=>void,
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -42,7 +46,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (id: string, size: string) => {
-    setCart((prev) => prev.filter((item) => !(item.id === id && item.size === size)));
+    setCart((prev) =>
+      prev.filter((item) => !(item.id === id && item.size === size))
+    );
   };
 
   const increaseQuantity = (id: string, size: string) => {

@@ -54,7 +54,7 @@ export default function LeftSection() {
           >
             <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl scale-110" />
             <Image
-              src="https://res.cloudinary.com/dfuh1q6ic/image/upload/v1751304986/mseal-logo_dcsiqz.png"
+              src="/assets/mseal-logo.png"
               alt="Muranga Seals"
               width={220}
               height={220}

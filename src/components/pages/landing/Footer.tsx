@@ -15,7 +15,6 @@ export function Footer() {
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
     if (email) {
-      // Here you would typically send this to your API
       setIsSubscribed(true)
       setTimeout(() => {
         setIsSubscribed(false)
@@ -26,7 +25,6 @@ export function Footer() {
 
   const currentYear = new Date().getFullYear()
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -51,13 +49,10 @@ export function Footer() {
 
     
     <footer className="relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden md:px-20">
-      {/* Background grid pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
 
-      {/* Yellow accent line */}
       <div className="h-1 w-full bg-[#fae115]"></div>
 
-      {/* Main footer content */}
       <div className="container mx-auto px-4 py-10">
         <motion.div
           className="grid gap-12 md:grid-cols-3 lg:grid-cols-4"
@@ -66,11 +61,10 @@ export function Footer() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {/* Column 1: About & Quick Links */}
           <motion.div variants={itemVariants}>
             <div className="mb-2">
               <Image
-                src="https://res.cloudinary.com/dfuh1q6ic/image/upload/v1751304986/mseal-logo_dcsiqz.png"
+                src="/assets/mseal-logo.png"
                 alt="Muranga Seal FC Logo"
                 width={180}
                 height={60}
@@ -87,7 +81,7 @@ export function Footer() {
               {[
                 { name: "About", href: "/about" },
                 { name: "Matches", href: "/matches" },
-                { name: "Membership", href: "/membership" },
+                { name: "Membership", href: "/" },
                 { name: "Contact Us", href: "/contact" },
                 { name: "FAQs", href: "/faq" },
               ].map((link, index) => (
@@ -104,7 +98,6 @@ export function Footer() {
             </ul>
           </motion.div>
 
-          {/* Column 2: Contact Information & Map */}
           <motion.div variants={itemVariants}>
             <h3 className="text-lg font-bold mb-4 text-[#fae115]">Contact Information</h3>
             <ul className="space-y-4 mb-6">
@@ -136,12 +129,11 @@ export function Footer() {
                 <MapPin className="h-5 w-5 text-[#fae115] mt-1 mr-3 shrink-0" />
                 <div>
                   <p className="text-gray-300">Stadium:</p>
-                  <p className="text-white">Muranga Stadium, Muranga County, Kenya</p>
+                  <p className="text-white">St Sebastian Park, Muranga County, Kenya</p>
                 </div>
               </li>
             </ul>
 
-            {/* Stadium Map/Image Placeholder */}
             <div className="relative h-32 rounded-lg overflow-hidden border border-gray-800">
               <Image src="/placeholder.svg?height=128&width=300" alt="Stadium Location" fill className="object-cover" />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
@@ -155,27 +147,7 @@ export function Footer() {
             </div>
           </motion.div>
 
-          {/* Column 3: Match Schedule & Social Media */}
           <motion.div variants={itemVariants}>
-            {/* <h3 className="text-lg font-bold mb-4 text-[#fae115]">Upcoming Matches</h3>
-            <div className="space-y-4 mb-8">
-              {[
-                { opponent: "Nairobi City Stars", date: "12 Jun", home: true },
-                { opponent: "Gor Mahia FC", date: "19 Jun", home: false },
-                { opponent: "AFC Leopards", date: "26 Jun", home: true },
-              ].map((match, index) => (
-                <div key={index} className="flex items-center justify-between p-2 border-b border-gray-800">
-                  <div className="flex items-center">
-                    <div className={`w-2 h-2 rounded-full ${match.home ? "bg-green-500" : "bg-blue-500"} mr-2`}></div>
-                    <span className="text-sm text-gray-300">
-                      {match.home ? "vs" : "@"} {match.opponent}
-                    </span>
-                  </div>
-                  <span className="text-xs bg-gray-800 px-2 py-1 rounded">{match.date}</span>
-                </div>
-              ))}
-            </div> */}
-
             <h3 className="text-lg font-bold mb-4 text-[#fae115]">Follow Us</h3>
             <div className="flex space-x-4">
               {[
@@ -201,7 +173,6 @@ export function Footer() {
             </div>
           </motion.div>
 
-          {/* Column 4: Newsletter & App Download */}
           <motion.div variants={itemVariants}>
             <h3 className="text-lg font-bold mb-4 text-[#fae115]">Newsletter</h3>
             <p className="text-gray-300 mb-4">

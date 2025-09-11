@@ -6,41 +6,77 @@ const TrustedSponsors = () => {
   const sponsors = [
     {
       href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
+      image: "/assets/sponsors/sp-logo.jpg",
       alt: "SportPesa - Official Sports Betting Partner",
       text: "SportPesa"
     },
     {
+      href: "https://casino-finix.com/en/",
+      image: "/assets/sponsors/finix logo.jpg",
+      alt: "Finix",
+      text: "Finix"
+    },
+    {
+      href: "https://whizmo.com/kenya/index.html",
+      image: "/assets/sponsors/whizmo.svg",
+      alt: "whizmo",
+      text: "Whizmo"
+    },
+    {
       href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
+      image: "/assets/sponsors/sp-casino.png",
+      alt: "sp-casino",
+      text: "sp-casino"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sponsors/sp-logo.jpg",
       alt: "SportPesa - Official Sports Betting Partner",
       text: "SportPesa"
     },
     {
+      href: "https://casino-finix.com/en/",
+      image: "/assets/sponsors/finix logo.jpg",
+      alt: "Finix",
+      text: "Finix"
+    },
+    {
+      href: "https://whizmo.com/kenya/index.html",
+      image: "/assets/sponsors/whizmo.svg",
+      alt: "whizmo",
+      text: "Whizmo"
+    },
+     {
       href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
+      image: "/assets/sponsors/sp-casino.png",
+      alt: "sp-casino",
+      text: "sp-casino"
+    },
+    {
+      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
+      image: "/assets/sponsors/sp-logo.jpg",
       alt: "SportPesa - Official Sports Betting Partner",
       text: "SportPesa"
     },
     {
-      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
-      alt: "SportPesa - Official Sports Betting Partner",
-      text: "SportPesa"
-    },
-
-    {
-      href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
-      alt: "SportPesa - Official Sports Betting Partner",
-      text: "SportPesa"
+      href: "https://casino-finix.com/en/",
+      image: "/assets/sponsors/finix logo.jpg",
+      alt: "Finix",
+      text: "Finix"
     },
     {
+      href: "https://whizmo.com/kenya/index.html",
+      image: "/assets/sponsors/whizmo.svg",
+      alt: "whizmo",
+      text: "Whizmo"
+    },
+     {
       href: "https://www.ke.sportpesa.com/en/sports-betting/football-1/",
-      image: "/assets/sportpesa-seeklogo.png",
-      alt: "SportPesa - Official Sports Betting Partner",
-      text: "SportPesa"
-    }
+      image: "/assets/sponsors/sp-casino.png",
+      alt: "sp-casino",
+      text: "sp-casino"
+    },
+    
   ];
 
   const duplicatedSponsors = [...sponsors, ...sponsors, ...sponsors];

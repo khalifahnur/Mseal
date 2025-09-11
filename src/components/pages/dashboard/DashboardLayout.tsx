@@ -5,7 +5,7 @@ import { AppSidebar } from "@/components/Sidebar/Sidebar";
 import { Header } from "@/components/pages/dashboard/header";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MembershipModal } from "@/components/pages/dashboard/membership/MembershipModal";
 import { FullScreenLoader } from "../loading/FullScreenLoader";
 import { PhoneNumberModal } from "@/components/Forms/PhoneNumberModal";
@@ -16,7 +16,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
     if (user) {
       if (user.phoneNumber == null) {
         setIsPhoneModalOpen(true);
@@ -24,7 +24,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         setIsMembershipModalOpen(true);
       }
     }
-  });
+  }, [user]);
 
   const getCurrentTabName = () => {
     const path = pathname.split("/")[1];

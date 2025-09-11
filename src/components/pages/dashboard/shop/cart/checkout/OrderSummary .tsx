@@ -7,23 +7,31 @@ interface CartItem {
   price: number;
   quantity: number;
   size?: string;
+  customization?: {
+    name: string;
+    number: string;
+  } | null;
 }
 
 interface OrderSummaryProps {
   cart: CartItem[];
-  subtotal: number;
-  shipping: number;
+  itemSubtotal: number;
+  printingCost: number;
+  deliveryFee: number;
   serviceFee: number;
   total: number;
 }
 
 export default function OrderSummary({
   cart,
-  subtotal,
-  shipping,
+  itemSubtotal,
+  printingCost,
+  deliveryFee,
   serviceFee,
   total,
 }: OrderSummaryProps) {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div>
       <h3 className="font-medium text-base mb-3">Order Summary</h3>
@@ -41,6 +49,9 @@ export default function OrderSummary({
             <div className="flex-1">
               <h4 className="font-medium text-sm line-clamp-1">
                 {item.name}
+                {item.customization && (
+                  <span className="text-muted-foreground"> (Customized)</span>
+                )}
               </h4>
               {item.size && (
                 <p className="text-xs text-muted-foreground">Size: {item.size}</p>
@@ -50,7 +61,7 @@ export default function OrderSummary({
                   Qty: {item.quantity}
                 </span>
                 <span className="text-sm">
-                  Ksh.{(item.price * item.quantity).toFixed(2)}
+                  KSh {(item.price * item.quantity + (item.customization ? 500 * item.quantity : 0)).toFixed(2)}
                 </span>
               </div>
             </div>
@@ -60,20 +71,28 @@ export default function OrderSummary({
 
       <div className="mt-6 space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Subtotal</span>
-          <span>Ksh.{subtotal.toFixed(2)}</span>
+          <span className="text-muted-foreground">Items Subtotal</span>
+          <span>KSh {itemSubtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Shipping</span>
-          <span>Ksh.{shipping.toFixed(2)}</span>
+          <span className="text-muted-foreground">Printing Cost</span>
+          <span>KSh {printingCost.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-muted-foreground">Delivery Fee</span>
+          <span>KSh {deliveryFee.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-muted-foreground">Service Fee</span>
-          <span>Ksh.{serviceFee.toFixed(2)}</span>
+          <span>KSh {serviceFee.toFixed(2)}</span>
         </div>
         <div className="flex justify-between font-semibold pt-2 border-t">
           <span>Total</span>
-          <span>Ksh.{total.toFixed(2)}</span>
+          <span>KSh {total.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between text-muted-foreground">
+          <span>Total Items</span>
+          <span>{totalItems}</span>
         </div>
       </div>
     </div>

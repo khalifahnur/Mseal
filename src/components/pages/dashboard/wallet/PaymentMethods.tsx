@@ -1,7 +1,7 @@
 "use client";
 
 import { Field, ErrorMessage } from "formik";
-import { Phone, CreditCard } from "lucide-react";
+import { Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -43,21 +43,21 @@ export default function PaymentForm({
       popular: true,
       imgUrl: "/assets/payment/mpesa.png",
     },
-    {
-      id: "card",
-      name: "Credit/Debit Card",
-      description: "Pay with Visa, Mastercard, or other cards",
-      icon: CreditCard,
-      popular: false,
-      imgUrl: "/assets/payment/mastercard.png",
-    },
-    {
-      id: "visa",
-      name: "Bank Transfer",
-      description: "Direct bank transfer",
-      popular: false,
-      imgUrl: "/assets/payment/visa.png",
-    },
+    // {
+    //   id: "card",
+    //   name: "Credit/Debit Card",
+    //   description: "Pay with Visa, Mastercard, or other cards",
+    //   icon: CreditCard,
+    //   popular: false,
+    //   imgUrl: "/assets/payment/mastercard.png",
+    // },
+    // {
+    //   id: "visa",
+    //   name: "Bank Transfer",
+    //   description: "Direct bank transfer",
+    //   popular: false,
+    //   imgUrl: "/assets/payment/visa.png",
+    // },
     {
       id: "airtel",
       name: "Airtel",
