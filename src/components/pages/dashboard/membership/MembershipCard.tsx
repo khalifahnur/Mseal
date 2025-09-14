@@ -23,8 +23,8 @@ export default function MembershipCard({
 }: membershipCardProps) {
   const [memberInfo] = useState({
     membershipTier: "Premium Bronze",
-    pointsEarned: 2450,
-    pointsToNextTier: 550,
+    pointsEarned: 10,
+    pointsToNextTier: 0,
   });
 
   return (

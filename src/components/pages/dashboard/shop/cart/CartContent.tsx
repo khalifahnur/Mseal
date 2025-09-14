@@ -15,8 +15,8 @@ interface CartContentProps {
 export default function CartContent({onCheckout}:CartContentProps) {
   const { cart, removeFromCart,increaseQuantity, decreaseQuantity } = useCart()
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shipping = cart.length > 0 ? 100 : 0
-  const total = subtotal + shipping
+  //const shipping = cart.length > 0 ? 100 : 0
+  const total = subtotal
 
   return (
     <SheetContent className="w-full sm:max-w-md flex flex-col p-0">
@@ -102,10 +102,10 @@ export default function CartContent({onCheckout}:CartContentProps) {
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>Ksh.{subtotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              {/* <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
                 <span>Ksh.{shipping.toFixed(2)}</span>
-              </div>
+              </div> */}
               <Separator />
               <div className="flex justify-between font-semibold">
                 <span>Total</span>
