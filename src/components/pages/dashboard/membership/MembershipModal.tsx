@@ -123,8 +123,8 @@ export function MembershipModal({
         toast.info("Redirecting to Pesapal for Visa payment...", {
           toastId: "visa-redirect",
         });
-      } catch (err: any) {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
+      } /* eslint-disable @typescript-eslint/no-explicit-any */
+        catch (err: any) {
         const errorMessage = err.message || "Visa payment initiation failed";
         setErrors({ paymentMethod: errorMessage });
         toast.error(errorMessage, { toastId: "visa-payment-error" });
@@ -224,8 +224,8 @@ export function MembershipModal({
             toastId: "stk-push",
           }
         );
-      } catch (err: any) {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
+      } /* eslint-disable @typescript-eslint/no-explicit-any */
+      catch (err: any) {
         const errorMessage = err.message || "Payment failed";
         setErrors({ paymentMethod: errorMessage });
         toast.error(errorMessage, { toastId: "payment-error" });
