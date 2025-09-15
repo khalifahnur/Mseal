@@ -35,9 +35,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     return <FullScreenLoader />;
   }
 
-  const firstname = user?.firstName;
-  const lastName = user?.lastName;
-  const initials = `${firstname.charAt(0)}.${lastName.charAt(0)}`.toUpperCase();
+  const firstName = user?.firstName || '';
+  const lastName = user?.lastName || '';
+  const initials = (typeof firstName === 'string' && firstName)
+    ? (typeof lastName === 'string' && lastName)
+      ? `${firstName.charAt(0)}.${lastName.charAt(0)}`.toUpperCase()
+      : `${firstName.slice(0, 2)}`.toUpperCase()
+    : '';
 
   const handlePhoneModalClose = () => {
     setIsPhoneModalOpen(false);
