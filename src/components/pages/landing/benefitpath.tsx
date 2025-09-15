@@ -92,7 +92,7 @@ const BackgroundParticles = ({ count = 20 }) => {
   }, [count])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute opensans inset-0 overflow-hidden pointer-events-none">
       {particles.map((p, i) => (
         <motion.div
           key={i}

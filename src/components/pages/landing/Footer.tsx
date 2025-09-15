@@ -48,10 +48,10 @@ export function Footer() {
   return (
 
     
-    <footer className="relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden md:px-20">
+    <footer className="opensans relative bg-gradient-to-b from-[#0a0c1b] to-black text-white overflow-hidden md:px-20">
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
 
-      <div className="h-1 w-full bg-[#fae115]"></div>
+      <div className="h-1 w-full bg-primary"></div>
 
       <div className="container mx-auto px-4 py-10">
         <motion.div
@@ -76,7 +76,7 @@ export function Footer() {
               </p>
             </div>
 
-            <h3 className="text-lg font-bold mb-4 text-[#fae115]">Quick Links</h3>
+            <h3 className="text-lg font-bold mb-4 text-primary">Quick Links</h3>
             <ul className="space-y-3">
               {[
                 { name: "About", href: "/about" },
@@ -88,7 +88,7 @@ export function Footer() {
                 <li key={index}>
                   <Link
                     href={link.href}
-                    className="group flex items-center text-gray-300 hover:text-[#fae115] transition-colors duration-300"
+                    className="group flex items-center text-gray-300 hover:text-primary transition-colors duration-300"
                   >
                     <ArrowRight className="mr-2 h-4 w-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
@@ -99,34 +99,34 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-bold mb-4 text-[#fae115]">Contact Information</h3>
+            <h3 className="text-lg font-bold mb-4 text-primary">Contact Information</h3>
             <ul className="space-y-4 mb-6">
               <li className="flex items-start">
-                <Mail className="h-5 w-5 text-[#fae115] mt-1 mr-3 shrink-0" />
+                <Mail className="h-5 w-5 text-primary mt-1 mr-3 shrink-0" />
                 <div>
                   <p className="text-gray-300">Email:</p>
                   <a
                     href="mailto:info@murangaseals.com"
-                    className="text-white hover:text-[#fae115] transition-colors duration-300"
+                    className="text-white hover:text-primary transition-colors duration-300"
                   >
                     info@murangaseals.com
                   </a>
                 </div>
               </li>
               <li className="flex items-start">
-                <Phone className="h-5 w-5 text-[#fae115] mt-1 mr-3 shrink-0" />
+                <Phone className="h-5 w-5 text-primary mt-1 mr-3 shrink-0" />
                 <div>
                   <p className="text-gray-300">Phone:</p>
                   <a
                     href="tel:+254123456789"
-                    className="text-white hover:text-[#fae115] transition-colors duration-300"
+                    className="text-white hover:text-primary transition-colors duration-300"
                   >
                     +254 123 456 789
                   </a>
                 </div>
               </li>
               <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-[#fae115] mt-1 mr-3 shrink-0" />
+                <MapPin className="h-5 w-5 text-primary mt-1 mr-3 shrink-0" />
                 <div>
                   <p className="text-gray-300">Stadium:</p>
                   <p className="text-white">St Sebastian Park, Muranga County, Kenya</p>
@@ -139,7 +139,7 @@ export function Footer() {
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
                 <Link
                   href="/contact"
-                  className="px-3 py-1.5 bg-[#fae115] text-black text-sm font-medium rounded-full hover:bg-yellow-400 transition-colors duration-300"
+                  className="px-3 py-1.5 bg-primary text-black text-sm font-medium rounded-full hover:bg-primary/40 transition-colors duration-300"
                 >
                   Get Directions
                 </Link>
@@ -148,7 +148,7 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-bold mb-4 text-[#fae115]">Follow Us</h3>
+            <h3 className="text-lg font-bold mb-4 text-primary/40">Follow Us</h3>
             <div className="flex space-x-4">
               {[
                 { icon: Facebook, label: "Facebook", href: "#", color: "hover:bg-blue-600" },
@@ -174,7 +174,7 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-bold mb-4 text-[#fae115]">Newsletter</h3>
+            <h3 className="text-lg font-bold mb-4 text-primary">Newsletter</h3>
             <p className="text-gray-300 mb-4">
               Stay updated with our latest news, match updates, and exclusive offers!
             </p>
@@ -186,12 +186,12 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full p-3 pl-4 pr-12 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-[#fae115] text-white"
+                  className="w-full p-3 pl-4 pr-12 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-primary text-white"
                   required
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#fae115] transition-colors duration-300"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors duration-300"
                   aria-label="Subscribe"
                 >
                   <Send className="h-5 w-5" />
@@ -241,13 +241,13 @@ export function Footer() {
               &copy; {currentYear} Murang&apos;a Seal FC. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-              <Link href="/privacy" className="hover:text-[#fae115] transition-colors duration-300">
+              <Link href="/privacy" className="hover:text-primary transition-colors duration-300">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-[#fae115] transition-colors duration-300">
+              <Link href="/terms" className="hover:text-primary transition-colors duration-300">
                 Terms of Service
               </Link>
-              <Link href="/cookies" className="hover:text-[#fae115] transition-colors duration-300">
+              <Link href="/cookies" className="hover:text-primary transition-colors duration-300">
                 Cookie Policy
               </Link>
             </div>

@@ -31,20 +31,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 mt-2">
+      <section className="grid gap-4 sm:grid-cols-2 mt-2 mb-2">
         <div className="col-span-full sm:col-span-1" id="membership-card">
           {user?.membershipId == null ? (
             <NoMembership />
           ) : (
             <MembershipCard
-              memberName={`${user?.firstName} ${user?.lastName}`}
-              memberNumber={user?.membershipId}
-              teamName="Murang'a Seals"
-              balance={user?.balance}
+              membershipTier={user?.membershipTier}
               qrcode={user?.qrcode}
-              expDate={user?.expDate}
               createdAt={user?.createdAt}
-              walletId={user?.walletId}
+              cardNumber={user?.walletId}
             />
           )}
         </div>

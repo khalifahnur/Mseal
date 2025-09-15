@@ -48,7 +48,7 @@ export const LoadingOverlay = ({
   }, [])
 
   const colorMap: Record<LoadingColor, string> = {
-    primary: "border-blue-600 bg-[#fae115]",
+    primary: "border-blue-600 bg-[#e16f23]",
     secondary: "border-slate-700 bg-slate-100",
     accent: "border-indigo-600 bg-indigo-100",
     success: "border-emerald-600 bg-emerald-100",
@@ -216,7 +216,7 @@ export const InlineLoader = ({
   }, [])
 
   const colorMap: Record<LoadingColor, string> = {
-    primary: "bg-[#fae115]",
+    primary: "bg-#e16f23",
     secondary: "bg-slate-700",
     accent: "bg-indigo-600",
     success: "bg-emerald-600",

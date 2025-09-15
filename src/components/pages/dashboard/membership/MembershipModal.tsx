@@ -33,6 +33,7 @@ import { cities, membershipTiers } from "@/lib/placeholderData";
 import useSocketData from "@/hooks/socket/membershipSocketHook";
 import ReactConfetti from "react-confetti";
 import { useWindowSize } from "react-use";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export function MembershipModal({
   open,
@@ -56,6 +57,7 @@ export function MembershipModal({
   >("idle");
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
+  const { refreshUser } = useAuth();
   const router = useRouter();
 
   const paymentMutation = useMembershipPayment();
@@ -81,6 +83,9 @@ export function MembershipModal({
         autoClose: 3000,
         toastId: "payment-success",
       });
+
+      window.location.reload();
+      refreshUser();
     } else if (confirmOrderPaymentStatus.paymentStatus === "Failed") {
       setPaymentStatus("error");
       setTransactionReference(null);
@@ -118,9 +123,8 @@ export function MembershipModal({
         toast.info("Redirecting to Pesapal for Visa payment...", {
           toastId: "visa-redirect",
         });
-      } 
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      catch (err: any) {
+      } catch (err: any) {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         const errorMessage = err.message || "Visa payment initiation failed";
         setErrors({ paymentMethod: errorMessage });
         toast.error(errorMessage, { toastId: "visa-payment-error" });
@@ -188,8 +192,12 @@ export function MembershipModal({
   const handleSubmit = useCallback(
     async (
       values: paymentData,
-      { setSubmitting, setErrors }: FormikHelpers<paymentData>
+      { setSubmitting, setErrors }: FormikHelpers<paymentData>,
+      event?: React.FormEvent<HTMLFormElement>
     ) => {
+      if (event && (event.target as any).dataset.action !== "pay") {
+        return;
+      }
       setPaymentStatus("initiating");
       try {
         setSubmitting(true);
@@ -216,9 +224,8 @@ export function MembershipModal({
             toastId: "stk-push",
           }
         );
-      } 
+      } catch (err: any) {
         /* eslint-disable @typescript-eslint/no-explicit-any */
-        catch (err: any) {
         const errorMessage = err.message || "Payment failed";
         setErrors({ paymentMethod: errorMessage });
         toast.error(errorMessage, { toastId: "payment-error" });
@@ -275,7 +282,7 @@ export function MembershipModal({
     useEffect(() => {
       if (values.membershipTier) {
         const selectedTier = membershipTiers.find(
-          (t:any) => t.value === values.membershipTier
+          (t: any) => t.value === values.membershipTier
         );
         if (selectedTier) {
           setFieldValue("amount", selectedTier.price);
@@ -294,7 +301,7 @@ export function MembershipModal({
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <div className="bg-gradient-to-r from-[#fae115] to-gray-900 p-4 rounded-t-xl">
+        <div className="bg-gradient-to-r from-primary to-gray-900 p-4 rounded-t-xl">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               Membership Registration
@@ -316,7 +323,7 @@ export function MembershipModal({
             />
           )}
 
-          {paymentStatus === "success" ? (
+          {/* {paymentStatus === "success" ? (
             <div className="text-center py-6">
               <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                 <CheckCircle className="h-8 w-8 text-green-500" />
@@ -334,316 +341,319 @@ export function MembershipModal({
                 Continue
               </Button>
             </div>
-          ) : (
-            <>
-              <div className="relative mb-6">
-                <div className="flex justify-between items-center">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex flex-col items-center">
-                      <div
-                        className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all",
-                          step === i
-                            ? "bg-[#fae115] text-gray-900 scale-110"
-                            : step > i
-                            ? "bg-green-100 text-green-700"
-                            : "bg-gray-100 text-gray-500"
-                        )}
-                      >
-                        {step > i ? <CheckCircle className="h-4 w-4" /> : i}
-                      </div>
-                      <span
-                        className={cn(
-                          "text-xs mt-1 font-medium",
-                          step >= i ? "text-gray-900" : "text-gray-500"
-                        )}
-                      >
-                        {i === 1 ? "Plan" : i === 2 ? "Info" : "Pay"}
-                      </span>
+          ) : ( */}
+          <>
+            <div className="relative mb-6">
+              <div className="flex justify-between items-center">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex flex-col items-center">
+                    <div
+                      className={cn(
+                        "flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all",
+                        step === i
+                          ? "bg-primary text-gray-900 scale-110"
+                          : step > i
+                          ? "bg-green-100 text-green-700"
+                          : "bg-gray-100 text-gray-500"
+                      )}
+                    >
+                      {step > i ? <CheckCircle className="h-4 w-4" /> : i}
                     </div>
-                  ))}
-                </div>
-                <div className="absolute top-4 left-4 right-4 h-0.5 bg-gray-200 -z-10">
-                  <div
-                    className="h-full bg-[#fae115] transition-all duration-300"
-                    style={{ width: `${((step - 1) / 2) * 100}%` }}
-                  />
-                </div>
+                    <span
+                      className={cn(
+                        "text-xs mt-1 font-medium",
+                        step >= i ? "text-gray-900" : "text-gray-500"
+                      )}
+                    >
+                      {i === 1 ? "Plan" : i === 2 ? "Info" : "Pay"}
+                    </span>
+                  </div>
+                ))}
               </div>
+              <div className="absolute top-4 left-4 right-4 h-0.5 bg-gray-200 -z-10">
+                <div
+                  className="h-full bg-primary transition-all duration-300"
+                  style={{ width: `${((step - 1) / 2) * 100}%` }}
+                />
+              </div>
+            </div>
 
-              <div className="space-y-4">
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={handleSubmit}
-                  validateOnChange={true}
-                  validateOnBlur={true}
-                  enableReinitialize
-                >
-                  {({
-                    values,
-                    setFieldValue,
-                    errors,
-                    isSubmitting,
-                    setTouched,
-                    validateForm,
-                    handleSubmit,
-                  }) => {
-                    // useEffect(() => {
-                    //   if (values.membershipTier) {
-                    //     const selectedTier = membershipTiers.find((t) => t.value === values.membershipTier);
-                    //     if (selectedTier) {
-                    //       setFieldValue("amount", selectedTier.price);
-                    //     }
-                    //   }
-                    // }, [values.membershipTier, setFieldValue]);
+            <div className="space-y-4">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+                validateOnChange={true}
+                validateOnBlur={true}
+                enableReinitialize
+              >
+                {({
+                  values,
+                  setFieldValue,
+                  errors,
+                  isSubmitting,
+                  setTouched,
+                  validateForm,
+                  handleSubmit,
+                }) => {
+                  // useEffect(() => {
+                  //   if (values.membershipTier) {
+                  //     const selectedTier = membershipTiers.find((t) => t.value === values.membershipTier);
+                  //     if (selectedTier) {
+                  //       setFieldValue("amount", selectedTier.price);
+                  //     }
+                  //   }
+                  // }, [values.membershipTier, setFieldValue]);
 
-                    return (
-                      <form onSubmit={handleSubmit} className="space-y-4">
-                        <MembershipTierUpdater
-                          values={values}
-                          setFieldValue={setFieldValue}
-                          membershipTiers={membershipTiers}
-                        />
-                        {step === 1 && (
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-gray-900">
-                              Choose Plan
-                            </h3>
+                  return (
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <MembershipTierUpdater
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        membershipTiers={membershipTiers}
+                      />
+                      {step === 1 && (
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-bold text-gray-900">
+                            Choose Plan
+                          </h3>
 
-                            <div className="space-y-2">
-                              {membershipTiers.map((tier) => (
-                                <div
-                                  key={tier.value}
-                                  className={cn(
-                                    "relative p-3 border rounded-lg cursor-pointer transition-all",
-                                    values.membershipTier === tier.value
-                                      ? "border-[#fae115] bg-yellow-50"
-                                      : "border-gray-200 hover:border-gray-300",
-                                    tier.value === "silver" &&
-                                      "ring-1 ring-[#fae115] ring-opacity-30"
-                                  )}
-                                  onClick={() =>
-                                    setFieldValue("membershipTier", tier.value)
-                                  }
-                                >
-                                  {tier.value === "silver" && (
-                                    <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                                      <span className="bg-[#fae115] text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full">
-                                        POPULAR
-                                      </span>
-                                    </div>
-                                  )}
+                          <div className="space-y-2">
+                            {membershipTiers.map((tier) => (
+                              <div
+                                key={tier.value}
+                                className={cn(
+                                  "relative p-3 border rounded-lg cursor-pointer transition-all",
+                                  values.membershipTier === tier.value
+                                    ? "border-primary bg-yellow-50"
+                                    : "border-gray-200 hover:border-gray-300",
+                                  tier.value === "silver" &&
+                                    "ring-1 ring-primary ring-opacity-30"
+                                )}
+                                onClick={() =>
+                                  setFieldValue("membershipTier", tier.value)
+                                }
+                              >
+                                {tier.value === "silver" && (
+                                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                                    <span className="bg-primary text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full">
+                                      POPULAR
+                                    </span>
+                                  </div>
+                                )}
 
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center space-x-3">
-                                      <span className="font-medium">
-                                        {tier.label}
-                                      </span>
-                                    </div>
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center space-x-3">
+                                    <span className="font-medium">
+                                      {tier.label}
+                                    </span>
+                                  </div>
 
-                                    <div className="text-right flex items-center space-x-2">
-                                      {tier.value !== "none" && (
-                                        <div>
-                                          <span className="text-lg font-bold text-gray-900">
-                                            {tier.price.toLocaleString()}
-                                          </span>
-                                          <p className="text-xs text-gray-500">
-                                            KSh/yr
-                                          </p>
-                                        </div>
-                                      )}
+                                  <div className="text-right flex items-center space-x-2">
+                                    {tier.value !== "none" && (
+                                      <div>
+                                        <span className="text-lg font-bold text-gray-900">
+                                          {tier.price.toLocaleString()}
+                                        </span>
+                                        <p className="text-xs text-gray-500">
+                                          KSh/yr
+                                        </p>
+                                      </div>
+                                    )}
 
-                                      <Field
-                                        name="membershipTier"
-                                        type="radio"
-                                        value={tier.value}
-                                        checked={
-                                          values.membershipTier === tier.value
-                                        }
-                                        onChange={() =>
-                                          setFieldValue(
-                                            "membershipTier",
-                                            tier.value
-                                          )
-                                        }
-                                        className="h-4 w-4 border-gray-300 text-[#fae115] focus:ring-[#fae115]"
-                                      />
-                                    </div>
+                                    <Field
+                                      name="membershipTier"
+                                      type="radio"
+                                      value={tier.value}
+                                      checked={
+                                        values.membershipTier === tier.value
+                                      }
+                                      onChange={() =>
+                                        setFieldValue(
+                                          "membershipTier",
+                                          tier.value
+                                        )
+                                      }
+                                      className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                                    />
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-
-                            <ErrorMessage
-                              name="membershipTier"
-                              component="div"
-                              className="text-xs text-red-600 bg-red-50 p-2 rounded"
-                            />
+                              </div>
+                            ))}
                           </div>
-                        )}
 
-                        {step === 2 && (
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-gray-900">
-                              Your Details
-                            </h3>
+                          <ErrorMessage
+                            name="membershipTier"
+                            component="div"
+                            className="text-xs text-red-600 bg-red-50 p-2 rounded"
+                          />
+                        </div>
+                      )}
 
-                            <div className="space-y-3">
-                              <div>
-                                <label className="text-sm font-medium text-gray-700 mb-1 block">
-                                  Address *
-                                </label>
-                                <div className="relative">
-                                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                  <Field
-                                    name="physicalAddress"
-                                    as={Input}
-                                    className="pl-10 h-10 text-sm border-gray-200 focus:border-[#fae115] rounded-lg"
-                                    placeholder="Your address"
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      setFieldValue(
-                                        "physicalAddress",
-                                        e.target.value
-                                      );
-                                    }}
-                                  />
-                                </div>
-                                <ErrorMessage
+                      {step === 2 && (
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-bold text-gray-900">
+                            Your Details
+                          </h3>
+
+                          <div className="space-y-3">
+                            <div>
+                              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                Address *
+                              </label>
+                              <div className="relative">
+                                <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                <Field
                                   name="physicalAddress"
-                                  component="div"
-                                  className="text-xs text-red-600 mt-1"
+                                  as={Input}
+                                  className="pl-10 h-10 text-sm border-gray-200 focus:border-primary rounded-lg"
+                                  placeholder="Your address"
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    setFieldValue(
+                                      "physicalAddress",
+                                      e.target.value
+                                    );
+                                  }}
                                 />
                               </div>
+                              <ErrorMessage
+                                name="physicalAddress"
+                                component="div"
+                                className="text-xs text-red-600 mt-1"
+                              />
+                            </div>
 
-                              <div>
-                                <label className="text-sm font-medium text-gray-700 mb-1 block">
-                                  City *
-                                </label>
-                                <Field
-                                  name="city"
-                                  as="select"
-                                  className="w-full h-10 px-3 text-sm border border-gray-200 rounded-lg focus:border-[#fae115] bg-white"
-                                >
-                                  <option value="">Select city</option>
-                                  {cities.map((city) => (
-                                    <option key={city.value} value={city.value}>
-                                      {city.label}
-                                    </option>
-                                  ))}
-                                </Field>
-                                <ErrorMessage
-                                  name="city"
-                                  component="div"
-                                  className="text-xs text-red-600 mt-1"
-                                />
-                              </div>
+                            <div>
+                              <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                City *
+                              </label>
+                              <Field
+                                name="city"
+                                as="select"
+                                className="w-full h-10 px-3 text-sm border border-gray-200 rounded-lg focus:border-primary bg-white"
+                              >
+                                <option value="">Select city</option>
+                                {cities.map((city) => (
+                                  <option key={city.value} value={city.value}>
+                                    {city.label}
+                                  </option>
+                                ))}
+                              </Field>
+                              <ErrorMessage
+                                name="city"
+                                component="div"
+                                className="text-xs text-red-600 mt-1"
+                              />
+                            </div>
 
-                              <div>
-                                <Field
-                                  name="dob"
-                                  component={DateOfBirthPicker}
-                                  className="h-10 text-sm border-gray-200 focus:border-[#fae115] rounded-lg"
-                                />
-                                <ErrorMessage
-                                  name="dob"
-                                  component="div"
-                                  className="text-xs text-red-600 mt-1"
-                                />
-                              </div>
+                            <div>
+                              <Field
+                                name="dob"
+                                component={DateOfBirthPicker}
+                                className="h-10 text-sm border-gray-200 focus:border-primary rounded-lg"
+                              />
+                              <ErrorMessage
+                                name="dob"
+                                component="div"
+                                className="text-xs text-red-600 mt-1"
+                              />
                             </div>
                           </div>
+                        </div>
+                      )}
+
+                      {step === 3 && (
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-bold text-gray-900">
+                            Payment
+                          </h3>
+
+                          <PaymentForm
+                            values={values}
+                            setFieldValue={setFieldValue}
+                            email={email}
+                            phoneNumber={phoneNumber}
+                            membershipTiers={membershipTiers}
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                        {step > 1 && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleBack}
+                            disabled={
+                              isSubmitting ||
+                              paymentStatus === "initiating" ||
+                              paymentStatus === "pending"
+                            }
+                            className="px-4 py-2 text-sm rounded-lg"
+                          >
+                            Back
+                          </Button>
                         )}
 
-                        {step === 3 && (
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-gray-900">
-                              Payment
-                            </h3>
-
-                            <PaymentForm
-                              values={values}
-                              setFieldValue={setFieldValue}
-                              email={email}
-                              phoneNumber={phoneNumber}
-                              membershipTiers={membershipTiers}
-                            />
-                          </div>
-                        )}
-
-                        <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                          {step > 1 && (
+                        <div className="flex-1 flex justify-end">
+                          {step < 3 ? (
                             <Button
                               type="button"
-                              variant="outline"
-                              onClick={handleBack}
+                              onClick={() =>
+                                handleNext(
+                                  values,
+                                  errors,
+                                  validateForm,
+                                  setTouched
+                                )
+                              }
                               disabled={
                                 isSubmitting ||
+                                isNextDisabled ||
                                 paymentStatus === "initiating" ||
                                 paymentStatus === "pending"
                               }
-                              className="px-4 py-2 text-sm rounded-lg"
+                              className="px-6 py-2 bg-primary hover:bg-primary/40 text-gray-900 font-semibold rounded-lg text-sm"
                             >
-                              Back
+                              {isNextDisabled ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                "Next"
+                              )}
+                            </Button>
+                          ) : (
+                            <Button
+                              type="submit"
+                              disabled={
+                                isSubmitting ||
+                                paymentStatus === "initiating" ||
+                                paymentStatus === "pending" ||
+                                !values.paymentMethod ||
+                                Object.keys(errors).length > 0
+                              }
+                              data-action="pay"
+                              className="px-6 py-2 bg-primary hover:bg-primary/40 text-gray-900 font-semibold rounded-lg text-sm"
+                            >
+                              {isSubmitting ||
+                              paymentStatus === "initiating" ? (
+                                <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                              ) : null}
+                              {paymentStatus === "pending"
+                                ? "Processing..."
+                                : `Pay Ksh.${values.amount.toLocaleString()}`}
                             </Button>
                           )}
-
-                          <div className="flex-1 flex justify-end">
-                            {step < 3 ? (
-                              <Button
-                                type="button"
-                                onClick={() =>
-                                  handleNext(
-                                    values,
-                                    errors,
-                                    validateForm,
-                                    setTouched
-                                  )
-                                }
-                                disabled={
-                                  isSubmitting ||
-                                  isNextDisabled ||
-                                  paymentStatus === "initiating" ||
-                                  paymentStatus === "pending"
-                                }
-                                className="px-6 py-2 bg-[#fae115] hover:bg-yellow-400 text-gray-900 font-semibold rounded-lg text-sm"
-                              >
-                                {isNextDisabled ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  "Next"
-                                )}
-                              </Button>
-                            ) : (
-                              <Button
-                                type="submit"
-                                disabled={
-                                  isSubmitting ||
-                                  paymentStatus === "initiating" ||
-                                  paymentStatus === "pending"
-                                }
-                                className="px-6 py-2 bg-[#fae115] hover:bg-yellow-400 text-gray-900 font-semibold rounded-lg text-sm"
-                              >
-                                {isSubmitting ||
-                                paymentStatus === "initiating" ? (
-                                  <Loader2 className="h-4 w-4 animate-spin mr-1" />
-                                ) : null}
-                                {paymentStatus === "pending"
-                                  ? "Processing..."
-                                  : `Pay Ksh.${values.amount.toLocaleString()}`}
-                              </Button>
-                            )}
-                          </div>
                         </div>
-                      </form>
-                    );
-                  }}
-                </Formik>
-              </div>
-            </>
-          )}
+                      </div>
+                    </form>
+                  );
+                }}
+              </Formik>
+            </div>
+          </>
+          {/* )} */}
         </div>
 
         {iframeUrl && (

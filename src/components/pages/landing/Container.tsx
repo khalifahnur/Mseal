@@ -10,7 +10,7 @@ interface LandingHeaderProps {
 }
 export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
   return (
-    <section className="relative md:px-20 overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
+    <section className="relative opensans md:px-20 overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute w-20 h-20 rounded-lg bg-[#fae11a] opacity-20"
@@ -144,7 +144,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
                 Adult Membership
-                <span className="ml-2 bg-[#fae115] text-black text-xs px-2 py-1 rounded-full">2025 SEASON</span>
+                <span className="ml-2 bg-primary text-black text-xs px-2 py-1 rounded-full">2025 SEASON</span>
               </motion.h2>
             </div>
 
@@ -179,7 +179,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                   transition={{ delay: 0.6 + index * 0.1, duration: 0.5 }}
                 >
                   <svg
-                    className="h-5 w-5 text-[#fae115] mt-0.5 mr-2 shrink-0"
+                    className="h-5 w-5 text-primary mt-0.5 mr-2 shrink-0"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -205,7 +205,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                 <div className="w-full sm:w-auto">
                   <Link href='#pricing'>
                   <motion.button
-                    className="w-full bg-[#fae115] text-black px-8 py-3 font-bold rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg transform hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center justify-center"
+                    className="w-full bg-primary text-black px-8 py-3 font-bold rounded-lg hover:bg-primary/40 transition-all duration-300 shadow-lg transform hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center justify-center"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -233,13 +233,13 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                 transition={{ delay: 1.2, duration: 0.5 }}
               >
                 <div className="text-center sm:text-left">
-                  <span className="text-gray-600 font-extrabold">Just want tickets? </span>
+                  <span className="text-black font-extrabold">Just want tickets? </span>
                   <Link href="/" className="group inline-flex items-center" prefetch>
-                    <span className="font-semibold text-black group-hover:text-[#fae115] transition-colors duration-200">
+                    <span className="font-semibold text-black group-hover:text-primary transition-colors duration-200">
                       Buy match tickets
                     </span>
                     <svg
-                      className="ml-1 w-4 h-4 text-gray-500 group-hover:text-[#fae115] group-hover:translate-x-1 transition-all duration-200"
+                      className="ml-1 w-4 h-4 text-gray-500 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -268,7 +268,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                 </svg>
                 Already a member?{" "}
                 <Button  onClick={onLoginClick} variant={'ghost'}>
-                  <span className="text-[#fae115] hover:underline cursor-pointer font-semibold ml-1"> LOG IN HERE</span>
+                  <span className="text-primary hover:underline cursor-pointer font-semibold ml-1"> LOG IN HERE</span>
                   
                 </Button>
               </div>
@@ -283,7 +283,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
           >
             {/* Additional floating elements around the card */}
             <motion.div
-              className="absolute w-12 h-12 rounded-full bg-yellow-400 opacity-20 z-0"
+              className="absolute w-12 h-12 rounded-full bg-primary/40 opacity-20 z-0"
               style={{ top: "-10%", right: "20%" }}
               animate={{
                 y: [0, -15, 0],

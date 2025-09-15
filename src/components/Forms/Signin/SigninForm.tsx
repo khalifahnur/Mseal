@@ -88,7 +88,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
   
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="opensans min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,225,21,0.1),transparent_50%)]" />
 
       <div className="relative z-10 container mx-auto min-h-screen p-4 flex items-center justify-center">
@@ -150,7 +150,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                                   className={`pl-10 h-12 border-2 transition-all duration-200 ${
                                     meta.touched && meta.error
                                       ? "border-red-300 focus:border-red-500"
-                                      : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                                      : "border-gray-200 focus:border-primary hover:border-gray-300"
                                   }`}
                                 />
                               </div>
@@ -182,7 +182,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                                   className={`pl-10 pr-12 h-12 border-2 transition-all duration-200 ${
                                     meta.touched && meta.error
                                       ? "border-red-300 focus:border-red-500"
-                                      : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                                      : "border-gray-200 focus:border-primary hover:border-gray-300"
                                   }`}
                                 />
                                 <Button
@@ -215,7 +215,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                             id="remember"
                             //checked={values.remember}
                             //onCheckedChange={(checked) => setFieldValue("remember", checked)}
-                            className="border-2 border-gray-300 data-[state=checked]:bg-[#fae115] data-[state=checked]:border-[#fae115]"
+                            className="border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                           />
                           <Label htmlFor="remember" className="text-sm text-gray-600 cursor-pointer">
                             Remember me
@@ -223,7 +223,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                         </div>
                         <Link
                           href={'/forgot-password'}
-                          className="text-sm text-[#fae115] hover:text-[#e6c200] font-medium transition-colors"
+                          className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
                         >
                           Forgot password?
                         </Link>
@@ -232,7 +232,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                       <Button
                         type="submit"
                         disabled={isSubmitting || isLoading}
-                        className="w-full h-12 bg-gradient-to-r from-[#fae115] to-[#f5d800] hover:from-[#f5d800] hover:to-[#e6c200] text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/80 hover:to-primary/60 text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       >
                         {isSubmitting || isLoading ? (
                           <div className="flex items-center gap-2">
@@ -255,7 +255,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
                     Don&apos;t have an account?{" "}
                     <button
                       onClick={onSignUpClick}
-                      className="text-[#fae115] hover:text-[#e6c200] font-semibold transition-colors hover:underline"
+                      className="text-primary hover:text-primary/40 font-semibold transition-colors hover:underline"
                     >
                       Sign up for free
                     </button>

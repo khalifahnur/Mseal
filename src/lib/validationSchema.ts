@@ -15,6 +15,7 @@ export const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email").required("Email is required"),
   amount: Yup.number().min(0).required("Amount is required"),
   useDefaultNumber: Yup.boolean(),
+  paymentMethod: Yup.string().required("Please select a payment method"),
 });
 
 export const signupSchema = Yup.object({

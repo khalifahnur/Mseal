@@ -11,7 +11,7 @@ export default function LeftSection() {
     { icon: CheckCircle, color: "text-black/80" },
   ];
   return (
-    <div className="relative bg-gradient-to-br from-[#fae115] via-[#f5d800] to-[#e6c200] p-12 overflow-hidden">
+    <div className="relative opensans bg-gradient-to-br from-primary via-primary/80 to-primary/60 p-12 overflow-hidden">
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-20 left-16 w-40 h-40 bg-white/10 rounded-full blur-2xl"

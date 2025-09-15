@@ -78,7 +78,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
   });
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="opensans min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(250,225,21,0.1),transparent_50%)]" />
 
       <div className="relative z-10 container mx-auto max-h-fit p-4 flex items-center justify-center">
@@ -138,7 +138,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                           className={`pl-10 h-12 border-2 transition-all duration-200 ${
                             formik.touched.firstName && formik.errors.firstName
                               ? "border-red-300 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                              : "border-gray-200 focus:border-primary hover:border-gray-300"
                           }`}
                         />
                       </div>
@@ -174,7 +174,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                           className={`pl-10 h-12 border-2 transition-all duration-200 ${
                             formik.touched.lastName && formik.errors.lastName
                               ? "border-red-300 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                              : "border-gray-200 focus:border-primary hover:border-gray-300"
                           }`}
                         />
                       </div>
@@ -211,7 +211,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                         className={`pl-10 h-12 border-2 transition-all duration-200 ${
                           formik.touched.email && formik.errors.email
                             ? "border-red-300 focus:border-red-500"
-                            : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                            : "border-gray-200 focus:border-primary hover:border-gray-300"
                         }`}
                       />
                     </div>
@@ -251,7 +251,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                           formik.touched.phoneNumber &&
                           formik.errors.phoneNumber
                             ? "border-red-300 focus:border-red-500"
-                            : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                            : "border-gray-200 focus:border-primary hover:border-gray-300"
                         }`}
                       />
                     </div>
@@ -288,7 +288,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                           className={`pl-10 pr-12 h-12 border-2 transition-all duration-200 ${
                             formik.touched.password && formik.errors.password
                               ? "border-red-300 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                              : "border-gray-200 focus:border-primary hover:border-gray-300"
                           }`}
                         />
                         <Button
@@ -338,7 +338,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                             formik.touched.confirmPassword &&
                             formik.errors.confirmPassword
                               ? "border-red-300 focus:border-red-500"
-                              : "border-gray-200 focus:border-[#fae115] hover:border-gray-300"
+                              : "border-gray-200 focus:border-primary hover:border-gray-300"
                           }`}
                         />
                         <Button
@@ -379,7 +379,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                         onCheckedChange={(checked) =>
                           formik.setFieldValue("agreeTerms", checked)
                         }
-                        className="border-2 border-gray-300 data-[state=checked]:bg-[#fae115] data-[state=checked]:border-[#fae115] mt-1"
+                        className="border-2 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary mt-1"
                       />
                       <div className="text-sm leading-relaxed">
                         <Label
@@ -389,14 +389,14 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                           I agree to the{" "}
                           <a
                             href="#"
-                            className="text-[#fae115] hover:text-[#e6c200] font-medium underline"
+                            className="text-primary hover:text-primary/40 font-medium underline"
                           >
                             Terms of Service
                           </a>{" "}
                           and{" "}
                           <a
                             href="#"
-                            className="text-[#fae115] hover:text-[#e6c200] font-medium underline"
+                            className="text-primary hover:text-primary/40 font-medium underline"
                           >
                             Privacy Policy
                           </a>
@@ -420,7 +420,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                     <Button
                       type="submit"
                       disabled={loading}
-                      className="w-full h-12 bg-gradient-to-r from-[#fae115] to-[#f5d800] hover:from-[#f5d800] hover:to-[#e6c200] text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      className="w-full h-12 bg-gradient-to-br from-primary via-primary/80 to-primary/60 hover:from-primary hover:to-primary/50 text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     >
                       {loading ? (
                         <div className="flex items-center gap-2">
@@ -441,7 +441,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
                     Already have an account?{" "}
                     <button
                       onClick={onSignInClick}
-                      className="text-[#fae115] hover:text-[#e6c200] font-semibold transition-colors hover:underline"
+                      className="text-primary hover:text-primary font-semibold transition-colors hover:underline"
                     >
                       Sign in here
                     </button>

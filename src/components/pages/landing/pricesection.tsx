@@ -9,7 +9,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
   return (
     <section
       id="pricing"
-      className="py-10 md:py-20 relative px-20 bg-linear-to-r from-gray-50 to-white"
+      className="opensans py-10 md:py-20 relative px-20 bg-linear-to-r from-gray-50 to-white"
     >
       <div className="container px-4 md:px-6 relative">
         <div
@@ -120,12 +120,12 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
                     <li key={featureIndex} className="flex items-start">
                       <CheckCircle
                         className={`h-5 w-5 mr-2 mt-0.5 ${
-                          plan.popular ? "text-white" : "text-primary/20"
+                          plan.popular ? "text-gray-900" : "text-primary"
                         }`}
                       />
                       <span
                         className={
-                          plan.popular ? "text-white/90" : "text-gray-700"
+                          plan.popular ? "text-white" : "text-gray-700"
                         }
                       >
                         {feature}
@@ -137,8 +137,8 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
                 <Button
                   className={`w-full h-12 rounded-xl cursor-pointer ${
                     plan.popular
-                      ? "bg-white text-primary hover:bg-white/90"
-                      : "bg-primary hover:bg-primary/80 text-white"
+                      ? "bg-white text-gray-900 hover:bg-white/90"
+                      : "bg-primary hover:bg-primary/80 text-gray-900"
                   }`}
                   // variant='ghost'
                   onClick={onLoginClick}

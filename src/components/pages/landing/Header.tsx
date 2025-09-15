@@ -47,9 +47,9 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
 
   return (
     <div className={`${isScrolled ? "sticky top-0 z-50" : ""}`}>
-      <div className={`bg-[#fae115] w-full ${isScrolled ? "h-1" : "h-2"}`}></div>
+      <div className={`bg-primary w-full ${isScrolled ? "h-1" : "h-2"}`}></div>
       <header
-        className={`text-black border-b border-gray-200 relative z-50 transition-all duration-300 ${isScrolled ? "shadow-md" : ""}`}
+        className={`opensans text-black border-b border-gray-200 relative z-50 transition-all duration-300 ${isScrolled ? "shadow-md" : ""}`}
       >
         <div className={`relative bg-black ${isScrolled ? "h-0" : "h-10"} w-full transition-all duration-300`} />
         <nav
@@ -79,7 +79,7 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-sm font-semibold border-b-2 hover:border-b-[#fae115] text-[#fae115] transition-colors border-transparent"
+                  className="text-sm font-semibold border-b-2 hover:border-b-primary text-primary transition-colors border-transparent"
                 >
                   {item.label}
                 </Link>
@@ -91,12 +91,12 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
 
             <Button
-              className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer"
+              className="hidden lg:flex items-center justify-between text-sm font-semibold text-black hover:text-gray-600 bg-primary px-3 py-1 rounded transition-colors cursor-pointer"
               onClick={onSignUpClick}
               variant={"ghost"}
             >
               <span className="flex items-center">
-                <UsersRound className="mr-2" size={15} /> JOIN
+                <UsersRound className="mr-2" size={6} /> JOIN
               </span>
             </Button>
 
@@ -130,16 +130,16 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
                     <Link
                       key={item.label}
                       href={item.href}
-                      className="text-sm font-semibold text-black hover:text-[#fae115] transition-colors"
+                      className="text-sm font-semibold text-black hover:text-primary transition-colors"
                     >
                       {item.label}
                     </Link>
                   ))}
                   <Button
-                    className="flex items-center justify-center text-sm font-semibold text-black hover:text-gray-600 bg-[#fae115] px-3 py-1 rounded transition-colors cursor-pointer"
+                    className="flex items-center justify-center text-sm font-semibold text-black hover:text-gray-600 bg-primary px-3 py-1 rounded transition-colors cursor-pointer"
                     onClick={onSignUpClick}
                   >
-                    <UsersRound className="mr-2" size={15} /> JOIN
+                    <UsersRound className="mr-2" size={10} /> JOIN
                   </Button>
                   <Button
                     className="text-sm text-[#fff] font-semibold bg-[#000] px-3 py-1 rounded cursor-pointer"

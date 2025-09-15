@@ -86,7 +86,7 @@ export default function UpcomingMatches() {
                       {event.availableTickets > 0 && (
                         <Button
                           size="sm"
-                          className="bg-gradient-to-r from-[#fae115] to-amber-500 hover:from-amber-500 hover:to-[#fae115]"
+                          className="bg-gradient-to-r from-primary to-primary/40 hover:from-amber-500 hover:to-primary"
                         >
                           Buy Ticket
                         </Button>

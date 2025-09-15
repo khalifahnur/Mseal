@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export function CTASection() {
   return (
-    <section className="py-16 bg-[#000] text-primary-foreground">
+    <section className="opensans py-16 bg-[#000] text-primary-foreground">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold mb-4">
           Don&apos;t miss out on the action!
@@ -11,7 +11,7 @@ export function CTASection() {
           Experience Murang&apos;a Seals like never before.
         </p>
         <div className="space-x-4">
-          <Button size="lg" variant="secondary">
+          <Button size="lg" variant="secondary" className="bg-primary">
             Secure Your Membership
           </Button>
         </div>

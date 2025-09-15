@@ -94,7 +94,7 @@ export function Header({ currentTab, initials }: HeaderProps) {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-2 border-[#fae115] bg-gray-900 text-white hover:bg-[#fae115] hover:text-gray-900 focus:ring-2 focus:ring-[#fae115] focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-200 h-10 w-10 flex items-center justify-center"
+                  className="rounded-full border-2 border-primary bg-gray-900 text-white hover:bg-primary hover:text-gray-900 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors duration-200 h-10 w-10 flex items-center justify-center"
                 >
                   {initials ? (
                     <span className="text-sm font-medium">{initials}</span>

@@ -15,7 +15,7 @@ export function MegaMenu() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="link"
-          className="text-sm font-semibold text-[#fae115] hover:text-[#fae115]"
+          className="text-sm font-semibold text-primary hover:text-primary"
         >
           MEMBERSHIPS
           <ChevronDown />
@@ -34,7 +34,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/season-ticket/adult"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Adult
                   </Link>
@@ -42,7 +42,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/season-ticket/junior"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Junior
                   </Link>
@@ -50,7 +50,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/season-ticket/senior"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Senior
                   </Link>
@@ -63,7 +63,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/vip/gold"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Gold
                   </Link>
@@ -71,7 +71,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/vip/platinum"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Platinum
                   </Link>
@@ -79,7 +79,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/vip/diamond"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Diamond
                   </Link>
@@ -92,7 +92,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/benefits"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Membership Benefits
                   </Link>
@@ -100,7 +100,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/faq"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     FAQs
                   </Link>
@@ -108,7 +108,7 @@ export function MegaMenu() {
                 <li>
                   <Link
                     href="/memberships/terms"
-                    className="hover:text-[#fae115]"
+                    className="hover:text-primary"
                   >
                     Terms and Conditions
                   </Link>
