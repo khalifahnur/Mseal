@@ -16,11 +16,9 @@ import { Switch } from "@/components/ui/switch";
 import formatMonthYear from "@/lib/utils";
 import { useUpdateNfc } from "@/hooks/Authhook/authHook";
 import Transaction from "./Transaction";
-import { MembershipCard } from "../home/membershipcard";
 
 type nfcProp = {
   nfcId?: string | null | undefined;
-  expDate: string | null | undefined;
   createdAt: string | null | undefined;
   tier: string | undefined | null;
   nfcEnabled:
@@ -32,7 +30,6 @@ type nfcProp = {
     | undefined;
 };
 export default function Nfc({
-  expDate,
   createdAt,
   tier,
   nfcId,

@@ -29,7 +29,6 @@ export default function WalletPage() {
       <BalanceWallet walletBalance={user?.balance} />
 
       <Nfc
-        expDate={user?.expDate}
         createdAt={user?.createdAt}
         tier={user?.membershipTier}
         nfcId={user?.walletId}
