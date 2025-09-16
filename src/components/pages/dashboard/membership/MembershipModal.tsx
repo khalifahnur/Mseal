@@ -301,7 +301,7 @@ export function MembershipModal({
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <div className="bg-gradient-to-r from-primary to-gray-900 p-4 rounded-t-xl">
+        <div className="bg-gradient-to-r from-primary to-gray-200 p-4 rounded-t-xl">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               Membership Registration

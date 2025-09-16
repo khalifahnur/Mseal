@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import formatMonthYear from "@/lib/utils";
 import { useUpdateNfc } from "@/hooks/Authhook/authHook";
 import Transaction from "./Transaction";
+import { MembershipCard } from "../home/membershipcard";
 
 type nfcProp = {
   nfcId?: string | null | undefined;
@@ -73,18 +74,14 @@ export default function Nfc({
             </div>
             <div className="space-y-2">
               <p className="text-sm opacity-80">Card Number</p>
-              <p className="text-xl font-mono tracking-wider">
+              <p className="text-lg font-mono tracking-wider">
                 •••• •••• •••• {nfcId?.slice(-4) ?? "****"}
               </p>
             </div>
             <div className="flex justify-between items-end mt-4">
-              <div>
+              <div className="ml-auto text-right">
                 <p className="text-xs opacity-80">Member Since</p>
                 <p className="text-sm">{formatMonthYear(createdAt)}</p>
-              </div>
-              <div>
-                <p className="text-xs opacity-80">Expires</p>
-                <p className="text-sm">{formatMonthYear(expDate)}</p>
               </div>
             </div>
           </div>
