@@ -5,7 +5,7 @@ import type React from "react"
 import { Facebook, Twitter, Instagram, Youtube, MapPin, Mail, Phone, ArrowRight, Send } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion,Variants } from "framer-motion"
 import Image from "next/image"
 
 export function Footer() {
@@ -36,7 +36,7 @@ export function Footer() {
     },
   }
 
-  const itemVariants = {
+  const itemVariants:Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
