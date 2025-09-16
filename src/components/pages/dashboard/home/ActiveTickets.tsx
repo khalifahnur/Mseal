@@ -65,12 +65,12 @@ export default function ActiveTickets() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" asChild>
-          <Link href="/tickets">
+        <Link href="/tickets">
+          <Button variant="outline" size="sm" asChild>
             <CalendarDays className="mr-2 h-4 w-4" />
             View Tickets
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

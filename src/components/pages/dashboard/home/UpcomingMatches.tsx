@@ -16,6 +16,7 @@ import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUpcomingEvents } from "@/api/api";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UpcomingMatches() {
   const {
@@ -61,10 +62,12 @@ export default function UpcomingMatches() {
             </TableHeader>
             <TableBody>
               {events && events.length > 0 ? (
-                /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+                /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
                 events.map((event: any) => (
                   <TableRow key={event._id}>
-                    <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      {new Date(event.date).toLocaleDateString()}
+                    </TableCell>
                     <TableCell>{event.time}</TableCell>
                     <TableCell>{event.venue}</TableCell>
                     <TableCell className="flex items-center gap-2">
@@ -84,19 +87,24 @@ export default function UpcomingMatches() {
                     </TableCell>
                     <TableCell>
                       {event.availableTickets > 0 && (
-                        <Button
-                          size="sm"
-                          className="bg-gradient-to-r from-primary to-primary/40 hover:from-amber-500 hover:to-primary"
-                        >
-                          Buy Ticket
-                        </Button>
+                        <Link href={`/tickets/buy/${event._id}`}>
+                          <Button
+                            size="sm"
+                            className="bg-gradient-to-r from-primary to-primary/40 hover:from-amber-500 hover:to-primary"
+                          >
+                            Buy Ticket
+                          </Button>
+                        </Link>
                       )}
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-6 text-muted-foreground"
+                  >
                     No upcoming matches.
                   </TableCell>
                 </TableRow>

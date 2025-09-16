@@ -19,7 +19,10 @@ import Link from "next/link";
 import { Event } from "@/types/ticket";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import { useState, useEffect } from "react";
-import { useTicketPayment, useTicketWalletPayment } from "@/hooks/Paymenthook/usePaymentHook";
+import {
+  useTicketPayment,
+  useTicketWalletPayment,
+} from "@/hooks/Paymenthook/usePaymentHook";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
@@ -30,12 +33,12 @@ import useSocketData from "@/hooks/socket/ticketSocketHook";
 import { useRouter } from "next/navigation";
 
 export default function Container({ eventId }: { eventId: string }) {
-    const router = useRouter()
+  const router = useRouter();
   const { width, height } = useWindowSize();
   const [paymentStatus, setPaymentStatus] = useState("idle");
   const [showConfetti, setShowConfetti] = useState(false);
-  const queryClient = useQueryClient()
-  
+  const queryClient = useQueryClient();
+
   const serviceFee = 50;
   const { user } = useAuth();
   const [transactionReference, setTransactionReference] = useState<
@@ -68,8 +71,8 @@ export default function Container({ eventId }: { eventId: string }) {
           toastId: "payment-success",
         });
         setShowConfetti(true);
-        queryClient.invalidateQueries({ queryKey: ['activeTickets'] })
-        queryClient.invalidateQueries({ queryKey: ['userInfo'] })
+        queryClient.invalidateQueries({ queryKey: ["activeTickets"] });
+        queryClient.invalidateQueries({ queryKey: ["userInfo"] });
         setTimeout(() => {
           setShowConfetti(false);
           setTransactionReference(null);
@@ -84,7 +87,7 @@ export default function Container({ eventId }: { eventId: string }) {
         // });
       }
     }
-  }, [transactionReference, confirmTicketPaymentStatus,router]);
+  }, [transactionReference, confirmTicketPaymentStatus, router]);
 
   useEffect(() => {
     if (paymentStatus === "success") {
@@ -136,7 +139,6 @@ export default function Container({ eventId }: { eventId: string }) {
             amount: values.amount,
             phoneNumber: values.phoneNumber,
             paymentMethod: values.paymentMethod,
-
           };
 
           try {
@@ -146,7 +148,7 @@ export default function Container({ eventId }: { eventId: string }) {
               paymentResponse = await initiateTicketPayment.mutateAsync(
                 ticketDetails
               );
-              
+
               toast.info(
                 "M-Pesa STK push sent to your phone. Please complete the payment.",
                 {
@@ -214,9 +216,8 @@ export default function Container({ eventId }: { eventId: string }) {
               setTransactionReference(paymentResponse.reference);
               setPaymentStatus("pending");
             }
-          } 
-          /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
-          catch (error: any) {
+          } catch (error: any) {
+            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
             setPaymentStatus("error");
             toast.error(error.message || "Failed to initiate payment.");
           }
@@ -239,9 +240,12 @@ export default function Container({ eventId }: { eventId: string }) {
                         name="quantity"
                         type="number"
                         as={Input}
-                        /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
+                        min="1"
                         onChange={(e: any) => {
-                          const qty = parseInt(e.target.value);
+                          const qty = Math.max(
+                            1,
+                            parseInt(e.target.value) || 1
+                          );
                           setFieldValue("quantity", qty);
                           setFieldValue(
                             "amount",
