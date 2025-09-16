@@ -37,7 +37,7 @@ export default function ProductCard({
       <div className="relative aspect-square overflow-hidden">
         <Link href={`/shop/product/${id}`}>
           <Image
-            src={image || "/placeholder.svg"}
+            src={image}
             alt={name}
             width={100}
             height={100}
