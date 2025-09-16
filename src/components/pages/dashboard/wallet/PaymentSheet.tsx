@@ -64,7 +64,7 @@ export default function PaymentSheet({
       } else if (confirmWalletPaymentStatus.paymentStatus === "Failed") {
         setPaymentStatus("error");
         toast.error("Payment failed. Please try again.", {
-          position: "bottom-right",
+          position: "top-right",
           autoClose: 5000,
           toastId: "payment-failed",
         });

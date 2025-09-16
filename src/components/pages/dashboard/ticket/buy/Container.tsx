@@ -216,8 +216,8 @@ export default function Container({ eventId }: { eventId: string }) {
               setTransactionReference(paymentResponse.reference);
               setPaymentStatus("pending");
             }
-          } catch (error: any) {
-            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
+          } /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
+           catch (error: any) {
             setPaymentStatus("error");
             toast.error(error.message || "Failed to initiate payment.");
           }
@@ -241,6 +241,7 @@ export default function Container({ eventId }: { eventId: string }) {
                         type="number"
                         as={Input}
                         min="1"
+                        /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/
                         onChange={(e: any) => {
                           const qty = Math.max(
                             1,
