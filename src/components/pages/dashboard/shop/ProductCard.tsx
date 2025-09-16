@@ -52,17 +52,22 @@ export default function ProductCard({
       </div>
 
       <div className="p-4 flex-1 flex flex-col">
-        <Link href={`/shop/product/${id}`} className="hover:underline">
-          <h3 className="font-medium text-sm mb-2 line-clamp-2">{name}</h3>
-          <h2 className="font-medium text-sm mb-2 italic">{description}</h2>
-        </Link>
-        <div className="mt-auto pt-4 flex items-center justify-between">
-          <div className="flex flex-col">
-          <span className="font-bold">
-              Ksh.{price.toFixed(2)}
-            </span>
-            <span className="text-sm text-red-500 line-through">
-              Ksh.{(price / 0.7).toFixed(0)}
+        <div className="space-y-3">
+          <h4 className="text-xl font-semibold text-gray-800 truncate">
+            {name || "Item Name"}
+          </h4>
+          <Badge
+            variant="secondary"
+            className="text-xs bg-blue-100 text-blue-800"
+          >
+            {badge}
+          </Badge>
+          <p className="text-sm text-gray-600 line-clamp-3">
+            {description || "No description provided"}
+          </p>
+          <div className="flex justify-between items-center pt-2">
+            <span className="text-lg font-bold text-green-600">
+              Ksh {price.toLocaleString()}
             </span>
           </div>
         </div>
