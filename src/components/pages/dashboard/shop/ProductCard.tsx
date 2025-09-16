@@ -39,13 +39,17 @@ export default function ProductCard({
           <Image
             src={image}
             alt={name}
-            width={100}
-            height={100}
+            width={300}
+            height={300}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
         {badge && (
-          <Badge className="absolute top-2 right-2 bg-orange-500">
+          <Badge
+            variant={"secondary"}
+            className="absolute top-2 right-2 text-xs bg-blue-100 text-blue-800"
+          >
             {badge}
           </Badge>
         )}
@@ -56,12 +60,6 @@ export default function ProductCard({
           <h4 className="text-xl font-semibold text-gray-800 truncate">
             {name || "Item Name"}
           </h4>
-          <Badge
-            variant="secondary"
-            className="text-xs bg-blue-100 text-blue-800"
-          >
-            {badge}
-          </Badge>
           <p className="text-sm text-gray-600 line-clamp-3">
             {description || "No description provided"}
           </p>
