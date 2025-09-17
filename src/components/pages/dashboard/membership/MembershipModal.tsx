@@ -265,7 +265,7 @@ export function MembershipModal({
       membershipTier: "",
       dob: "",
       amount: 0,
-      physicalAddress: "",
+      physicalAddress: "" ,
       city: "",
       useDefaultNumber: !!phoneNumber,
       paymentMethod: "",
@@ -497,7 +497,7 @@ export function MembershipModal({
                           </h3>
 
                           <div className="space-y-3">
-                            <div>
+                            {/* <div>
                               <label className="text-sm font-medium text-gray-700 mb-1 block">
                                 Address *
                               </label>
@@ -506,6 +506,7 @@ export function MembershipModal({
                                 <Field
                                   name="physicalAddress"
                                   as={Input}
+                                  required={false}
                                   className="pl-10 h-10 text-sm border-gray-200 focus:border-primary rounded-lg"
                                   placeholder="Your address"
                                   onChange={(
@@ -523,7 +524,7 @@ export function MembershipModal({
                                 component="div"
                                 className="text-xs text-red-600 mt-1"
                               />
-                            </div>
+                            </div> */}
 
                             <div>
                               <label className="text-sm font-medium text-gray-700 mb-1 block">
@@ -533,8 +534,9 @@ export function MembershipModal({
                                 name="city"
                                 as="select"
                                 className="w-full h-10 px-3 text-sm border border-gray-200 rounded-lg focus:border-primary bg-white"
+                                
                               >
-                                <option value="">Select city</option>
+                                <option value="" >Select city</option>
                                 {cities.map((city) => (
                                   <option key={city.value} value={city.value}>
                                     {city.label}
@@ -553,6 +555,7 @@ export function MembershipModal({
                                 name="dob"
                                 component={DateOfBirthPicker}
                                 className="h-10 text-sm border-gray-200 focus:border-primary rounded-lg"
+                                required={false}
                               />
                               <ErrorMessage
                                 name="dob"

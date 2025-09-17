@@ -106,7 +106,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
       <Label htmlFor={field.name}>{label}</Label>
       <div className="grid grid-cols-3 gap-2">
         <div>
-          <Select value={month} onValueChange={setMonth}>
+          <Select value={month} onValueChange={setMonth} required={false}>
             <SelectTrigger id="month">
               <SelectValue placeholder="Month" />
             </SelectTrigger>
@@ -120,7 +120,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
           </Select>
         </div>
         <div>
-          <Select value={day} onValueChange={setDay} disabled={!month || !year}>
+          <Select value={day} onValueChange={setDay} disabled={!month || !year} required={false}>
             <SelectTrigger id="day">
               <SelectValue placeholder="Day" />
             </SelectTrigger>
@@ -134,7 +134,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
           </Select>
         </div>
         <div>
-          <Select value={year} onValueChange={setYear}>
+          <Select value={year} onValueChange={setYear} required={false}>
             <SelectTrigger id="year">
               <SelectValue placeholder="Year" />
             </SelectTrigger>

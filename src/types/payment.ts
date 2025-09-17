@@ -2,9 +2,9 @@ export interface paymentData {
   email?: string;
   phoneNumber?: string;
   membershipTier?: string;
-  dob: string;
+  dob?: string;
   amount: number;
-  physicalAddress: string;
+  physicalAddress?: string;
   city: string;
   useDefaultNumber?: boolean;
   paymentMethod?: string;
