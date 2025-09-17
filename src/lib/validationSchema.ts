@@ -6,10 +6,7 @@ export const validationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(/^\+254\d{9}$/, "Phone number must be in the format +254XXXXXXXXX")
     .required("Phone number is required"),
-  dob: Yup.string()
-    .test("valid-date", "Invalid date", (value) => {
-      return value ? !isNaN(new Date(value).getTime()) : false;
-    }).optional(),
+  dob: Yup.string().optional(),
   email: Yup.string().email("Invalid email").required("Email is required"),
   amount: Yup.number().min(0).required("Amount is required"),
   useDefaultNumber: Yup.boolean(),
