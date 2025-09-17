@@ -4,7 +4,7 @@ export interface paymentData {
   membershipTier?: string;
   dob?: string;
   amount: number;
-  physicalAddress?: string;
+  //physicalAddress?: string;
   city: string;
   useDefaultNumber?: boolean;
   paymentMethod?: string;

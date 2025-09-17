@@ -8,7 +8,7 @@ import {
   type FormikHelpers,
   FormikErrors,
 } from "formik";
-import { MapPin, Loader2, CheckCircle } from "lucide-react";
+import { Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,7 +17,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { validationSchema } from "@/lib/validationSchema";
@@ -111,7 +110,6 @@ export function MembershipModal({
           tier: selectedTier.value,
           isUpgrade: false,
           dob: values.dob,
-          physicalAddress: values.physicalAddress,
           city: values.city,
           amount: selectedTier.price,
         };
@@ -168,13 +166,11 @@ export function MembershipModal({
         }
       } else if (step === 2) {
         if (
-          !validationErrors.dob &&
-          !validationErrors.physicalAddress &&
           !validationErrors.city
         ) {
           setStep(3);
         } else {
-          setTouched({ physicalAddress: true, city: true, dob: true });
+          setTouched({  city: true, dob: false });
           toast.error("Please fill in all required fields.", {
             toastId: "step2-error",
           });
@@ -265,7 +261,7 @@ export function MembershipModal({
       membershipTier: "",
       dob: "",
       amount: 0,
-      physicalAddress: "" ,
+      //physicalAddress: "" ,
       city: "",
       useDefaultNumber: !!phoneNumber,
       paymentMethod: "",
