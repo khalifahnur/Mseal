@@ -318,26 +318,6 @@ export function MembershipModal({
               className="z-50"
             />
           )}
-
-          {/* {paymentStatus === "success" ? (
-            <div className="text-center py-6">
-              <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <CheckCircle className="h-8 w-8 text-green-500" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-                Payment Successful!
-              </h3>
-              <p className="text-gray-600 mb-4 text-sm">
-                Welcome to our community!
-              </p>
-              <Button
-                onClick={() => handleClose(false)}
-                className="px-6 py-2 bg-[#fae115] hover:bg-yellow-400 text-gray-900 font-semibold rounded-lg"
-              >
-                Continue
-              </Button>
-            </div>
-          ) : ( */}
           <>
             <div className="relative mb-6">
               <div className="flex justify-between items-center">
@@ -392,15 +372,6 @@ export function MembershipModal({
                   validateForm,
                   handleSubmit,
                 }) => {
-                  // useEffect(() => {
-                  //   if (values.membershipTier) {
-                  //     const selectedTier = membershipTiers.find((t) => t.value === values.membershipTier);
-                  //     if (selectedTier) {
-                  //       setFieldValue("amount", selectedTier.price);
-                  //     }
-                  //   }
-                  // }, [values.membershipTier, setFieldValue]);
-
                   return (
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <MembershipTierUpdater

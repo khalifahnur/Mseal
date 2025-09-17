@@ -2,16 +2,14 @@ import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
   membershipTier: Yup.string().required("Membership tier is required"),
-  physicalAddress: Yup.string().required("Street address is required"),
   city: Yup.string().required("City is required"),
   phoneNumber: Yup.string()
     .matches(/^\+254\d{9}$/, "Phone number must be in the format +254XXXXXXXXX")
     .required("Phone number is required"),
   dob: Yup.string()
-    .required("Date of birth is required")
     .test("valid-date", "Invalid date", (value) => {
       return value ? !isNaN(new Date(value).getTime()) : false;
-    }),
+    }).optional(),
   email: Yup.string().email("Invalid email").required("Email is required"),
   amount: Yup.number().min(0).required("Amount is required"),
   useDefaultNumber: Yup.boolean(),
