@@ -628,9 +628,10 @@ export function MembershipModal({
                               disabled={
                                 isSubmitting ||
                                 paymentStatus === "initiating" ||
-                                paymentStatus === "pending" ||
-                                !values.paymentMethod ||
-                                Object.keys(errors).length > 0
+                                paymentStatus === "pending" 
+                                // ||
+                                // !values.paymentMethod ||
+                                // Object.keys(errors).length > 0
                               }
                               data-action="pay"
                               className="px-6 py-2 bg-primary hover:bg-primary/40 text-gray-900 font-semibold rounded-lg text-sm"
