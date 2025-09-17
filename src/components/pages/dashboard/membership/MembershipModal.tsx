@@ -236,7 +236,7 @@ export function MembershipModal({
   const handleClose = useCallback(
     (open: boolean) => {
       if (!open && paymentStatus !== "success") {
-        toast.info("Please complete the payment to close the modal.", {
+        toast.info("Please complete the payment to close the window.", {
           toastId: "close-restrict",
         });
         return;
@@ -303,7 +303,7 @@ export function MembershipModal({
               Membership Registration
             </DialogTitle>
             <DialogDescription className="text-gray-800 text-sm font-medium">
-              Complete payment to close modal
+              Complete payment to close window
             </DialogDescription>
           </DialogHeader>
         </div>
