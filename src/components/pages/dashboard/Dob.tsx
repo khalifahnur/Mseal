@@ -83,7 +83,7 @@ export function DateOfBirthPicker({ field, form, label = "Date of Birth" }: Date
         form.setFieldError(field.name, undefined);
       }
     } else if (field.value) {
-      form.setFieldValue(field.name, ""); // Clear if incomplete
+      form.setFieldValue(field.name, undefined); 
     }
   }, [month, day, year, field.name, field.value, form, error]);
 
