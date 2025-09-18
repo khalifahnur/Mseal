@@ -44,7 +44,7 @@ const SignUpPage = ({ onSignInClick }: signUpProps) => {
       onSignInClick();
 
       toast.success("🎉 Registration Successful! You can now sign in.", {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,

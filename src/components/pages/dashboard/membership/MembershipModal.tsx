@@ -77,7 +77,7 @@ export function MembershipModal({
     if (confirmOrderPaymentStatus.paymentStatus === "Completed") {
       setPaymentStatus("success");
       setShowConfetti(true);
-      toast.success("Payment confirmed! You can now close the modal.", {
+      toast.success("Payment confirmed! ", {
         position: "top-right",
         autoClose: 3000,
         toastId: "payment-success",
@@ -89,7 +89,7 @@ export function MembershipModal({
       setPaymentStatus("error");
       setTransactionReference(null);
     }
-  }, [transactionReference, confirmOrderPaymentStatus, paymentStatus]);
+  }, [transactionReference, confirmOrderPaymentStatus, paymentStatus, refreshUser]);
 
   const handleVisaPayment = useCallback(
     async (
@@ -145,7 +145,6 @@ export function MembershipModal({
       setIsNextDisabled(true);
 
       const validationErrors = await validateForm();
-      console.log("Step 2 validation:", { values, errors: validationErrors });
 
       if (step === 1) {
         if (!validationErrors.membershipTier) {
@@ -232,7 +231,7 @@ export function MembershipModal({
         setSubmitting(false);
       }
     },
-    [paymentMutation, handleVisaPayment]
+    [paymentMutation]
   );
 
   const handleClose = useCallback(
@@ -299,7 +298,7 @@ export function MembershipModal({
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <div className="bg-gradient-to-r from-primary to-gray-200 p-4 rounded-t-xl">
+        <div className="bg-primary p-4 rounded-t-xl">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
               Membership Registration

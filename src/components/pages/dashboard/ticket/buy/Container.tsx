@@ -87,7 +87,7 @@ export default function Container({ eventId }: { eventId: string }) {
         // });
       }
     }
-  }, [transactionReference, confirmTicketPaymentStatus, router]);
+  }, [transactionReference, confirmTicketPaymentStatus, router,queryClient]);
 
   useEffect(() => {
     if (paymentStatus === "success") {

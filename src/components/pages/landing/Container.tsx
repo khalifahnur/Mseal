@@ -1,46 +1,22 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { motion } from "framer-motion"
-import BlobImage from "./BlobImage"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion";
+import BlobImage from "./BlobImage";
+import { Button } from "@/components/ui/button";
+import Ctabtn from "./ctabtn";
 
 interface LandingHeaderProps {
   onLoginClick: () => void;
 }
-export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
+export default function MembershipSection({
+  onLoginClick,
+}: LandingHeaderProps) {
   return (
-    <section className="relative opensans md:px-20 overflow-hidden bg-gradient-to-b from-white to-gray-100 text-black min-h-[calc(100vh-4rem)] w-full">
+    <section className="relative opensans md:px-20 overflow-hidden bg-[#ffffff] text-black min-h-[calc(100vh-4rem)] w-full">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute w-20 h-20 rounded-lg bg-[#fae11a] opacity-20"
-          style={{ top: "15%", right: "20%" }}
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
+        
 
-        <motion.div
-          className="absolute w-16 h-16 rounded-lg bg-purple-500 opacity-20"
-          style={{ bottom: "25%", right: "10%" }}
-          animate={{
-            y: [0, 20, 0],
-            x: [0, -10, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-
-        <motion.div
+        {/* <motion.div
           className="absolute w-14 h-14 rounded-full bg-white opacity-20"
           style={{ top: "20%", left: "15%" }}
           animate={{
@@ -52,39 +28,13 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
             repeat: Number.POSITIVE_INFINITY,
             repeatType: "reverse",
           }}
-        />
+        /> */}
 
-        <motion.div
-          className="absolute w-24 h-24 rounded-full bg-[#fae11a] opacity-15"
-          style={{ bottom: "15%", left: "20%" }}
-          animate={{
-            y: [0, 10, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 5.5,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-
-        <motion.div
-          className="absolute w-32 h-32 rounded-full border-4 border-gray-200 opacity-20"
-          style={{ top: "10%", right: "30%" }}
-          animate={{
-            y: [0, -10, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
+        
 
         {/* Large background blobs */}
         <motion.div
-          className="absolute w-64 h-64 rounded-full bg-yellow-100 opacity-40"
+          className="absolute w-64 h-64 rounded-full bg-primary/10 opacity-40"
           style={{ top: "-5%", right: "-5%" }}
           animate={{
             y: [0, 20, 0],
@@ -98,7 +48,7 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
         />
 
         <motion.div
-          className="absolute w-96 h-96 rounded-full bg-blue-50 opacity-50"
+          className="absolute w-96 h-96 rounded-full bg-gray-100 opacity-50"
           style={{ bottom: "-10%", left: "-10%" }}
           animate={{
             y: [0, -30, 0],
@@ -121,14 +71,6 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
             transition={{ duration: 0.6 }}
           >
             <div>
-              <motion.h3
-                className="text-sm sm:text-base font-semibold text-gray-600 uppercase tracking-wider mb-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-              >
-                Official Membership
-              </motion.h3>
               <motion.h1
                 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary via-black to-gray-800 bg-clip-text text-transparent"
                 initial={{ opacity: 0 }}
@@ -143,8 +85,10 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                Adult Membership
-                <span className="ml-2 bg-primary text-black text-xs px-2 py-1 rounded-full">2025 SEASON</span>
+                Official Membership
+                <span className="ml-2 bg-primary text-black text-xs px-2 py-1 rounded-full">
+                  2025 SEASON
+                </span>
               </motion.h2>
             </div>
 
@@ -154,8 +98,8 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              Join the pride of Muranga and experience football like never before with exclusive member benefits
-              including:
+              Join the pride of Muranga and experience football like never
+              before with exclusive member benefits including:
             </motion.p>
 
             <motion.ul
@@ -195,84 +139,31 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
               ))}
             </motion.ul>
 
-            <motion.div
-              className="pt-4 space-y-5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1, duration: 0.5 }}
-            >
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="w-full sm:w-auto">
-                  <Link href='#pricing'>
-                  <motion.button
-                    className="w-full bg-primary text-black px-8 py-3 font-bold rounded-lg hover:bg-primary/40 transition-all duration-300 shadow-lg transform hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#fae115] focus:ring-opacity-50 flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    JOIN NOW
-                    <svg
-                      className="ml-2 w-5 h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5-5 5M6 12h12" />
-                    </svg>
-                  </motion.button>
-                  </Link>
-                </div>
+            <Ctabtn />
 
-              </div>
-
-              {/* Ticket purchase option */}
-              <motion.div
-                className="flex items-center justify-center sm:justify-start mt-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.5 }}
+            <div className="text-base flex items-center">
+              <svg
+                className="h-5 w-5 text-gray-500 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <div className="text-center sm:text-left">
-                  <span className="text-black font-extrabold">Just want tickets? </span>
-                  <Link href="/" className="group inline-flex items-center" prefetch>
-                    <span className="font-semibold text-black group-hover:text-primary transition-colors duration-200">
-                      Buy match tickets
-                    </span>
-                    <svg
-                      className="ml-1 w-4 h-4 text-gray-500 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
-                </div>
-              </motion.div>
-
-              <div className="text-base flex items-center">
-                <svg
-                  className="h-5 w-5 text-gray-500 mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-                Already a member?{" "}
-                <Button  onClick={onLoginClick} variant={'ghost'}>
-                  <span className="text-primary hover:underline cursor-pointer font-semibold ml-1"> LOG IN HERE</span>
-                  
-                </Button>
-              </div>
-            </motion.div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+              Already a member?{" "}
+              <Button onClick={onLoginClick} variant={"ghost"}>
+                <span className="text-primary hover:underline cursor-pointer font-semibold ml-1">
+                  {" "}
+                  LOG IN HERE
+                </span>
+              </Button>
+            </div>
           </motion.div>
 
           <motion.div
@@ -315,5 +206,5 @@ export default function MembershipSection({ onLoginClick}: LandingHeaderProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

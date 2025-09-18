@@ -28,7 +28,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
               name: "Ordinary",
               price: 500,
               features: [
-                "Annual registration included",
+                "Membership included",
                 "Official membership card",
                 "Dedicated member entrance (faster entry) ",
               ],
@@ -39,7 +39,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
               name: "Bronze",
               price: 2000,
               features: [
-                "Annual registration included",
+                "Membership included",
                 "10% discount on match tickets",
                 "Official membership card",
                 "5% discount on merchandise",
@@ -53,7 +53,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
               name: "Silver",
               price: 5000,
               features: [
-                "Annual registration included",
+                "Membership included",
                 "Annual pass to ordinary stand for all home matches",
                 "Official membership card",
                 "Opportunity to upgrade to VIP stand during games",
@@ -69,7 +69,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
               name: "Gold",
               price: 10000,
               features: [
-                " Annual registration included",
+                "Membership included",
                 "Annual pass to VIP stand for all home matches",
                 "Premium membership card",
                 "Guaranteed big match access",
@@ -92,7 +92,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {plan.popular && (
-                <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid-pattern.svg')] bg-repeat opacity-10"></div>
+                <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
               )}
 
               <div className="p-6 relative">
@@ -112,7 +112,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
                     {plan.price}
                   </span>
                   <span className="ml-1 text-sm font-medium text-gray-700">
-                    /Annually
+                    /yr
                   </span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -135,7 +135,7 @@ export default function Pricing({ onLoginClick }: LandingHeaderProps) {
                 </ul>
 
                 <Button
-                  className={`w-full h-12 rounded-xl cursor-pointer ${
+                  className={`w-full h-12 rounded-full cursor-pointer ${
                     plan.popular
                       ? "bg-white text-gray-900 hover:bg-white/90"
                       : "bg-primary hover:bg-primary/80 text-gray-900"

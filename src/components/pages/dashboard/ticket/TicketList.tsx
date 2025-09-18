@@ -106,7 +106,7 @@ export function TicketList() {
         return (
           <Card key={event._id} className="overflow-hidden">
             <CardContent className="p-0">
-              <div className="flex flex-col md:flex-row bg-[url('/assets/ticket-bg.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-50 before:absolute before:inset-0 before:z-[-1]">
+              <div className="flex flex-col text-black md:flex-row bg-[url('/assets/ticket-bg.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-10 before:absolute before:inset-0 before:z-[-1]">
                 <div className="relative md:w-1/3">
                   <Image
                     src={"/assets/images/stadi1.jpeg"}
@@ -118,7 +118,7 @@ export function TicketList() {
                   />
                 </div>
                 <div className="flex-1 p-6">
-                  <div className="flex flex-col h-full justify-between">
+                  <div className="flex flex-col h-full justify-between text-black">
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="text-xl font-bold">{eventName}</h3>
@@ -141,20 +141,20 @@ export function TicketList() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
-                        <div className="flex items-center text-muted-foreground">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4 text-primary md:text-gray-500">
+                        <div className="flex items-center">
                           <Calendar className="mr-2 h-4 w-4" />
                           <span>{formatDate(event.date)}</span>
                         </div>
-                        <div className="flex items-center text-muted-foreground">
+                        <div className="flex items-center">
                           <Clock className="mr-2 h-4 w-4" />
                           <span>{event.time} EAT</span>
                         </div>
-                        <div className="flex items-center text-muted-foreground">
+                        <div className="flex items-center">
                           <MapPin className="mr-2 h-4 w-4" />
                           <span>{event.venue}</span>
                         </div>
-                        <div className="flex items-center text-muted-foreground">
+                        <div className="flex items-center">
                           <Ticket className="mr-2 h-4 w-4" />
                           <span>KES {event.ticketPrice.toLocaleString()}</span>
                         </div>
@@ -162,7 +162,7 @@ export function TicketList() {
 
                       <div className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-primary md:text-gray-500">
                             Ticket availability
                           </span>
                           <span className="text-sm font-medium">

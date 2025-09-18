@@ -58,7 +58,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
       }, 3000)
 
       toast.success("Welcome Back! You've successfully logged in", {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
@@ -71,7 +71,7 @@ export default function LoginForm({ onSignUpClick }: signInProps) {
 
     if (signInMutation.isError) {
       toast.error(signInMutation.isError || "❌ Login failed. Check credentials and try again.", {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,

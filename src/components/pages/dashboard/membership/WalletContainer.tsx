@@ -14,18 +14,18 @@ import React from "react";
 
 export default function WalletContainer() {
   return (
-    <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+    <Card className="bg-black text-white">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Wallet className="h-6 w-6 text-blue-600" />
-            <CardTitle className="text-blue-900">
+            <Wallet className="h-6 w-6 " />
+            <CardTitle className="text-white">
               Mseal Wallet & NFC Card
             </CardTitle>
           </div>
-          <Badge className="bg-blue-600">New Feature</Badge>
+          <Badge>New Feature</Badge>
         </div>
-        <CardDescription className="text-blue-700">
+        <CardDescription>
           Experience seamless payments with your Mseal wallet and NFC
           membership card
         </CardDescription>
@@ -33,9 +33,9 @@ export default function WalletContainer() {
       <CardContent>
         <div className="grid gap-4 md:grid-cols-3">
           <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
-            <CreditCard className="h-8 w-8 text-blue-600" />
+            <CreditCard className="h-8 w-8 text-primary" />
             <div>
-              <p className="font-medium">Contactless Payments</p>
+              <p className="font-medium text-gray-900">Contactless Payments</p>
               <p className="text-sm text-muted-foreground">
                 Tap to pay at venues
               </p>
@@ -44,14 +44,14 @@ export default function WalletContainer() {
           <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
             <Wallet className="h-8 w-8 text-green-600" />
             <div>
-              <p className="font-medium">Digital Balance</p>
+              <p className="font-medium text-black">Digital Balance</p>
               <p className="text-sm text-muted-foreground">Ksh.#### available</p>
             </div>
           </div>
           <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
             <Zap className="h-8 w-8 text-amber-600" />
             <div>
-              <p className="font-medium">Instant Transactions</p>
+              <p className="font-medium text-black">Instant Transactions</p>
               <p className="text-sm text-muted-foreground">
                 No waiting in lines
               </p>

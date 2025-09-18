@@ -15,6 +15,8 @@ type User = {
   lastName: string;
   email: string;
   phoneNumber: string | null;
+  dob:string | null;
+  city:string | null;
   membershipId: string | null;
   balance: number;
   membershipTier: string | null;

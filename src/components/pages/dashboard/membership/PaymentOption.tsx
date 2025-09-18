@@ -111,7 +111,7 @@ export default function PaymentForm({ values, setFieldValue, email, phoneNumber,
       </div>
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="pt-2">
           {values.paymentMethod === "mpesa" && (
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">

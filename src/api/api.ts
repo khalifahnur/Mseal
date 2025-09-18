@@ -52,7 +52,7 @@ export const signUpUser = async (data: AuthData): Promise<AuthResponse> => {
   } catch (error: any) {
     if (error?.response) {
       const errorMessage =
-        error?.response?.data?.error || "An error occurred during sign up.";
+        error?.response?.data?.message || "An error occurred during sign up.";
       throw new Error(errorMessage);
     } else {
       // response (network issues, etc.)

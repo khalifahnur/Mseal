@@ -109,15 +109,6 @@ export default function LandingHeader({ onLoginClick, onSignUpClick }: LandingHe
             </Button>
 
             <div className="border-l-2 border-[#eee] h-6 mx-4 hidden lg:block" />
-            <div className="hidden lg:block p-2">
-              <Image
-                src="/assets/sponsors/sp-logo.jpg"
-                alt="Muranga Seals"
-                width={100}
-                height={100}
-                className="h-5 w-20"
-              />
-            </div>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="lg:hidden bg-white" aria-label="Open menu">

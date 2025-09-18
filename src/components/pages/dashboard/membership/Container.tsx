@@ -1,15 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Star, Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { membershipTiers } from "./placeholder";
-import { BenefitsList } from "./benefits";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import MembershipCard from "./MembershipCard";
 import MembershipFAQ from "./MembershipFaqs";
 import WalletContainer from "./WalletContainer";
 import { useAuth } from "@/components/Forms/AuthContext";
+import { Sheet } from "@/components/ui/sheet";
+import PaymentUpgradeSheet from "./UpgradeMembership";
 
 export default function MembershipPage() {
   // const { data, isLoading } = useQuery({
@@ -20,6 +21,8 @@ export default function MembershipPage() {
   //   refetchOnWindowFocus: false,
   // });
 
+  const [sheetModalVisible, setSheetModalVisible] = useState(false);
+  const [upgradeTier, setUpgradeTier] = useState("");
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
@@ -27,6 +30,11 @@ export default function MembershipPage() {
   }
 
   const activeMembership = user?.membershipTier;
+
+  const handleModal = (tier: string) => {
+    setSheetModalVisible(true);
+    setUpgradeTier(tier);
+  };
 
   return (
     <div className="p-4 space-y-6">
@@ -42,7 +50,6 @@ export default function MembershipPage() {
         </>
       )}
 
-      {/* Membership Benefits */}
       <Card className="bg-white/5">
         <CardHeader>
           <CardTitle>Membership Tiers & Benefits</CardTitle>
@@ -80,6 +87,7 @@ export default function MembershipPage() {
                         : "bg-primary text-[#000] hover:bg-primary/40"
                     }`}
                     disabled={tier === activeMembership}
+                    onClick={() => handleModal(tier)}
                   >
                     {tier === activeMembership ? "Current Plan" : "Upgrade"}
                   </button>
@@ -89,9 +97,16 @@ export default function MembershipPage() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Member Benefits */}
-      <BenefitsList />
+      <Sheet open={sheetModalVisible} onOpenChange={setSheetModalVisible}>
+        <PaymentUpgradeSheet
+          setSheetModalVisible={setSheetModalVisible}
+          email={user?.email || ""}
+          phoneNumber={user?.phoneNumber || ""}
+          membershipTier={upgradeTier || ""}
+          dob={user?.dob || ""}
+          city={user?.city || ""}
+        />
+      </Sheet>
 
       <MembershipFAQ />
     </div>

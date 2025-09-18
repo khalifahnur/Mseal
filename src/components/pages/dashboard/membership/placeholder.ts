@@ -13,7 +13,7 @@ export const membershipTiers = {
     name: "Ordinary",
     price: "Ksh 500",
     benefits: [
-      "Annual registration included",
+      "Membership included",
       "Official membership card",
       "Dedicated member entrance (faster entry) ",
     ],
@@ -22,7 +22,7 @@ export const membershipTiers = {
     name: "Bronze",
     price: "Ksh 2,000",
     benefits: [
-      "Annual registration included",
+      "Membership included",
       "10% discount on match tickets",
       "Official membership card",
       "5% discount on merchandise",
@@ -34,7 +34,7 @@ export const membershipTiers = {
     name: "Silver",
     price: "KSh 5,000",
     benefits: [
-      "Annual registration included",
+      "Membership included",
       "Annual pass to ordinary stand for all home matches",
       "Official membership card",
       "Opportunity to upgrade to VIP stand during games",
@@ -47,7 +47,7 @@ export const membershipTiers = {
     name: "Gold",
     price: "KSh 10,000",
     benefits: [
-      " Annual registration included",
+      "Membership included",
       "Annual pass to VIP stand for all home matches",
       "Premium membership card",
       "Guaranteed big match access",
@@ -58,9 +58,3 @@ export const membershipTiers = {
     ],
   },
 };
-
-export const mockTransactions = [
-  { date: "2024-12-01", description: "Membership Renewal", amount: 199.99 },
-  { date: "2024-11-15", description: "Match Ticket Purchase", amount: 45.0 },
-  { date: "2024-10-30", description: "Merchandise Purchase", amount: 75.5 },
-];
