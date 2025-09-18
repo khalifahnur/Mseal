@@ -77,8 +77,8 @@ export function AppSidebar() {
 
   const baseSidebarItems = [
   { name: "Home", href: '/home', icon: Home },
-  { name: "Tickets", href: '/tickets', icon: Ticket },
-  // { name: "Matches", href: '/matches', icon: Calendar },
+  //{ name: "Tickets", href: '/tickets', icon: Ticket },
+  { name: "Matches", href: '/matches', icon: Calendar },
   
 ];
 
