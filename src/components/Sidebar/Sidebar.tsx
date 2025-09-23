@@ -32,8 +32,6 @@ import { toast } from "react-toastify";
 import { useAuth } from "@/components/Forms/AuthContext";
 import { Skeleton } from "../ui/skeleton";
 
-
-
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -76,21 +74,19 @@ export function AppSidebar() {
   });
 
   const baseSidebarItems = [
-  { name: "Home", href: '/home', icon: Home },
-  //{ name: "Tickets", href: '/tickets', icon: Ticket },
-  { name: "Matches", href: '/matches', icon: Calendar },
-  
-];
+    { name: "Home", href: "/home", icon: Home },
+    { name: "Matches", href: "/matches", icon: Calendar },
+  ];
 
-const shopItem = { name: "Shop", href: '/shop', icon: StoreIcon };
-const membershipItem = { name: "Membership", href: '/membership', icon: CreditCard };
-const ticketItem = {name:"Tickets",href:'/tickets',icon:Ticket};
+  const shopItem = { name: "Shop", href: "/shop", icon: StoreIcon };
+  const membershipItem = { name: "Membership", href: "/membership", icon: CreditCard };
+  const ticketItem = { name: "Tickets", href: "/tickets", icon: Ticket };
 
-const footerItems = [
-  { name: "Settings", href: '/settings', icon: Settings },
-  { name: "Logout", href: "#", icon: LogOut },
-  { name: "Need Help", href: "#", icon: HelpCircle },
-];
+  const footerItems = [
+    { name: "Settings", href: "/settings", icon: Settings },
+    { name: "Logout", href: "#", icon: LogOut },
+    { name: "Need Help", href: "#", icon: HelpCircle },
+  ];
 
   const handleLogout = useCallback(async () => {
     try {
@@ -102,11 +98,11 @@ const footerItems = [
 
   const sidebarItems = useMemo(
     () =>
-      data?.membershipId ? [...baseSidebarItems,ticketItem, membershipItem, shopItem ] : baseSidebarItems,
+      data?.membershipId
+        ? [...baseSidebarItems, ticketItem, membershipItem, shopItem]
+        : baseSidebarItems,
     [data?.membershipId]
-);
-
-
+  );
 
   if (isLoading) {
     return (
@@ -134,7 +130,6 @@ const footerItems = [
     );
   }
 
-
   return (
     <Sidebar variant="floating">
       <SidebarHeader className="items-center justify-center">
@@ -156,8 +151,10 @@ const footerItems = [
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild isActive={pathname === item.href}>
                 <Link href={item.href} prefetch>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {item.name}
+                  <span className="flex items-center">
+                    <item.icon className="mr-2 h-4 w-4" />
+                    {item.name}
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -171,14 +168,18 @@ const footerItems = [
             <SidebarMenuItem key={item.name}>
               {item.name === "Logout" ? (
                 <SidebarMenuButton onClick={handleLogout}>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  Logout
+                  <span className="flex items-center">
+                    <item.icon className="mr-2 h-4 w-4" />
+                    Logout
+                  </span>
                 </SidebarMenuButton>
               ) : (
                 <SidebarMenuButton asChild>
                   <Link href={item.href} prefetch>
-                    <item.icon className="mr-2 h-4 w-4" />
-                    {item.name}
+                    <span className="flex items-center">
+                      <item.icon className="mr-2 h-4 w-4" />
+                      {item.name}
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               )}

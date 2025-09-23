@@ -63,7 +63,7 @@ export default function Container() {
         </div>
       </main>
 
-      <footer className="bg-gray-100 border-t">
+      <footer className="border-t shadow-lg bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-2xl">
         <div className="container mx-auto p-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>

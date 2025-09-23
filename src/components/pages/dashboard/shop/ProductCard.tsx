@@ -2,11 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-// import { Button } from "@/components/ui/button"
+//import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-// import { ShoppingCart } from "lucide-react"
-// import { toast } from "react-toastify"
 
 interface ProductCardProps {
   id: string;
@@ -17,6 +14,7 @@ interface ProductCardProps {
   description?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductCard({
   id,
   name,
@@ -35,7 +33,7 @@ export default function ProductCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative aspect-square overflow-hidden">
-        <Link href={`/shop/product/${id}`}>
+        {/* <Link href={`/shop/product/${id}`}> */}
           <Image
             src={image}
             alt={name}
@@ -43,8 +41,9 @@ export default function ProductCard({
             height={300}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+            onClick={()=>window.alert(`${name} coming soon!`)}
           />
-        </Link>
+        {/* </Link> */}
         {badge && (
           <Badge
             variant={"secondary"}
