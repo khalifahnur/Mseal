@@ -67,8 +67,10 @@ export default function ActiveTickets() {
       <CardFooter>
         <Link href="/tickets">
           <Button variant="outline" size="sm" asChild>
-            <CalendarDays className="mr-2 h-4 w-4" />
-            View Tickets
+            <span className="flex items-center">
+              <CalendarDays className="mr-2 h-4 w-4" />
+              View Tickets
+            </span>
           </Button>
         </Link>
       </CardFooter>

@@ -89,7 +89,10 @@ export function TicketHistory() {
     <div className="grid gap-6">
       {usedTickets.map((ticket) =>
         ticket.event.map((event) => (
-          <Card key={`${ticket._id}-${event.eventId}`} className="overflow-hidden">
+          <Card
+            key={`${ticket._id}-${event.eventId}`}
+            className="overflow-hidden"
+          >
             <CardContent className="p-0">
               <div className="flex flex-col md:flex-row bg-[url('/assets/images/stadi1.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-50 before:absolute before:inset-0 before:z-[-1]">
                 <div className="relative md:w-1/3">
@@ -107,19 +110,27 @@ export function TicketHistory() {
                 <div className="flex-1 p-6">
                   <div className="flex flex-col h-full justify-between">
                     <div>
-                      <h3 className="text-xl text-white md:text-black font-bold mb-2">{event.match}</h3>
+                      <h3 className="text-xl text-white md:text-black font-bold mb-2">
+                        {event.match}
+                      </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                         <div className="flex items-center text-muted-foreground ">
                           <Calendar className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{formatDate(event.date)}</span>
+                          <span className="text-white md:text-black">
+                            {formatDate(event.date)}
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Clock className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{event.time} EAT</span>
+                          <span className="text-white md:text-black">
+                            {event.time} EAT
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <MapPin className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{event.venue}</span>
+                          <span className="text-white md:text-black">
+                            {event.venue}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -177,8 +188,10 @@ export function TicketHistory() {
                         onClick={() => downloadReceipt(ticket, event)}
                         aria-label="Download receipt as PDF"
                       >
-                        <Download className="mr-2 h-4 w-4" />
-                        Download Receipt
+                        <span className="flex items-center">
+                          <Download className="mr-2 h-4 w-4" />
+                          Download Receipt
+                        </span>
                       </Button>
                     </div>
                   </div>

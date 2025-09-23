@@ -107,28 +107,40 @@ export function ActiveTickets() {
                 <div className="flex-1 p-6">
                   <div className="flex flex-col h-full justify-between">
                     <div>
-                      <h3 className="text-xl font-bold mb-2 text-white md:text-black">{event?.match}</h3>
+                      <h3 className="text-xl font-bold mb-2 text-white md:text-black">
+                        {event?.match}
+                      </h3>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                         <div className="flex items-center text-muted-foreground">
                           <Calendar className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{formatDate(event?.date)}</span>
+                          <span className="text-white md:text-black">
+                            {formatDate(event?.date)}
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Clock className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{event?.time} EAT</span>
+                          <span className="text-white md:text-black">
+                            {event?.time} EAT
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <MapPin className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">{event?.venue}</span>
+                          <span className="text-white md:text-black">
+                            {event?.venue}
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Ticket className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">Regular Ticket</span>
+                          <span className="text-white md:text-black">
+                            Regular Ticket
+                          </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <User className="mr-2 h-4 w-4 text-white md:text-black" />
-                          <span className="text-white md:text-black">Section A, Row 5, Seat 12</span>
+                          <span className="text-white md:text-black">
+                            Section A, Row 5, Seat 12
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -170,7 +182,9 @@ export function ActiveTickets() {
                             </div>
                             <div className="text-center space-y-2">
                               <h4 className="font-bold">{event?.match}</h4>
-                              <p>{formatDate(event?.date)} • {event?.time} EAT</p>
+                              <p>
+                                {formatDate(event?.date)} • {event?.time} EAT
+                              </p>
                               <p>{event?.venue}</p>
                               <p className="font-mono text-xs">
                                 {ticket.ticketId}
@@ -181,8 +195,10 @@ export function ActiveTickets() {
                             variant="outline"
                             onClick={handleDownloadTicket}
                           >
-                            <Download className="mr-2 h-4 w-4" />
-                            Download
+                            <span className="flex items-center">
+                              <Download className="mr-2 h-4 w-4" />
+                              Download
+                            </span>
                           </Button>
                         </DialogContent>
                       </Dialog>

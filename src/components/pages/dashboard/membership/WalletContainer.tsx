@@ -26,8 +26,8 @@ export default function WalletContainer() {
           <Badge>New Feature</Badge>
         </div>
         <CardDescription>
-          Experience seamless payments with your Mseal wallet and NFC
-          membership card
+          Experience seamless payments with your Mseal wallet and NFC membership
+          card
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -45,7 +45,9 @@ export default function WalletContainer() {
             <Wallet className="h-8 w-8 text-green-600" />
             <div>
               <p className="font-medium text-black">Digital Balance</p>
-              <p className="text-sm text-muted-foreground">Ksh.#### available</p>
+              <p className="text-sm text-muted-foreground">
+                Ksh.#### available
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-3 p-3 bg-white rounded-lg border">
@@ -62,8 +64,10 @@ export default function WalletContainer() {
       <CardFooter className="place-content-end">
         <Button asChild className="w-1/2">
           <Link href="/membership/wallet">
-            <Wallet className="h-4 w-4 mr-2" />
-            Mseal Wallet
+            <span className="flex items-center">
+              <Wallet className="h-4 w-4 mr-2" />
+              Mseal Wallet
+            </span>
           </Link>
         </Button>
       </CardFooter>
