@@ -14,7 +14,7 @@ const nextConfig = {
       // },
       {
         protocol: "https",
-        hostname: "img.icons8.com",
+        hostname: "icons8.com",
         pathname: "**",
       },
       {

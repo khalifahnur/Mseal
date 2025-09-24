@@ -1,13 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-export type LoadingColor = "primary" | "secondary" | "accent" | "success" | "info" | "warning" | "error" | "neutral"
-export type LoadingSize = "xs" | "sm" | "md" | "lg" | "xl"
+export type LoadingColor = "primary" | "secondary" | "accent" | "success" | "info" | "warning" | "error" | "neutral";
+export type LoadingSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export const LoadingOverlay = ({
-  message,
+  message = "Loading...", // Default message
   color = "primary",
   blur = true,
   opacity = 80,
@@ -15,51 +16,28 @@ export const LoadingOverlay = ({
   className,
   showDots = true,
 }: {
-  message?: string
-  color?: LoadingColor
-  blur?: boolean
-  opacity?: number
-  size?: LoadingSize
-  className?: string
-  showDots?: boolean
+  message?: string;
+  color?: LoadingColor;
+  blur?: boolean;
+  opacity?: number;
+  size?: LoadingSize;
+  className?: string;
+  showDots?: boolean;
 }) => {
-  const [dots, setDots] = useState(1)
-  const [progress, setProgress] = useState(0)
+  const [dots, setDots] = useState(1);
 
   useEffect(() => {
-    if (!showDots || !message) return
-    
+    if (!showDots || !message) return;
+
     const interval = setInterval(() => {
-      setDots((prev) => (prev % 3) + 1)
-    }, 500)
+      setDots((prev) => (prev % 3) + 1);
+    }, 500);
 
-    return () => clearInterval(interval)
-  }, [message, showDots])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 95) return 0
-        return prev + 5
-      })
-    }, 200)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const colorMap: Record<LoadingColor, string> = {
-    primary: "border-blue-600 bg-[#e16f23]",
-    secondary: "border-slate-700 bg-slate-100",
-    accent: "border-indigo-600 bg-indigo-100",
-    success: "border-emerald-600 bg-emerald-100",
-    info: "border-cyan-600 bg-cyan-100", 
-    warning: "border-amber-600 bg-amber-100",
-    error: "border-rose-600 bg-rose-100",
-    neutral: "border-gray-600 bg-gray-100",
-  }
+    return () => clearInterval(interval);
+  }, [message, showDots]);
 
   const textColorMap: Record<LoadingColor, string> = {
-    primary: "text-blue-700",
+    primary: "text-primary",
     secondary: "text-slate-700",
     accent: "text-indigo-700",
     success: "text-emerald-700",
@@ -67,23 +45,23 @@ export const LoadingOverlay = ({
     warning: "text-amber-700",
     error: "text-rose-700",
     neutral: "text-gray-700",
-  }
+  };
 
   const sizeMap: Record<LoadingSize, string> = {
-    xs: "w-16 h-16",
-    sm: "w-24 h-24",
-    md: "w-32 h-32",
-    lg: "w-40 h-40",
-    xl: "w-48 h-48",
-  }
-  
+    xs: "w-12 h-12",
+    sm: "w-16 h-16",
+    md: "w-24 h-24",
+    lg: "w-32 h-32",
+    xl: "w-40 h-40",
+  };
+
   const textSizeMap: Record<LoadingSize, string> = {
     xs: "text-xs",
     sm: "text-sm",
     md: "text-base",
     lg: "text-lg",
     xl: "text-xl",
-  }
+  };
 
   return (
     <div
@@ -96,46 +74,16 @@ export const LoadingOverlay = ({
       aria-live="polite"
       role="status"
     >
-      {/* Loader Bars */}
-      <div className={cn("relative flex flex-col items-center justify-center", sizeMap[size])}>
-        {/* Top Loading Bar */}
-        <div className="w-full h-2 mb-2 bg-gray-100 rounded-full overflow-hidden">
-          <div 
-            className={cn("h-full rounded-full transition-all duration-200", colorMap[color].split(" ")[1])}
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        
-        {/* Animated Blocks */}
-        <div className="relative w-full h-full grid grid-cols-3 gap-2">
-          {[...Array(9)].map((_, index) => {
-            const delay = `${(index % 3) * 100 + Math.floor(index / 3) * 100}ms`;
-            
-            return (
-              <div 
-                key={index}
-                className={cn(
-                  "border-2 rounded-md flex items-center justify-center transition-all",
-                  colorMap[color],
-                  "animate-pulse"
-                )}
-                style={{ animationDelay: delay }}
-              />
-            );
-          })}
-        </div>
-        
-        {/* Bottom Loading Bar */}
-        <div className="w-full h-2 mt-2 bg-gray-100 rounded-full overflow-hidden">
-          <div 
-            className={cn("h-full rounded-full transition-all duration-200", colorMap[color].split(" ")[1])}
-            style={{ width: `${100 - progress}%` }}
-          />
-        </div>
-      </div>
-
+      <Image
+        src="/assets/images/icons8-ball.gif"
+        alt="Loading animation"
+        className={cn("object-contain", sizeMap[size])}
+        width={100}
+        height={100}
+        unoptimized
+      />
       {message && (
-        <div className="mt-6 text-center">
+        <div className="mt-4 text-center">
           <p className={cn("font-medium", textColorMap[color], textSizeMap[size])}>
             {message}
             {showDots && ".".repeat(dots)}
@@ -143,44 +91,38 @@ export const LoadingOverlay = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-/**
- * FullScreenLoader component that covers the entire viewport
- */
 export const FullScreenLoader = ({
-  message,
+  message = "Loading...",
   color = "primary",
   blur = true,
   opacity = 90,
   size = "md",
   showDots = true,
 }: {
-  message?: string
-  color?: LoadingColor
-  blur?: boolean
-  opacity?: number
-  size?: LoadingSize
-  showDots?: boolean
+  message?: string;
+  color?: LoadingColor;
+  blur?: boolean;
+  opacity?: number;
+  size?: LoadingSize;
+  showDots?: boolean;
 }) => {
   return (
     <div className="fixed inset-0 z-50">
-      <LoadingOverlay 
-        message={message} 
-        color={color} 
-        blur={blur} 
-        opacity={opacity} 
+      <LoadingOverlay
+        message={message}
+        color={color}
+        blur={blur}
+        opacity={opacity}
         size={size}
         showDots={showDots}
       />
     </div>
-  )
-}
+  );
+};
 
-/**
- * InlineLoader component with a minimal design for inline loading states
- */
 export const InlineLoader = ({
   message,
   color = "primary",
@@ -188,35 +130,35 @@ export const InlineLoader = ({
   className,
   showDots = true,
 }: {
-  message?: string
-  color?: LoadingColor
-  size?: LoadingSize
-  className?: string
-  showDots?: boolean
+  message?: string;
+  color?: LoadingColor;
+  size?: LoadingSize;
+  className?: string;
+  showDots?: boolean;
 }) => {
-  const [dots, setDots] = useState(1)
-  const [activeBar, setActiveBar] = useState(0)
+  const [dots, setDots] = useState(1);
+  const [activeBar, setActiveBar] = useState(0);
 
   useEffect(() => {
-    if (!showDots || !message) return
-    
-    const interval = setInterval(() => {
-      setDots((prev) => (prev % 3) + 1)
-    }, 500)
+    if (!showDots || !message) return;
 
-    return () => clearInterval(interval)
-  }, [message, showDots])
+    const interval = setInterval(() => {
+      setDots((prev) => (prev % 3) + 1);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [message, showDots]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveBar((prev) => (prev + 1) % 4)
-    }, 250)
+      setActiveBar((prev) => (prev + 1) % 4);
+    }, 250);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   const colorMap: Record<LoadingColor, string> = {
-    primary: "bg-#e16f23",
+    primary: "bg-blue-600",
     secondary: "bg-slate-700",
     accent: "bg-indigo-600",
     success: "bg-emerald-600",
@@ -224,7 +166,7 @@ export const InlineLoader = ({
     warning: "bg-amber-600",
     error: "bg-rose-600",
     neutral: "bg-gray-600",
-  }
+  };
 
   const textColorMap: Record<LoadingColor, string> = {
     primary: "text-blue-700",
@@ -235,7 +177,7 @@ export const InlineLoader = ({
     warning: "text-amber-700",
     error: "text-rose-700",
     neutral: "text-gray-700",
-  }
+  };
 
   const sizeMap: Record<LoadingSize, string> = {
     xs: "h-3 w-12",
@@ -243,7 +185,7 @@ export const InlineLoader = ({
     md: "h-5 w-20",
     lg: "h-6 w-24",
     xl: "h-8 w-32",
-  }
+  };
 
   const barSizeMap: Record<LoadingSize, string> = {
     xs: "w-2",
@@ -251,7 +193,7 @@ export const InlineLoader = ({
     md: "w-4",
     lg: "w-5",
     xl: "w-6",
-  }
+  };
 
   const textSizeMap: Record<LoadingSize, string> = {
     xs: "text-xs",
@@ -259,17 +201,17 @@ export const InlineLoader = ({
     md: "text-base",
     lg: "text-lg",
     xl: "text-xl",
-  }
+  };
 
   return (
-    <div 
+    <div
       className={cn("flex items-center gap-3", className)}
       aria-live="polite"
       role="status"
     >
       <div className={cn("flex justify-between items-end", sizeMap[size])}>
         {[0, 1, 2, 3].map((i) => (
-          <div 
+          <div
             key={i}
             className={cn(
               "h-full rounded transition-all duration-200",
@@ -277,14 +219,14 @@ export const InlineLoader = ({
               colorMap[color],
               i === activeBar ? "opacity-100" : "opacity-30"
             )}
-            style={{ 
+            style={{
               height: i === activeBar ? "100%" : "40%",
-              transform: i === activeBar ? "scaleY(1)" : "scaleY(0.8)" 
+              transform: i === activeBar ? "scaleY(1)" : "scaleY(0.8)",
             }}
           />
         ))}
       </div>
-      
+
       {message && (
         <span className={cn("font-medium", textColorMap[color], textSizeMap[size])}>
           {message}
@@ -292,5 +234,5 @@ export const InlineLoader = ({
         </span>
       )}
     </div>
-  )
-}
+  );
+};

@@ -84,29 +84,13 @@ const benefits = [
 
 
 export function BenefitsPath() {
-  const [containerWidth, setContainerWidth] = React.useState(0)
-  const containerRef = React.useRef<HTMLDivElement | null>(null)
+  
 
-  React.useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
-      }
-    }
-
-    updateWidth()
-    window.addEventListener("resize", updateWidth)
-    return () => window.removeEventListener("resize", updateWidth)
-  }, [])
-
-  // Responsive calculations
-  const isMobile = containerWidth < 768
   const visibleBenefits = benefits.slice(0, 6)
-  const cardWidth = isMobile ? 160 : 200
 
   return (
     <div className="relative w-full py-12 overflow-hidden flex justify-center opensans md:py-20 px-20 bg-[#000] text-primary-foreground">      
-      <div ref={containerRef} className="relative w-full max-w-5xl mx-auto px-4 z-10">
+      <div className="relative w-full max-w-5xl mx-auto px-4 z-10">
         <div className="text-center mb-12">
           {/* <motion.div 
             className="inline-block px-3 py-1 bg-gray-900 rounded-full text-yellow-400 text-sm font-medium mb-4 backdrop-blur-xs border border-slate-700/50"
@@ -134,70 +118,68 @@ export function BenefitsPath() {
           </motion.p>
         </div>
 
-        {/* Centered grid container */}
-        <div className="w-full flex justify-center">
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
-            {visibleBenefits.map((benefit, index) => {
-              const Icon = benefit.icon
+       <div className="w-full flex flex-col md:flex-row md:justify-center">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto px-2 sm:px-4">
+    {visibleBenefits.map((benefit, index) => {
+      const Icon = benefit.icon;
 
-              return (
-                <motion.div
-                  key={benefit.title}
-                  className={` bg-white backdrop-blur-md rounded-xl p-5 shadow-lg ${benefit.shadowColor} border ${benefit.borderColor} hover:shadow-xl transition-all duration-300 group relative overflow-hidden`}
-                  style={{
-                    width: "100%",
-                    maxWidth: `${cardWidth}px`,
-                    margin: "0 auto",
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1 + 0.3,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{
-                    y: -8,
-                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
-                    transition: { duration: 0.2 },
-                  }}
-                >
-                  {/* Subtle animated gradient in card background */}
-                  <motion.div 
-                    className="absolute inset-0 opacity-20 z-0 pointer-events-none"
-                    animate={{
-                      background: [
-                        "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)",
-                        "radial-gradient(circle at 100% 100%, rgba(255,255,255,0.2), transparent 50%)",
-                        "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)"
-                      ]
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      repeatType: "mirror"
-                    }}
-                  />
-                  
-                  <div
-                    className={` ${benefit.iconColor} h-14 w-14 rounded-full flex items-center justify-center mb-4 mx-auto transform group-hover:scale-110 transition-transform duration-300 shadow-md relative z-10`}
-                  >
-                    <Icon size={26} />
-                  </div>
-                  <h3
-                    className={`font-bold mb-2 text-base md:text-lg ${benefit.textColor} text-center group-hover:translate-x-1 transition-transform duration-300 relative z-10`}
-                  >
-                    {benefit.title}
-                  </h3>
-                  <p className={`text-sm ${benefit.textColor} opacity-80 text-center relative z-10`}>
-                    {benefit.description}
-                  </p>
-                  <div className="w-0 group-hover:w-full h-0.5 bg-linear-to-r from-transparent via-yellow-400 to-transparent mt-3 opacity-0 group-hover:opacity-100 transition-all duration-500 mx-auto relative z-10"></div>
-                </motion.div>
-              )
-            })}
+      return (
+        <motion.div
+          key={benefit.title}
+          className={`bg-white backdrop-blur-md rounded-xl p-3 sm:p-4 shadow-lg ${benefit.shadowColor} border ${benefit.borderColor} hover:shadow-xl transition-all duration-300 group relative overflow-hidden`}
+          style={{
+            width: "100%",
+            margin: "0 auto",
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.6,
+            delay: index * 0.1 + 0.3,
+            ease: "easeOut",
+          }}
+          whileHover={{
+            y: -8,
+            boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
+            transition: { duration: 0.2 },
+          }}
+        >
+          {/* Subtle animated gradient in card background */}
+          <motion.div 
+            className="absolute inset-0 opacity-20 z-0 pointer-events-none"
+            animate={{
+              background: [
+                "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)",
+                "radial-gradient(circle at 100% 100%, rgba(255,255,255,0.2), transparent 50%)",
+                "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.2), transparent 50%)"
+              ]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              repeatType: "mirror"
+            }}
+          />
+          
+          <div
+            className={` ${benefit.iconColor} h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto transform group-hover:scale-110 transition-transform duration-300 shadow-md relative z-10`}
+          >
+            <Icon size={18} />
           </div>
-        </div>
+          <h3
+            className={`font-bold mb-1 sm:mb-2 text-sm sm:text-base md:text-lg ${benefit.textColor} text-center group-hover:translate-x-1 transition-transform duration-300 relative z-10`}
+          >
+            {benefit.title}
+          </h3>
+          <p className={`text-xs sm:text-sm ${benefit.textColor} opacity-80 text-center relative z-10`}>
+            {benefit.description}
+          </p>
+          <div className="w-0 group-hover:w-full h-0.5 bg-linear-to-r from-transparent via-yellow-400 to-transparent mt-1 sm:mt-2 opacity-0 group-hover:opacity-100 transition-all duration-500 mx-auto relative z-10"></div>
+        </motion.div>
+      );
+    })}
+  </div>
+</div>
         
       </div>
     </div>

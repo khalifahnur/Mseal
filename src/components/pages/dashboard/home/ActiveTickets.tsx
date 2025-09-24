@@ -48,7 +48,7 @@ export default function ActiveTickets() {
   return (
     <Card className="relative w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>Tickets</CardTitle>
+        <CardTitle className="text-lg">Tickets</CardTitle>
         <CardDescription>View your active tickets and history</CardDescription>
       </CardHeader>
       <CardContent className="pb-2">

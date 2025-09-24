@@ -139,7 +139,7 @@ export function AppSidebar() {
             alt="Muranga Seals"
             width={50}
             height={50}
-            className="h-24 w-auto"
+            className="h-24 w-24"
             priority
           />
         </Link>

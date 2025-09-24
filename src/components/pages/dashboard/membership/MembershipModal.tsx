@@ -23,7 +23,6 @@ import { validationSchema } from "@/lib/validationSchema";
 import type { paymentData } from "@/types/payment";
 import {
   useMembershipPayment,
-  usePesapalMembershipPayment,
 } from "@/hooks/Paymenthook/usePaymentHook";
 import { DateOfBirthPicker } from "../Dob";
 import { useRouter } from "next/navigation";
@@ -60,7 +59,6 @@ export function MembershipModal({
   const router = useRouter();
 
   const paymentMutation = useMembershipPayment();
-  const pesapalPaymentMutation = usePesapalMembershipPayment();
   const confirmOrderPaymentStatus = useSocketData(
     "confirmMembershipPaymentStatus",
     transactionReference
@@ -91,48 +89,48 @@ export function MembershipModal({
     }
   }, [transactionReference, confirmOrderPaymentStatus, paymentStatus, refreshUser]);
 
-  const handleVisaPayment = useCallback(
-    async (
-      values: paymentData,
-      { setSubmitting, setErrors }: FormikHelpers<paymentData>
-    ) => {
-      try {
-        setSubmitting(true);
-        setPaymentStatus("initiating");
-        const selectedTier = membershipTiers.find(
-          (t) => t.value === values.membershipTier
-        );
-        if (!selectedTier) {
-          throw new Error("Invalid membership tier selected");
-        }
+  // const handleVisaPayment = useCallback(
+  //   async (
+  //     values: paymentData,
+  //     { setSubmitting, setErrors }: FormikHelpers<paymentData>
+  //   ) => {
+  //     try {
+  //       setSubmitting(true);
+  //       setPaymentStatus("initiating");
+  //       const selectedTier = membershipTiers.find(
+  //         (t) => t.value === values.membershipTier
+  //       );
+  //       if (!selectedTier) {
+  //         throw new Error("Invalid membership tier selected");
+  //       }
 
-        const paymentValues = {
-          tier: selectedTier.value,
-          isUpgrade: false,
-          dob: values.dob,
-          city: values.city,
-          amount: selectedTier.price,
-        };
+  //       const paymentValues = {
+  //         tier: selectedTier.value,
+  //         isUpgrade: false,
+  //         dob: values.dob,
+  //         city: values.city,
+  //         amount: selectedTier.price,
+  //       };
 
-        const response = await pesapalPaymentMutation.mutateAsync(
-          paymentValues
-        );
-        setIframeUrl(response.redirectUrl);
-        toast.info("Redirecting to Pesapal for Visa payment...", {
-          toastId: "visa-redirect",
-        });
-      } /* eslint-disable @typescript-eslint/no-explicit-any */
-        catch (err: any) {
-        const errorMessage = err.message || "Visa payment initiation failed";
-        setErrors({ paymentMethod: errorMessage });
-        toast.error(errorMessage, { toastId: "visa-payment-error" });
-        setPaymentStatus("error");
-      } finally {
-        setSubmitting(false);
-      }
-    },
-    [pesapalPaymentMutation]
-  );
+  //       const response = await pesapalPaymentMutation.mutateAsync(
+  //         paymentValues
+  //       );
+  //       setIframeUrl(response.redirectUrl);
+  //       toast.info("Redirecting to Pesapal for Visa payment...", {
+  //         toastId: "visa-redirect",
+  //       });
+  //     } /* eslint-disable @typescript-eslint/no-explicit-any */
+  //       catch (err: any) {
+  //       const errorMessage = err.message || "Visa payment initiation failed";
+  //       setErrors({ paymentMethod: errorMessage });
+  //       toast.error(errorMessage, { toastId: "visa-payment-error" });
+  //       setPaymentStatus("error");
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
+  //   },
+  //   [pesapalPaymentMutation]
+  // );
 
   const handleNext = useCallback(
     async (
@@ -191,6 +189,7 @@ export function MembershipModal({
       { setSubmitting, setErrors }: FormikHelpers<paymentData>,
       event?: React.FormEvent<HTMLFormElement>
     ) => {
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       if (event && (event.target as any).dataset.action !== "pay") {
         return;
       }

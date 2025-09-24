@@ -45,7 +45,7 @@ export default function UpcomingMatches() {
   return (
     <Card id="upcoming-matches">
       <CardHeader>
-        <CardTitle>Upcoming Matches</CardTitle>
+        <CardTitle className="font-semibold text-lg">Upcoming Matches</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[150px] w-full">

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export default function BlobImage() {
-  const cardImage = "/assets/stack-cards.png"; 
+  const cardImage = "/assets/images/vert.png"; 
 
 
 

@@ -1,99 +1,112 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import formatMonthYear from "@/lib/utils";
-import { NfcIcon } from "lucide-react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { QRCodeSVG } from "qrcode.react";
 
 interface MembershipCardProps {
-  logoUrl?: string;
   qrcode: string | null;
   createdAt: string | null;
   membershipTier: string | null;
   cardNumber: string | null;
+  expDate:string | null;
 }
 
 export function MembershipCard({
-  logoUrl = "https://mseal-membership.vercel.app/_next/image?url=%2Fassets%2Fmseal-logo.png&w=128&q=75",
   createdAt,
   membershipTier,
   cardNumber,
+  expDate,
+  qrcode
 }: MembershipCardProps) {
-  const tierStyles = {
-    gold: {
-      chip: "bg-gradient-to-br from-[#fae115] to-yellow-600 border-[#fae115]/50",
-      text: "text-[#fae115]",
-    },
-    silver: {
-      chip: "bg-gradient-to-br from-gray-300 to-gray-500 border-gray-300/50",
-      text: "text-gray-300",
-    },
-    bronze: {
-      chip: "bg-gradient-to-br from-amber-800 to-amber-600 border-amber-800/50",
-      text: "text-amber-800",
-    },
-    default: {
-      chip: "bg-gradient-to-br from-gray-500 to-gray-700 border-gray-500/50",
-      text: "text-gray-500",
-    },
+  const getBackgroundImage = () => {
+    switch (membershipTier?.toLowerCase()) {
+      case "gold":
+        return "url('/assets/membership/Gold.png')";
+      case "silver":
+        return "url('/assets/membership/Silver.png')";
+      case "bronze":
+        return "url('/assets/membership/bronze.png')";
+      default:
+        return "url('/assets/membership/Ordinary.png')";
+    }
   };
 
-  const normalizedTier = membershipTier?.toLowerCase();
-  const { chip: chipClass, text: textClass } =
-    normalizedTier === "gold" ||
-    normalizedTier === "silver" ||
-    normalizedTier === "bronze"
-      ? tierStyles[normalizedTier]
-      : tierStyles.default;
+  const getTextColorClass = () => {
+    return membershipTier?.toLowerCase() === "bronze" ? "text-white" : "text-[#1e1e1e]";
+  };
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      <Card className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-[#fae115]/30 bg-gray-900 text-white transition-transform duration-300 hover:-translate-y-2 hover:rotate-[-1deg] hover:scale-105 hover:shadow-[0_8px_24px_rgba(250,225,21,0.3)]">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-700 via-black to-gray-600 opacity-95"></div>
-        <div
-          className="absolute inset-0 bg-center bg-contain bg-no-repeat opacity-20"
-          style={{
-            backgroundImage: `url("${logoUrl}")`,
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-[#fae115]/10"></div>
-
-        {/* Card Content */}
-        <div className="relative p-6 flex flex-col justify-between h-full min-h-[200px]">
-          {/* Header: Logo and NFC */}
-          <div className="flex justify-between items-start mb-4">
-            <div className="text-left">
-              <p className={`text-sm font-semibold tracking-wide ${textClass}`}>
-                Muranga Seal
-              </p>
-              <p className={`text-lg font-medium capitalize ${textClass}`}>
-                {membershipTier ? `${membershipTier} Member` : "Member"}
-              </p>
-            </div>
-            <NfcIcon className={`h-8 w-8 ${textClass}/90 transition-transform duration-300 hover:scale-110`} />
-          </div>
-
-          {/* Card Chip */}
-          <div className="mb-4">
-            <div className={`w-12 h-8 rounded-md shadow-inner border ${chipClass}`}></div>
-          </div>
-
-          {/* Member Since */}
-          <div className="flex justify-between items-end mt-4">
-            <div className="text-left">
-              <p className="text-xs opacity-80">Card Number</p>
-              <p className="text-sm font-medium tracking-widest text-white/90 drop-shadow-md">
-                •••• •••• •••• {cardNumber?.slice(-4) ?? "****"}
-              </p>
-            </div>
-            <div className="ml-auto text-right">
-              <p className="text-xs opacity-80">Member Since</p>
-              <p className="text-sm font-medium">
-                {createdAt ? formatMonthYear(createdAt) : "N/A"}
-              </p>
-            </div>
-          </div>
+    <div
+      className="bg-opacity-90 rounded-2xl p-4 flex flex-col justify-between relative w-full max-w-full"
+      style={{
+        backgroundImage: getBackgroundImage(),
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-opacity-50"></div>
+      <div className="flex justify-between items-start z-10">
+        <Image
+          src={"/assets/mseal-logo.png"}
+          alt="Membership Logo"
+          width={80}
+          height={80}
+          className="object-contain"
+        />
+        <div className={`text-lg font-extrabold uppercase tracking-wide ${getTextColorClass()}`}>
+          {membershipTier ? `${membershipTier} Member` : "Member"}
         </div>
-      </Card>
+      </div>
+
+      <div className="flex justify-between items-center z-10">
+        <div>
+          <p className={`text-sm font-semibold ${getTextColorClass()}`}>CARD NUMBER.</p>
+          <p className={`text-xl font-mono  ${getTextColorClass()}`}>
+            0000 0000 0000 {cardNumber?.slice(-4) ?? "0000"}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex justify-between items-end  text-sm font-medium z-10">
+        <div>
+          <p className={`text-sm font-mono  ${getTextColorClass()}`}>MEMBER SINCE</p>
+          <p className={`text-sm font-mono  ${getTextColorClass()}`}>{createdAt ? formatMonthYear(createdAt) : "N/A"}</p>
+        </div>
+        <div>
+          <p className={`text-sm font-mono  ${getTextColorClass()}`}>EXPIRATION</p>
+          <p className={`text-sm font-mono  ${getTextColorClass()}`}>{expDate ? formatMonthYear(expDate) : "N/A"}</p>
+        </div>
+        {/* <div className="w-20 h-20 rounded-lg bg-white p-2"> */}
+          {/* <Image
+            src={'/assets/images/qr.png'}
+            alt="QR Code"
+            width={80}
+            height={80}
+            className="object-contain"
+          /> */}
+          <div
+            className={cn(
+              "bg-white p-2 rounded-sm",
+              qrcode ? "w-20 h-20" : "p-2"
+            )}
+          >
+            {qrcode ? (
+              <QRCodeSVG
+                value={qrcode}
+                size={40}
+                bgColor="#ffffff"
+                fgColor="#000000"
+                level="L"
+                className="w-full h-full"
+              />
+            ) : (
+              <p className="text-black text-xs">No QR Code</p>
+            )}
+          </div>
+        {/* </div> */}
+      </div>
     </div>
   );
 }
