@@ -90,14 +90,14 @@ export function RecentTransactions() {
             /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
             transactions.map(({transaction}:any) => {
               const { icon: Icon, description } =
-                transactionTypeMap[transaction.transactionType] || {
+                transactionTypeMap[transaction?.transactionType] || {
                   icon: CreditCard,
-                  description: transaction.transactionType || "Unknown",
+                  description: transaction?.transactionType || "Unknown",
                 };
-              const isPayment = transaction.transactionType !== "refund";
+              const isPayment = transaction?.transactionType !== "refund";
               return (
                 <tr
-                  key={transaction._id}
+                  key={transaction?._id}
                   className="border-b border-border/50 hover:bg-accent/30 transition-colors"
                 >
                   <td className="py-4 px-2">
@@ -118,17 +118,17 @@ export function RecentTransactions() {
                   <td className="py-4 px-2">
                     <div className="font-medium text-sm">
                       {description}
-                      {transaction.paymentMethod && (
+                      {transaction?.paymentMethod && (
                         <span className="text-xs text-muted-foreground">
                           {" "}
-                          ({transaction.paymentMethod})
+                          ({transaction?.paymentMethod})
                         </span>
                       )}
                     </div>
                   </td>
                   <td className="py-4 px-2">
                     <div className="text-sm text-muted-foreground">
-                      {new Date(transaction.createdAt).toLocaleDateString()}
+                      {new Date(transaction?.createdAt).toLocaleDateString()}
                     </div>
                   </td>
                   <td className="py-4 px-2 text-right">
@@ -138,7 +138,7 @@ export function RecentTransactions() {
                           isPayment ? "text-red-400" : "text-green-400"
                         }`}
                       >
-                        ksh.{transaction.amount.toFixed(2)}
+                        ksh.{transaction?.amount.toFixed(2)}
                       </span>
                       {isPayment ? (
                         <ArrowUpRight className="w-3 h-3 text-red-400" />
@@ -150,12 +150,12 @@ export function RecentTransactions() {
                   <td className="py-4 px-2 text-center">
                     <span
                       className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        transaction.status === "Success"
+                        transaction?.status === "Success"
                           ? "bg-green-500/20 text-green-400"
                           : "bg-red-500/20 text-red-400"
                       }`}
                     >
-                      {transaction.status}
+                      {transaction?.status}
                     </span>
                   </td>
                 </tr>
