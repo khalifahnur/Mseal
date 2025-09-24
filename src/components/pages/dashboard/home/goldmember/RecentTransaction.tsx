@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import { fetchUserTransactions } from "@/api/api";
-import { CreditCard, ArrowUpRight, ArrowDownLeft, Calendar, Trophy, Coffee } from "lucide-react";
+import { CreditCard, ArrowUpRight, ArrowDownLeft, Trophy, ShoppingBag } from "lucide-react";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const transactionTypeMap: Record<string, { icon: any; description: string }> = {
   ticket: {
@@ -16,15 +16,15 @@ const transactionTypeMap: Record<string, { icon: any; description: string }> = {
     description: "Refund",
   },
   prepaid: {
-    icon: Coffee,
+    icon: CreditCard,
     description: "Mseal wallet prepaid",
   },
   merchandise: {
-    icon: Calendar,
+    icon: ShoppingBag,
     description: "Merchandise Purchase",
   },
   membership: {
-    icon: Calendar,
+    icon: CreditCard,
     description: "Membership Purchase",
   },
 };
