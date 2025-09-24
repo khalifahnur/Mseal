@@ -5,33 +5,28 @@ import { Card } from "@/components/ui/card";
 import { FullScreenLoader } from "@/components/pages/loading/FullScreenLoader";
 import { fetchUserTransactions } from "@/api/api";
 import { CreditCard, ArrowUpRight, ArrowDownLeft, Trophy, ShoppingBag } from "lucide-react";
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const transactionTypeMap: Record<string, { icon: any; description: string }> = {
-  ticket: {
-    icon: Trophy,
-    description: "Match Ticket Purchase",
-  },
-  refund: {
-    icon: CreditCard,
-    description: "Refund",
-  },
-  prepaid: {
-    icon: CreditCard,
-    description: "Mseal wallet prepaid",
-  },
-  merchandise: {
-    icon: ShoppingBag,
-    description: "Merchandise Purchase",
-  },
-  membership: {
-    icon: CreditCard,
-    description: "Membership Purchase",
-  },
+import { LucideIcon } from "lucide-react";
+
+interface Transaction {
+  _id: string;
+  transactionType: string;
+  amount: number;
+  createdAt: string;
+  status: string;
+  paymentMethod?: string;
+}
+
+const transactionTypeMap: Record<string, { icon: LucideIcon; description: string }> = {
+  ticket: { icon: Trophy, description: "Match Ticket Purchase" },
+  refund: { icon: CreditCard, description: "Refund" },
+  prepaid: { icon: CreditCard, description: "Mseal wallet prepaid" },
+  merchandise: { icon: ShoppingBag, description: "Merchandise Purchase" },
+  membership: { icon: CreditCard, description: "Membership Purchase" },
 };
 
 export function RecentTransactions() {
   const {
-    data: transactions = [], 
+    data: transactions = [],
     isLoading,
     isError,
     error,
@@ -43,17 +38,19 @@ export function RecentTransactions() {
     retry: false,
   });
 
+  console.log("Transactions data:", transactions); // Debug API response
+
   if (isLoading) return <FullScreenLoader />;
 
-  if (isError) {
+  if (isError || !Array.isArray(transactions)) {
     return (
       <div className="p-4 text-center text-red-500">
-        Error loading transactions: {error?.message || "Unknown error"}
+        Error loading transactions: {error?.message || "Invalid data received"}
       </div>
     );
   }
 
-  if (!transactions || transactions.length === 0) {
+  if (transactions.length === 0) {
     return (
       <Card className="p-6">
         <div className="flex items-center justify-between mb-6">
@@ -86,18 +83,25 @@ export function RecentTransactions() {
             </tr>
           </thead>
           <tbody>
-            {
-            /*eslint-disable-next-line @typescript-eslint/no-explicit-any*/ 
-            transactions.map(({transaction}:any) => {
+            {transactions.map((transaction: Transaction) => {
+              if (!transaction) {
+                return (
+                  <tr key={Math.random()}>
+                    <td colSpan={5} className="py-4 px-2 text-center text-red-500">
+                      Invalid transaction data
+                    </td>
+                  </tr>
+                );
+              }
               const { icon: Icon, description } =
-                transactionTypeMap[transaction?.transactionType] || {
+                transactionTypeMap[transaction.transactionType] || {
                   icon: CreditCard,
-                  description: transaction?.transactionType || "Unknown",
+                  description: transaction.transactionType || "Unknown",
                 };
-              const isPayment = transaction?.transactionType !== "refund";
+              const isPayment = transaction.transactionType !== "refund";
               return (
                 <tr
-                  key={transaction?._id}
+                  key={transaction._id}
                   className="border-b border-border/50 hover:bg-accent/30 transition-colors"
                 >
                   <td className="py-4 px-2">
@@ -118,17 +122,17 @@ export function RecentTransactions() {
                   <td className="py-4 px-2">
                     <div className="font-medium text-sm">
                       {description}
-                      {transaction?.paymentMethod && (
+                      {transaction.paymentMethod && (
                         <span className="text-xs text-muted-foreground">
                           {" "}
-                          ({transaction?.paymentMethod})
+                          ({transaction.paymentMethod})
                         </span>
                       )}
                     </div>
                   </td>
                   <td className="py-4 px-2">
                     <div className="text-sm text-muted-foreground">
-                      {new Date(transaction?.createdAt).toLocaleDateString()}
+                      {new Date(transaction.createdAt).toLocaleDateString()}
                     </div>
                   </td>
                   <td className="py-4 px-2 text-right">
@@ -138,7 +142,7 @@ export function RecentTransactions() {
                           isPayment ? "text-red-400" : "text-green-400"
                         }`}
                       >
-                        ksh.{transaction?.amount.toFixed(2)}
+                        ksh.{transaction.amount.toFixed(2)}
                       </span>
                       {isPayment ? (
                         <ArrowUpRight className="w-3 h-3 text-red-400" />
@@ -150,12 +154,12 @@ export function RecentTransactions() {
                   <td className="py-4 px-2 text-center">
                     <span
                       className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        transaction?.status === "Success"
+                        transaction.status === "Success"
                           ? "bg-green-500/20 text-green-400"
                           : "bg-red-500/20 text-red-400"
                       }`}
                     >
-                      {transaction?.status}
+                      {transaction.status}
                     </span>
                   </td>
                 </tr>
