@@ -8,6 +8,7 @@ import { fetchAllMerchandise } from "@/api/api";
 import { FullScreenLoader } from "../../loading/FullScreenLoader";
 import ProductGrid from "./ProductGrid";
 import CartButton from "./cart/CartButton";
+import { useAuth } from "@/components/Forms/AuthContext";
 
 export default function Container() {  
   const { data, isLoading } = useQuery({
@@ -18,6 +19,8 @@ export default function Container() {
     refetchOnWindowFocus: false,
   });
 
+  const {user} = useAuth();
+
   if (isLoading) return <FullScreenLoader />;
   return (
     <div className="min-h-screen flex flex-col">
@@ -25,7 +28,7 @@ export default function Container() {
         <div className="container mx-auto p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shirt className="h-6 w-6 text-secondary" />
-            <span className="font-bold text-xl">Muranga Seal Store</span>
+            <span className="font-bold text-xl">Muranga Seal Shop</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="#" className="text-sm font-medium hover:text-primary">
@@ -50,14 +53,14 @@ export default function Container() {
         </div>
       </header>
 
-      <PromoHeader />
+      <PromoHeader membershipTier={user?.membershipTier}/>
 
       <main className="flex-1 container mx-auto p-4">
         <div className="flex flex-col md:flex-row gap-6">
           {/* <FilterSidebar /> */}
 
           <div className="flex-1">
-            <h1 className="text-2xl font-bold mb-6">Player Jerseys & Kits</h1>
+            {/* <h1 className="text-2xl font-bold mb-6">Player Jerseys & Kits</h1> */}
               <ProductGrid items={data.responseItems}/>
           </div>
         </div>

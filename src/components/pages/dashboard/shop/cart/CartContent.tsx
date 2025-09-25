@@ -62,7 +62,7 @@ export default function CartContent({onCheckout}:CartContentProps) {
                     <div className="flex justify-between">
                       <h3 className="font-medium text-sm line-clamp-2">{item.name}</h3>
                       <button
-                        onClick={() => removeFromCart(item.id, item.size)}
+                        onClick={() => removeFromCart(item.id, item.size || '')}
                         className="text-muted-foreground hover:text-destructive transition-colors"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -73,7 +73,7 @@ export default function CartContent({onCheckout}:CartContentProps) {
                     <div className="flex justify-between items-center mt-2">
                       <div className="flex items-center border rounded">
                         <button
-                          onClick={() => decreaseQuantity(item.id, item.size)}
+                          onClick={() => decreaseQuantity(item.id, item.size || '')}
                           disabled={item.quantity <= 1}
                           className="px-2 py-1 text-muted-foreground hover:bg-muted disabled:opacity-50"
                         >
@@ -81,7 +81,7 @@ export default function CartContent({onCheckout}:CartContentProps) {
                         </button>
                         <span className="px-2 text-sm">{item.quantity}</span>
                         <button
-                          onClick={() => increaseQuantity(item.id, item.size)}
+                          onClick={() => increaseQuantity(item.id, item.size || '')}
                           className="px-2 py-1 text-muted-foreground hover:bg-muted"
                         >
                           <Plus className="h-3 w-3" />

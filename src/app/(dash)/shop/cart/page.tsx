@@ -115,7 +115,7 @@ export default function CartDrawer() {
                           {item.name}
                         </h3>
                         <button
-                          onClick={() => removeFromCart(item.id, item.size)}
+                          onClick={() => removeFromCart(item.id, item.size || '')}
                           className="text-muted-foreground hover:text-destructive transition-colors"
                         >
                           <X className="h-4 w-4" />

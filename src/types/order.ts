@@ -3,6 +3,7 @@ export interface orders{
         productId: string;
         quantity: number;
         price: number;
+        size?:string;
         customization: {
             name: string;
             number: string;

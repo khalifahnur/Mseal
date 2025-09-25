@@ -7,7 +7,7 @@ interface CartItem {
   name: string;
   price: number;
   quantity: number;
-  size: string;
+  size?: string;
   imgUrl: string;
   customization?: {
     name: string;

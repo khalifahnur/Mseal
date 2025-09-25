@@ -198,6 +198,7 @@ export default function CheckoutSheet({ setActiveSheet }: checkoutProp) {
       items: cart.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
+        size:item?.size,
         price: item.price + (item.customization ? 500 : 0),
         customization: item.customization || null,
       })),
