@@ -78,7 +78,7 @@ export default function ProductPage({ params }: PageProps) {
 
   if (!product) return <p className="p-4 text-red-600">Product not found.</p>;
 
-  const discountPercentage = user?.membershipTier === "gold" ? 0.3 : user?.membershipTier === "silver" ? 0.2 : 0;
+  const discountPercentage = user?.membershipTier === "gold" ? 0.2 : user?.membershipTier === "silver" ? 0.1 :  user?.membershipTier === "bronze" ? 0.05 : 0;
   const namePrintingPrice = product.category === "Jersey" ? 500 : 0;
   const basePrice = product.price;
   const discountedPrice = discountPercentage ? basePrice * (1 - discountPercentage) : basePrice;

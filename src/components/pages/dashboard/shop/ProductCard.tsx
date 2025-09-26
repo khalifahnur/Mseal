@@ -29,7 +29,7 @@ export default function ProductCard({
 
   const {user} = useAuth();
 
-  const discountPercentage = user?.membershipTier === "gold" ? 0.3 : user?.membershipTier === "silver" ? 0.2 : 0;
+  const discountPercentage = user?.membershipTier === "gold" ? 0.2 : user?.membershipTier === "silver" ? 0.1 :  user?.membershipTier === "bronze" ? 0.05 : 0;
   const discountedPrice = discountPercentage ? price * (1 - discountPercentage) : price;
 
   
