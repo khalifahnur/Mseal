@@ -10,6 +10,7 @@ export default function LeftSection() {
     { icon: Zap, color: "text-black/80" },
     { icon: CheckCircle, color: "text-black/80" },
   ];
+
   return (
     <div className="relative opensans bg-gradient-to-br from-primary via-primary/80 to-primary/60 p-12 overflow-hidden">
       <div className="absolute inset-0">
@@ -58,7 +59,7 @@ export default function LeftSection() {
         </motion.div>
 
         <div className="space-y-6">
-          {features.map((feature, index) => {
+          {features.gold.map((feature, index) => { 
             const IconComponent =
               benefitIcons[index % benefitIcons.length].icon;
             return (
