@@ -102,6 +102,7 @@ export default function PaymentUpgradeSheet({
         const paymentValues = {
           ...values,
           amount: selectedTier.price,
+          paymentContext:"upgrade"
         };
 
         const paymentResponse = await paymentMutation.mutateAsync(paymentValues);

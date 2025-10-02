@@ -90,7 +90,7 @@ export function ActiveTickets() {
     <div className="grid gap-6">
       {/* eslint-disable @typescript-eslint/no-explicit-any */}
       {activeTickets.map((ticket: any, index: number) => {
-        const event = ticket.event?.[0];
+        const event = ticket.event;
         return (
           <Card key={ticket._id} className="overflow-hidden">
             <CardContent className="p-0">

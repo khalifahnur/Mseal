@@ -10,6 +10,7 @@ import { RecentTransactions } from "./goldmember/RecentTransaction";
 import { ShopArrivals } from "./goldmember/Shop";
 import { MembershipCard } from "./membershipcard";
 
+
 export default function Home() {
   const { user, isLoading } = useAuth();
   if (isLoading) {

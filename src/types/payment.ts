@@ -8,7 +8,8 @@ export interface paymentData {
   city: string;
   useDefaultNumber?: boolean;
   paymentMethod?: string;
-  isUpgrade?: boolean
+  isUpgrade?: boolean;
+  paymentContext?:string;
 }
 /*eslint-disable @typescript-eslint/no-explicit-any*/ 
 export interface paymentResponse {

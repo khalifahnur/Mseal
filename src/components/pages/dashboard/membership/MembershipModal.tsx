@@ -292,7 +292,7 @@ export function MembershipModal({
   return (
     <Dialog open={open} onOpenChange={handleClose} modal={true}>
       <DialogContent
-        className="w-[90%] max-w-md sm:max-w-lg md:max-w-xl overflow-y-auto max-h-[85vh] sm:max-h-[90vh] rounded-xl p-0 border-0 shadow-xl bg-white"
+        className=" [&>button]:hidden w-[90%] max-w-md sm:max-w-lg md:max-w-xl overflow-y-auto max-h-[85vh] sm:max-h-[90vh] rounded-xl p-0 border-0 shadow-xl bg-white"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}

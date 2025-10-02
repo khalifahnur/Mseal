@@ -75,7 +75,7 @@ export function PhoneNumberModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal={true}>
-      <DialogContent className="sm:max-w-[425px]" 
+      <DialogContent className="[&>button]:hidden sm:max-w-[425px]" 
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}>

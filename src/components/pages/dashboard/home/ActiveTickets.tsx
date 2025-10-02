@@ -46,7 +46,7 @@ export default function ActiveTickets() {
     return <NoActiveTickets />;
   }
   return (
-    <Card className="relative w-full max-w-md mx-auto">
+    <Card className="relative w-full border">
       <CardHeader>
         <CardTitle className="text-lg">Tickets</CardTitle>
         <CardDescription>View your active tickets and history</CardDescription>

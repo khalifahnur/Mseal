@@ -30,7 +30,7 @@ interface Ticket {
     time: string;
     venue: string;
     imageUrl?: string;
-  }[];
+  };
   createdAt: string;
   paymentReference: string;
   paymentStatus: string;
@@ -47,7 +47,7 @@ export function TicketHistory() {
     refetchOnWindowFocus: false,
   });
 
-  const downloadReceipt = (ticket: Ticket, event: Ticket["event"][0]) => {
+  const downloadReceipt = (ticket: Ticket, event: Ticket["event"]) => {
     const doc = new jsPDF();
     doc.setFontSize(16);
     doc.text("Purchase Receipt", 20, 20);
@@ -88,17 +88,16 @@ export function TicketHistory() {
   return (
     <div className="grid gap-6">
       {usedTickets.map((ticket) =>
-        ticket.event.map((event) => (
           <Card
-            key={`${ticket._id}-${event.eventId}`}
+            key={`${ticket._id}-${ticket.event.eventId}`}
             className="overflow-hidden"
           >
             <CardContent className="p-0">
               <div className="flex flex-col md:flex-row bg-[url('/assets/images/stadi1.jpeg')] bg-cover bg-center md:bg-none relative before:backdrop-blur-sm backdrop-opacity-50 before:absolute before:inset-0 before:z-[-1]">
                 <div className="relative md:w-1/3">
                   <Image
-                    src={event.imageUrl || "/assets/images/stadi1.jpeg"}
-                    alt={event.match}
+                    src={ticket.event.imageUrl || "/assets/images/stadi1.jpeg"}
+                    alt={ticket.event.match}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"
@@ -111,25 +110,25 @@ export function TicketHistory() {
                   <div className="flex flex-col h-full justify-between">
                     <div>
                       <h3 className="text-xl text-white md:text-black font-bold mb-2">
-                        {event.match}
+                        {ticket.event.match}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
                         <div className="flex items-center text-muted-foreground ">
                           <Calendar className="mr-2 h-4 w-4 text-white md:text-black" />
                           <span className="text-white md:text-black">
-                            {formatDate(event.date)}
+                            {formatDate(ticket.event.date)}
                           </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <Clock className="mr-2 h-4 w-4 text-white md:text-black" />
                           <span className="text-white md:text-black">
-                            {event.time} EAT
+                            {ticket.event.time} EAT
                           </span>
                         </div>
                         <div className="flex items-center text-muted-foreground">
                           <MapPin className="mr-2 h-4 w-4 text-white md:text-black" />
                           <span className="text-white md:text-black">
-                            {event.venue}
+                            {ticket.event.venue}
                           </span>
                         </div>
                       </div>
@@ -152,17 +151,17 @@ export function TicketHistory() {
                           <div className="space-y-4 p-4">
                             <div className="space-y-1">
                               <h4 className="font-medium">Event</h4>
-                              <p>{event.match}</p>
+                              <p>{ticket.event.match}</p>
                             </div>
                             <div className="space-y-1">
                               <h4 className="font-medium">Date & Time</h4>
                               <p>
-                                {formatDate(event.date)} at {event.time}
+                                {formatDate(ticket.event.date)} at {ticket.event.time}
                               </p>
                             </div>
                             <div className="space-y-1">
                               <h4 className="font-medium">Venue</h4>
-                              <p>{event.venue}</p>
+                              <p>{ticket.event.venue}</p>
                             </div>
                             <div className="space-y-1">
                               <h4 className="font-medium">Purchase Date</h4>
@@ -185,7 +184,7 @@ export function TicketHistory() {
                       </Dialog>
                       <Button
                         variant="outline"
-                        onClick={() => downloadReceipt(ticket, event)}
+                        onClick={() => downloadReceipt(ticket, ticket.event)}
                         aria-label="Download receipt as PDF"
                       >
                         <span className="flex items-center">
@@ -199,7 +198,7 @@ export function TicketHistory() {
               </div>
             </CardContent>
           </Card>
-        ))
+      
       )}
     </div>
   );
