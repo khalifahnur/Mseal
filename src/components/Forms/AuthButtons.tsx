@@ -32,7 +32,7 @@ export default function AuthButtons() {
 
   const handleGoogleSignIn = () => {
     setIsNewLogin(true);
-    window.location.href = "https://msealserver-production.up.railway.app/mseal/auth-user/google";
+    window.location.href = process.env.NEXT_PUBLIC_MSEAL_GOOGLE_SIGNIN || '';
   };
   const handleXSignIn = () => {
     console.log("X sign-in not implemented");

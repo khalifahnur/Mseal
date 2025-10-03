@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 
 const SOCKET_URL = process.env.NODE_ENV === "production"
-  ? "https://msealserver-production.up.railway.app"
-  : "http://localhost:3002";
+  ? process.env.NEXT_PUBLIC_MSEAL_URL
+  : "";
 
 interface WebSocketData {
   paymentStatus: "Pending" | "Completed" | "Failed";

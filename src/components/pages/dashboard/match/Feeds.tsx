@@ -32,8 +32,6 @@ export default function Feeds() {
     refetchOnWindowFocus: false,
   });
 
-  console.log("x-post", xPosts);
-
   return (
     <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="pb-4">
