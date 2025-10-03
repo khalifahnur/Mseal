@@ -17,14 +17,8 @@ export default function MembershipFAQ() {
     {
       question: "How do I upgrade my membership?",
       answer:
-        "You can upgrade your membership at any time by selecting a new plan above. The price difference will be prorated.",
+        "You can upgrade your membership at any time by selecting a new plan above.",
       icon: <CreditCard className="h-5 w-5" />,
-    },
-    {
-      question: "Can I cancel my membership?",
-      answer:
-        "Yes, you can cancel your membership at any time. Refunds are available within 14 days of purchase.",
-      icon: <Clock className="h-5 w-5" />,
     },
     {
       question: "How do I earn membership points?",
