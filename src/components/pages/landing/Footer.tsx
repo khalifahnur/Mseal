@@ -79,11 +79,11 @@ export function Footer() {
             <h3 className="text-lg font-bold mb-4 text-primary">Quick Links</h3>
             <ul className="space-y-3">
               {[
-                { name: "About", href: "/about" },
-                { name: "Matches", href: "/matches" },
+                { name: "About", href: "/" },
+                { name: "Matches", href: "/" },
                 { name: "Membership", href: "/" },
-                { name: "Contact Us", href: "/contact" },
-                { name: "FAQs", href: "/faq" },
+                { name: "Contact Us", href: "/" },
+                { name: "FAQs", href: "/" },
               ].map((link, index) => (
                 <li key={index}>
                   <Link
@@ -241,13 +241,13 @@ export function Footer() {
               &copy; {currentYear} Murang&apos;a Seal FC. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-              <Link href="/privacy" className="hover:text-primary transition-colors duration-300">
+              <Link href="/" className="hover:text-primary transition-colors duration-300">
                 Privacy Policy
               </Link>
               <Link href="/terms" className="hover:text-primary transition-colors duration-300">
                 Terms of Service
               </Link>
-              <Link href="/cookies" className="hover:text-primary transition-colors duration-300">
+              <Link href="/" className="hover:text-primary transition-colors duration-300">
                 Cookie Policy
               </Link>
             </div>
